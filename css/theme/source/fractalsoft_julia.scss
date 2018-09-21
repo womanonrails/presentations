@@ -1,0 +1,201 @@
+@import "../template/mixins";
+@import "../template/settings";
+
+// Include theme-specific fonts
+@import url(../../lib/font/league-gothic/league-gothic.css);
+@import url(https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic);
+
+@import url(http://weloveiconfonts.com/api/?family=zocial);
+
+/* zocial */
+[class*="zocial-"]:before {
+  font-family: 'zocial', sans-serif;
+}
+
+// colors
+$backgroundColor: #091c2b;
+$heading1TextShadow: 0 1px 0 #edeced, 0 2px 0 #ddd, 0 3px 0 #ccc, 0 4px 0 rgba(0, 0, 0, 0.1), 0 5px 0 rgba(0, 0, 0, 0.2), 0 6px 0 rgba(0, 0, 0, 0.25);
+$headingColor: #edecf2;
+$linkColor: #45c7ff;
+$linkColorHover: #3669a2;
+$mainColor: #c1d4f2;
+$socialLinkColor: #2289d4;
+// $selectionBackgroundColor: lighten( $linkColor, 25% );
+
+// fonts
+$headingFont: 'League Gothic', Impact, Helvetica, sans-serif;
+// $headingFontWeight: 600;
+$headingLetterSpacing: normal;
+$headingTextShadow: none;
+$headingTextTransform: uppercase;
+$mainFont: 'Lato', Helvetica, sans-serif;
+$mainFontSize: 30px;
+
+$heading0Size: 4.0em;
+$heading1Size: 2.5em;
+$heading2Size: 1.6em;
+$heading3Size: 1.3em;
+$heading4Size: 1.0em;
+
+// Background generator
+@mixin bodyBackground() {
+  @include radial-gradient( rgba(9, 28, 43, 1), rgba(20, 60, 95, 1) );
+}
+
+.hljs {
+  background: #eee;
+  color: #000;
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+}
+
+.hljs-comment {
+  color: #a7a7b0;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+// like class, def, end
+.hljs-keyword {
+  color: #0000fd;
+  font-weight: bold;
+}
+
+// address url
+.hljs-link {
+  color: #119453;
+  font-style: italic;
+}
+
+// like nil
+.hljs-literal {
+  color: #c5060b;
+}
+
+// tag name between characters < and >
+.hljs-name {
+  color: #6911ff;
+}
+
+.hljs-number {
+  color: #ff7800;
+}
+
+.hljs-string {
+  color: #00b0b0;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+.hljs-symbol {
+  color: #5c5cb0;
+}
+
+// characters < and > and html properties like data-*
+.hljs-tag {
+  color: #126dff;
+}
+
+// like class name, method name
+.hljs-title {
+  color: #3669a2;
+}
+
+.hljs-addition,
+.hljs-attribute,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-bullet,
+.hljs-deletion,
+.hljs-emphasis,
+.hljs-meta,
+.hljs-quote,
+.hljs-section,
+.hljs-selector-class,
+.hljs-selector-id,
+.hljs-selector-tag,
+.hljs-strong,
+.hljs-subst,
+.hljs-template-tag,
+.hljs-template-variable,
+.hljs-type,
+.hljs-variable {
+}
+
+.reveal section {
+  &.pull-right {
+    text-align: right;
+  }
+
+  .pull-left {
+    text-align: left;
+    margin-left: 45px;
+  }
+
+  .text-dark-blue {
+    color: $backgroundColor !important;
+  }
+
+  i.fa {
+    font-family: 'FontAwesome';
+    font-style: normal;
+  }
+
+  img.pure {
+    background: none;
+    border:none;
+    box-shadow: none;
+    margin: 0;
+  }
+
+  img.middle-size {
+    width: 800px;
+  }
+
+  h2 {
+    text-shadow: $heading1TextShadow;
+  }
+
+  h2.font-size-like-h1 {
+    font-size: $heading1Size;
+  }
+
+  h2.big-font-size {
+    font-size: $heading0Size;
+  }
+
+  // &.left-list ul {
+  //   text-align: left;
+  //   display: block;
+  //   margin-left: 45px;
+  // }
+
+  .links {
+    margin-top: 100px;
+
+    a {
+      color: $socialLinkColor;
+
+      &:hover {
+        color: $linkColor;
+      }
+    }
+  }
+
+  .social a {
+    display: inline-block;
+    padding-right: 5px;
+    color: $socialLinkColor;
+
+    &:hover {
+        color: $linkColor;
+      }
+  }
+}
+
+@import "../template/theme";

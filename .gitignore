@@ -1,0 +1,15 @@
+*.eml
+*.iml
+*.iws
+.DS_Store
+.idea/
+.sass-cache
+.svn
+css/reveal.css
+js/reveal.js
+log/*.log
+node_modules/
+npm-debug.log
+out/
+package-lock.json
+tmp/**

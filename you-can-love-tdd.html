@@ -1,0 +1,725 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+
+    <title>You can love TDD - short test story</title>
+    <meta name='description' content='Testing is for everyone - presentation about what tests are and how to start testing'>
+
+    <link rel='stylesheet' href='css/reveal.min.css'>
+    <link rel='stylesheet' href='css/theme/fractalsoft_julia.css'>
+
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+  </head>
+  <body>
+    <div class='reveal'>
+      <div class='slides'>
+
+<section>
+  <h1>Do you know you can test?</h1>
+  <p>
+    <a href='https://womanonrails.com' target='_blank' title='Web development from woman perspective'>Agnieszka Matysek</a> at <a href='https://fractalsoft.org' target='_blank' title='Ruby on Rails developers'>Fractal Soft</a>
+  </p>
+</section>
+
+<section data-markdown>
+  <script type='text/template'>
+    <h2 class='font-size-like-h1'>We are all testers</h2>
+    <img alt='Choose between two options. Blue or red pillow.' class='pure' data-src='images/testing.jpg'>
+
+Note:
+
+- Niezależnie od tego czy jesteś pielęgniarką, trenerką fitnes czy ksiegową każdego dnia sprawdzasz działanie różnych rzeczy.
+- Mogą to być programy w pracy, aplikacje na telefonie, telewizor czy kuchenka mikrofalowa.
+- Idziesz do Ikei siadasz na stojących meblach i sprawdzasz, czy są wygodne, miłe w dotyku itd.
+  </script>
+</section>
+
+<section data-markdown>
+  <script type='text/template'>
+    <h2 class='font-size-like-h1'>Always testing</h2>
+    <img alt='Choose your pair of shoes to test.' class='pure middle-size' data-src='images/shoes.jpg'>
+
+Note:
+
+- Wszystko
+- Robisz to prawdopodobnie całkowicie nieświadomie/podświadomie.
+- Uruchamiasz/sprawdzasz i już wiesz czy działa czy nie.
+- Nie zamierzasz szukac dziury w całym, lecz chcesz używać czegoś i przez sam ten fakt sprawdzasz poprawność działania.
+  </script>
+</section>
+
+<section data-markdown>
+  <script type='text/template'>
+    <h2 class='font-size-like-h1'>Simetime fixing</h2>
+    <img alt='Sometime fixing even it is bus.' class='pure' style='width: 720px;' data-src='images/fixing.jpg'>
+
+Note:
+
+- Gdy już coś nie działa zgłaszasz to odpowiedniej osobie, a czasem sama radzisz sobie z problemem, starasz się go naprawić.
+- To wszystko są rożnego rodzaju testy, ale możemy je zakwalifikować do jednej kategorii.
+  </script>
+</section>
+
+<section data-markdown>
+  <script type='text/template'>
+    <h2 class='font-size-like-h1'>Manual tests</h2>
+    <img alt='You do some manual work.' class='pure middle-size' data-src='images/hand.jpg'>
+
+Note:
+
+- Testy manualne, bo robicie je własnymi rękami.
+- Tutaj na warsztatach też robicie testy manualne.
+- Uruchamiacie jakąś komendę w terminalu lub piszecie fragment jakiegoś kodu, a poźniej patrzycie do przeglądarki czy to co zrobiłyście daje efekt, którego oczekujecie.
+- Sprawdzacie czy napisy się dobrze wyświetlają, czy kolor tła jest odpowiedni.
+- Dlaczego robimy test?
+  </script>
+</section>
+
+<section data-transition='slide-in fade-out' data-markdown>
+  <script type='text/template'>
+    <h2 class='font-size-like-h1'>Not always what you want, you get</h2>
+
+Note:
+
+- Nie zawsze to co kazałyśmy zrobić komputerowi jest dokładnie tym, co chcemy żeby zrobił.
+  </script>
+</section>
+
+<section data-transition='fade-in slide-out' data-markdown>
+  <script type='text/template'>
+    <h2 class='font-size-like-h1'>Not always what you asked for, is what you want</h2>
+
+Note:
+
+- Komputer jest bardzo dosłowny (tak jak mówi Alek) na pytanie: _Która jest godzina?_ odpowie: 14 ale trzeba sie dopytać: _A ile minut?_ żeby dowiedzieć się że 52 min.
+  </script>
+</section>
+
+<section data-transition='slide-in fade-out' data-markdown>
+  <script type='text/template'>
+    <h2 class='big-font-size'>Test</h2>
+    <p>the way to check correctness of something (ex. application)</p>
+
+Note:
+
+- Przygotowujemy procedurę, która sprawdzi prawdziwość pewnych założeń.
+- Sposób na sprawdzenie poprawności działania czegoś (jakiegoś fragmentu, funkcji, metody, modułu, aplikacji, programu).
+- Czy i jak dobre jest to co robimy?
+- Testy są sposoblem (jednym ze sposobów) zapewniania dobrej jakości.
+- Wszystkie te testy robicie ręcznie.
+- Programiści są leniwi!
+- Najlepiej jakby ktoś to zanich to robił.
+- Trochę jakbyście poprosiły kogoś o sprawdzenie dla Was czegoś i dostarczennie Wam tylko informacji czy dziala lub nie. Wy nie musicie tego robić.
+- Ktoś inny za Was to robi, wiec jest to oddelegowane, w pewnym sensie zrobione automatycznie, zautomatyzowane.
+- Nie musimy się przejmować procesem, dostajemy tylko raport czy jest dobrze czy nie (takie dzielenie się obowiazkami).
+  </script>
+</section>
+
+<section data-transition='fade-in slide-out' data-markdown>
+  <script type='text/template'>
+    <h2 class='big-font-size'>Automated testing</h2>
+    <p>is the act of conducting specific tests via automation</p>
+
+Note:
+
+- Testowanie automatyczne to akt przeprowadzenia konkretnego testu automatycznie.
+- Tak samo jak możemy coś komuś zlecić w codziennym życiu. Tak samo możemy zlecic coś do zrobienia jakiemuś narzedziu lub programowi na komputerze.
+- Można powiedzieć, że są programy/narzędzia które testują inne programy lub w naszym przypadku aplikacje.
+- Nie wszystko da się zautomatyzować!
+- Komputer nie myśli a ludzie tak!
+- Ludzie są wstanie znajdować coraz to nowe luki w programach i systemach.
+- Patrz hakerzy.
+  </script>
+</section>
+
+<section data-markdown>
+  <script type='text/template'>
+    <h2 class='font-size-like-h1'>Time for code!</h2>
+    <img alt='Paper full of code' class='pure middle-size' data-src='images/code.jpg'>
+
+Note:
+
+- Najpierw trzeba zrozumieć co robi test automatyczny.
+  </script>
+</section>
+
+<section>
+  <h2>How do you do automated tests in Ruby?</h2>
+  <div class='fragment' data-fragment-index='1'>
+    <h4 class='pull-left'>Code</h4>
+    <div data-markdown>
+```ruby
+def average(array = [])
+  size = array.size
+  array.sum / size.to_f
+end
+```
+    </div>
+  </div>
+  <div class='fragment' data-fragment-index='2'>
+    <h4 class='pull-left'>Tests</h4>
+    <div data-markdown>
+```ruby
+average([2]) == 2
+ => true
+average([1, 2]) == 1.5
+ => true
+average([1, 2, 3]) == 2
+ => true
+```
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>RSpec</h2>
+  <div class='fragment' data-fragment-index='1'>
+    <h4 class='pull-left'>How does this work?</h4>
+    <div data-markdown>
+```ruby
+expect(actual).to eq(expected)
+```
+    </div>
+  </div>
+  <div class='fragment' data-fragment-index='2'>
+    <h4 class='pull-left'>Tests</h4>
+    <div data-markdown>
+```ruby
+expect(average([2])).to eq(2)
+ => true
+expect(average([1, 2])).to eq(1.5)
+ => true
+expect(average([1, 2, 3])).to eq(2)
+ => true
+```
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Mini Test</h2>
+  <div class='fragment' data-fragment-index='1'>
+    <h4 class='pull-left'>How does this work?</h4>
+    <div data-markdown>
+```ruby
+assert_equal expected, actual
+```
+    </div>
+  </div>
+  <div class='fragment' data-fragment-index='2'>
+    <h4 class='pull-left'>Tests</h4>
+    <div data-markdown>
+```ruby
+assert_equal 2, average([2])
+ => true
+assert_equal 1.5, average([1, 2])
+ => true
+assert_equal 2, average([1, 2, 3])
+ => true
+```
+    </div>
+  </div>
+</section>
+
+<section data-markdown>
+  <script type='text/template'>
+    <h2 class='font-size-like-h1'>Running tests</h2>
+    <img alt='How looks console when all tests passed - rainbow style.' class='pure' data-src='images/minitest-rainbow.png'>
+  </script>
+</section>
+
+<section data-markdown>
+  <script type='text/template'>
+    <h2 class='font-size-like-h1'>Nyan Cat</h2>
+    <img alt='Running test in Nyan Cat style.' class='pure' data-src='images/nyancat.gif'>
+  </script>
+</section>
+
+<section data-markdown>
+  <script type='text/template'>
+    <h2 class='font-size-like-h1'>Change perspective</h2>
+    <img alt='We look up at big building from the ground' class='pure' style='width: 720px;' data-src='images/perspective.jpg'>
+
+Note:
+
+- Do tej pory mówiliśmy o testowaniu już istniejącego kodu.
+- Na codzień jednak nie powinno sie tak robić. (?)
+- A co by sie stało gdybyśmy odwrócili ten process?
+- Najpierw test, a później kod.
+- Najpierw wypisujemy nasze oczekiwania, a później je spełniamy.
+- Mówimy nasze życzenia.
+- Mój pierścionek zaręczynowy.
+- A dopiero później piszemy najprostrzy kod, który spełni te oczekiwania.
+- Robimy to krok po kroku.
+- Tak własnie działa podejście TDD do tworzenia kodu.
+  </script>
+</section>
+
+<section>
+  <section data-background='#fff'>
+    <h2 class='text-dark-blue font-size-like-h1'>Test-driven development</h2>
+    <img alt='TDD' class='pure' data-src='images/tdd.gif'>
+
+
+    <aside class='notes' data-markdown>
+- Tworzenie aplikacji sterowanej testami.
+- Red - Green - Refactoring
+- Piszemy najpierw test, sprawdzamy że nie przechodzi. Później kod, sprawdzamy czy test przechodzi (czy spełniliśmy wymaganie). A później patrzymy czy coś da się uprościć, napisać lepiej.
+    </aside>
+  </section>
+
+  <section>
+    <h4 class='pull-left'>Create test</h4>
+    <div data-markdown>
+```ruby
+require 'spec_helper'
+describe 'flush?' do
+  it 'checks if array has one color' do
+    flush_rule = flush?([1, 1, 1, 1])
+    expect(flush_rule).to eq(true)
+  end
+end
+```
+    </div>
+    <div class='fragment' data-fragment-index='1'>
+      <h4 class='pull-left'>Run test</h4>
+      <div data-markdown>
+```bash
+$ rspec spec/lib/flush_spec.rb
+
+Randomized with seed 35317
+F
+
+Failures:
+
+  1) flush? checks if array has one color
+     Failure/Error: flush_rule = flush?([1, 1, 1, 1])
+
+     NoMethodError:
+       undefined method `flush?' for #<RSpec::ExampleGroups::Flush:0x00000002a73d50>
+     # ./spec/lib/flush_spec.rb:5:in `block (2 levels) in <top (required)>'
+
+Finished in 0.01294 seconds (files took 0.75094 seconds to load)
+1 example, 1 failure
+```
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h4 class='pull-left'>Create method</h4>
+    <div data-markdown>
+```ruby
+def flush?
+end
+```
+    </div>
+    <div class='fragment' data-fragment-index='1'>
+      <h4 class='pull-left'>Run test</h4>
+      <div data-markdown>
+```bash
+$ rspec spec/lib/flush_spec.rb
+
+Randomized with seed 28476
+F
+
+Failures:
+
+  1) flush? checks if array has one color
+     Failure/Error:
+       def flush?
+       end
+
+     ArgumentError:
+       wrong number of arguments (given 1, expected 0)
+     # ./spec/lib/flush_spec.rb:3:in `flush?'
+     # ./spec/lib/flush_spec.rb:9:in `block (2 levels) in <top (required)>'
+
+Finished in 0.01024 seconds (files took 0.66129 seconds to load)
+1 example, 1 failure
+```
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h4 class='pull-left'>Add argument</h4>
+    <div data-markdown>
+
+```ruby
+def flush?(array)
+end
+```
+    </div>
+    <div class='fragment' data-fragment-index='1'>
+      <h4 class='pull-left'>Run test</h4>
+      <div data-markdown>
+```bash
+$ rspec spec/lib/flush_spec.rb
+
+Randomized with seed 34173
+F
+
+Failures:
+
+  1) flush? checks if array has one color
+     Failure/Error: expect(flush_rule).to eq(true)
+
+       expected: true
+            got: nil
+
+       (compared using ==)
+     # ./spec/lib/flush_spec.rb:10:in `block (2 levels) in <top (required)>'
+
+Finished in 0.05983 seconds (files took 0.83267 seconds to load)
+1 example, 1 failure
+```
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h4 class='pull-left'>Add first logic</h4>
+    <div data-markdown>
+```ruby
+def flush?(array)
+  true
+end
+```
+    </div>
+    <div class='fragment' data-fragment-index='1'>
+      <h4 class='pull-left'>Run test</h4>
+      <div data-markdown>
+```bash
+$ rspec spec/lib/flush_spec.rb
+
+Randomized with seed 40116
+.
+
+Finished in 0.01189 seconds (files took 0.65796 seconds to load)
+1 example, 0 failures
+```
+      </div>
+    </div>
+    <aside class='notes' data-markdown>
+- No refactoring
+    </aside>
+  </section>
+
+  <section>
+    <h4 class='pull-left'>Add new test</h4>
+    <div data-markdown>
+```ruby
+describe 'flush?' do
+  it 'checks if array has one color'
+
+  it 'checks if array has more then one color' do
+    flush_rule = flush?([1, 1, 2, 1])
+    expect(flush_rule).to eq(false)
+  end
+end
+```
+    </div>
+    <div class='fragment' data-fragment-index='1'>
+      <h4 class='pull-left'>And run this tests</h4>
+      <div data-markdown>
+```bash
+$ rspec spec/lib/flush_spec.rb
+
+Randomized with seed 6606
+.F
+
+Failures:
+
+  1) flush? checks if array has more then one color
+     Failure/Error: expect(flush_rule).to eq(false)
+
+       expected: false
+            got: true
+
+       (compared using ==)
+     # ./spec/lib/flush_spec.rb:15:in `block (2 levels) in <top (required)>'
+
+Finished in 0.04907 seconds (files took 0.63654 seconds to load)
+2 examples, 1 failure
+```
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h4 class='pull-left'>Add more logic</h4>
+    <div data-markdown>
+```ruby
+def flush?(array)
+  array.uniq.size == 1
+end
+```
+    </div>
+    <div class='fragment' data-fragment-index='1'>
+      <h4 class='pull-left'>Run tests</h4>
+      <div data-markdown>
+```bash
+$ rspec spec/lib/flush_spec.rb
+
+Randomized with seed 33907
+..
+
+Finished in 0.01092 seconds (files took 0.57891 seconds to load)
+2 examples, 0 failures
+```
+      </div>
+    </div>
+  </section>
+</section><!-- TDD -->
+
+<section>
+  <img alt='Cloud of test types' class='pure middle-size' data-src='images/wordcloud.png'>
+
+  <aside class='notes' data-markdown>
+- Unit tests
+- Security tests
+- Functional tests (Black-box)
+- Dynamic tests
+- White-box testing (structural)
+- Integration tests
+- System tests
+- Operational acceptance tests
+- Static tests
+- Grey-box tests
+- Smoke tests
+- Regression tests
+- Alfa, Beta tests
+- Non-functional tests
+- Installation tests
+- Compatibility tests
+- Sanity tests
+- Regression tests
+- Acceptance tests
+- Continuous tests
+- Destructive tests
+- Software performance tests
+- Usability tests
+- Accessibility tests
+- Internationalization and localization
+- Development tests
+- A/B tests
+- Concurrent tests
+- Conformance testing or type testing
+  </aside>
+</section>
+
+<section class='left-list' data-markdown>
+  <script type='text/template'>
+    <h2 class='font-size-like-h1'>Ruby testing tools</h2>
+
+- [Minitest](https://github.com/seattlerb/minitest)
+- [RSpec](http://rspec.info/)
+- [Capybara](http://teamcapybara.github.io/capybara/)
+- [Cucumber](https://cucumber.io/)
+- [Bacon](https://github.com/chneukirchen/bacon)
+- [Riot](https://github.com/thumblemonks/riot)
+- [Assert](https://github.com/redding/assert)
+- [Fix](https://github.com/fixrb/fix)
+  </script>
+</section>
+
+<section data-transition='slide-in fade-out' data-markdown>
+  <script type='text/template'>
+    <h2 class='font-size-like-h1'>Books</h2>
+- [Test Driven Development: By Example - Ken Beck](https://www.amazon.com/Test-Driven-Development-Kent-Beck/dp/0321146530)
+- [The Pragmatic Programmer](https://pragprog.com/book/tpp/the-pragmatic-programmer)
+  </script>
+</section>
+
+<section data-transition='fade-in fade-out' data-markdown>
+  <script type='text/template'>
+    <h2 class='font-size-like-h1'>Meetups & more</h2>
+- [Girls who test](http://www.girlswhotest.pl/)
+- [WarszawQA](http://www.warszawqa.pl/), [RzeQA](http://rzeqa.pl/), [KraQA](http://kraqa.pl/), [PTaQ](http://ptaq.org/)
+- [BialQA](https://www.facebook.com/groups/BialQA), [ŁódQA](https://www.facebook.com/LodQA/), [WrotQA](https://www.facebook.com/WrotQA/), [TrojQA](http://trojqa.pl/)
+- [Quality Meetup](https://www.meetup.com/pl-PL/Quality-Meetup/)
+- [papryQArz](https://papryqarz.org/)
+- [Quality Excites](https://qualityexcites.pl/)
+- [testerzy.pl](http://testerzy.pl/)
+- [testuj.pl](https://testuj.pl/)
+  </script>
+</section>
+
+<section data-transition='fade-in slide-out' data-markdown>
+  <script type='text/template'>
+    <h2 class='font-size-like-h1'>Work</h2>
+- Tester
+- QA (Quality Assurance)
+
+Note:
+
+- **Quality Assurance** is process oriented. It is all about preventing defects by ensuring the processes used to manage and create deliverables works. Not only does it work, but is consistently followed by the team. QA is about engineering processes that assure quality is achieved in an effective and efficient way. For instance, if a defect is found and fixed, there is no guaranteeing it won’t pop back up. The role of QA is to identify the process that allowed the error to occur and re-engineer the system so that these defects won’t appear for the second time. The QA process verifies that the product will continue to function as the customer expects.
+
+- **Quality Control** is product oriented. It is the function of software quality that determines the ending result is what was expected. Whereas QA is proactive, QC is reactive. QC detects bugs by inspecting and testing the product. This involves checking the product against a predetermined set of requirements and validating that the product meets those requirements. Examples of QC include technical reviews, software testing and code inspections.
+
+- **Testing** is a subset of QC. It is the process of executing a system in order to detect bugs in the product so that they get fixed. Testing is an integral part of QC as it helps demonstrate that the product runs the way it is expected and designed for.
+  </script>
+</section>
+
+<section data-background='images/experience.jpg'>
+</section>
+
+<section data-markdown>
+  <script type='text/template'>
+### Credentials
+
+- https://www.flickr.com/photos/beegee49/27772773639
+- https://www.flickr.com/photos/buttersponge/4955768144
+- https://www.flickr.com/photos/96dpi/1041911681
+- https://www.flickr.com/photos/raulito39/15855867677
+- https://www.flickr.com/photos/practicalowl/6667485609
+- https://www.flickr.com/photos/anned/8700093610
+- https://www.flickr.com/photos/hamur0w0/6984884135
+  </script>
+</section>
+
+
+<section class='pull-right' data-background='images/unicorn.jpg'>
+  <img alt='Woman on Rails logotype' class='pure' data-src='images/womanonrails.png' height='94' width='300'>
+  <h2 class='text-dark-blue'>Agnieszka Matysek</h2>
+  <p class='text-dark-blue'>agnieszka (at) fractalsoft (dot) org</p>
+
+  <div class='links'>
+    <p>
+      <a href='https://womanonrails.com/pl' target='_blank' title='Web development z kobiecej perspektywy'>
+        <span class='zocial-wordpress'></span> Woman on Rails
+      </a>
+    </p>
+    <p>
+      <a href='https://bemore.womanonrails.com/' target='_blank' title='Przemyślenia o szczęściu'>
+        <span class='zocial-wordpress'></span> Be more
+      </a>
+    </p>
+    <p>
+      <a href='https://fractalsoft.org/pl' target='_blank' title='Programiści Ruby on Rails i JavaScript'>
+        <span>
+          <img alt='Fractal Soft logo' class='pure' data-src='images/icons/svg/fractalsoft.svg' style='width: 25px;'>
+          Fractal Soft
+        </span>
+      </a>
+    </p>
+  </div>
+
+  <p class='social'>
+    <a href='https://twitter.com/womanonrails' rel='nofollow noopener' target='_blank' title='Twitter @womanonrails'>
+      <span class='zocial-twitter'></span>
+    </a>
+    <a href='https://github.com/womanonrails' rel='nofollow noopener' target='_blank' title='GitHub'>
+      <span class='zocial-github'></span>
+    </a>
+    <a href='https://www.instagram.com/womanonrails' rel='nofollow noopener' target='_blank' title='Istagram'>
+      <span class='zocial-instagram'></span>
+    </a>
+    <a href='https://www.youtube.com/channel/UCudKRFuddrf8saaxUEoo0xQ' rel='nofollow noopener' target='_blank' title='YouTube'>
+      <span class='zocial-youtube'></span>
+    </a>
+    <a href='https://vimeo.com/womanonrails' rel='nofollow noopener' target='_blank' title='Vimeo'>
+      <span class='zocial-vimeo'></span>
+    </a>
+  </p>
+</section>
+
+      </div>
+    </div>
+
+    <script src='lib/js/head.min.js'></script>
+    <script src='js/reveal.min.js'></script>
+
+    <script>
+      // More info about config & dependencies:
+      // - https://github.com/hakimel/reveal.js#configuration
+      // - https://github.com/hakimel/reveal.js#dependencies
+      Reveal.initialize({
+        // Transition style for full page slide backgrounds
+        backgroundTransition: 'fade', // none/fade/slide/convex/concave/zoom
+
+        // Vertical centering of slides
+        center: true,
+
+        // Display presentation control arrows
+        controls: false,
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden" or "visible"
+        controlsBackArrows: 'faded',
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: 39,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL, so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        // Flags if we should show a help overlay when the questionmark key is pressed
+        help: true,
+
+        // Hides the address bar on mobile devices
+        hideAddressBar: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Display a presentation progress bar
+        progress: false,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Display the page number of the current slide
+        slideNumber: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Transition style
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+        // Transition speed
+        transitionSpeed: 'default', // default/fast/slow
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        dependencies: [
+          { src: 'plugin/markdown/marked.js' },
+          { src: 'plugin/markdown/markdown.js' },
+          { src: 'plugin/notes/notes.js', async: true },
+          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+        ]
+      });
+    </script>
+  </body>
+</html>
