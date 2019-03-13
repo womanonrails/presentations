@@ -1,0 +1,1673 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+
+    <title>Quality Assurance - Based on TDD example</title>
+    <meta name='description' content='How to help with Quality Assurance from programmer perspective?'>
+
+    <link rel='stylesheet' href='css/reveal.min.css'>
+    <link rel='stylesheet' href='css/theme/fractalsoft_julia.css'>
+
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+  </head>
+  <body>
+    <div class='reveal'>
+      <div class='slides'>
+
+<section>
+  <h1>Quality Assurance - Based on TDD example</h1>
+  <h4>Programmer helping with quality</h4>
+  <p>
+    <a href='https://womanonrails.com' target='_blank' title='Web development from woman perspective'>Agnieszka Matysek</a> at <a href='https://fractalsoft.org' target='_blank' title='Ruby on Rails developers'>Fractal Soft</a>
+  </p>
+</section>
+
+<section data-markdown data-background='images/quality-assurance/you.jpg'>
+  <script type='text/template'>
+
+Note:
+
+- Agnieszka Matysek
+- programistka zajmująca się wykorzystywaniem i wdrażaniem nowych technologii w szeroko rozumianym rolnictwie
+- team leader, mentor i organizator wielu szkoleń z programowania
+- współwłaściciel firmy Fractal Soft Sp. z o.o.
+- zainteresowania: good code standard, refactoring, testing
+- Po pracy: zwolenniczka minimalizmu, miłośniczka tańca i fotografowania
+  </script>
+</section>
+
+<section data-markdown data-background='images/quality-assurance/flower.jpg'>
+  <script type='text/template'>
+
+Note:
+
+- zaczynamy projekt i wszystko jest pięknie
+- proste, logiczne, tworzy sensowna całość
+- idzie nam szybko, dostarczamy nowe funkcjonalności
+- aż tu nagle...
+  </script>
+</section>
+
+<section data-markdown data-background='images/quality-assurance/mess.jpg'>
+  <script type='text/template'>
+
+Note:
+
+- bumm!
+- aplikacji nie da się ogarnąć umysłem
+- dodajemy jakąś funkcjonalność, a inna się psuje
+- lub jakoś tak wszystko do siebie nie pasuje
+- ciężko cokolwiek zrobić
+- są miejsca gdzie lepiej nie wchodzić
+- itd.
+  </script>
+</section>
+
+<section data-markdown data-background='images/quality-assurance/help.jpg'>
+  <script type='text/template'>
+
+Note:
+
+- pojawia się strach
+- nie jesteśmy w stanie zapanować nad systemem
+- nagle przestajemy ogarniać
+- nie ufamy sobie i nie ufamy innym
+- co dopiero powiedzieć że działa poprawnie
+- najchętniej to udawalibyśmy, że nas nie ma
+- ale najważniejsza jest...
+  </script>
+</section>
+
+<section data-markdown data-transition='slide-in fade-out'>
+  <script type='text/template'>
+    <h2 class='font-size-like-h1'>Responsibility</h2>
+
+Note:
+
+- odpowiedzialność
+- każdego z nas
+- za jakiś fragment, wycinek systemu, procesu, aplikacji
+- za funkcje jaka pełnimy w zespole
+- nie ma osób nieistotnych, każdy jest potrzebny
+- musimy być odpowiedzialni za swój kod, produkt,
+- za użyteczność i użytkowość
+- za mówienie co jest nie tak, co warto poprawić
+- czasem potrzebujemy wychodzić poza strefę komfortu
+- tak jak mówił Rob w zeszłym roku na keynote
+- to na połączeniu dziedzin, zakresu obowiązków trzeba wykazać się inicjatywą
+- nie "spychologią"
+- nie możemy zwalić winny np. na testerów, że źle sprawdzili / przetestowali
+- lub developerów, że źle zaprojektowali
+- trzeba siąść razem i wspólnie dbać o jakość
+  </script>
+</section>
+
+<section data-markdown data-transition='slide-in fade-out'>
+  <script type='text/template'>
+    <h2 class='font-size-like-h1'>Quality</h2>
+
+Note:
+
+- jakość to odpowiedzialność nas wszystkich
+- lecz każdy z nas patrzy na nią z innej strony
+- programiści od strony kodu
+- testerzy od strony testów
+- UX designerzy od użytkowości
+- itd.
+  </script>
+</section>
+
+<section data-markdown data-transition='slide-in fade-out'>
+  <script type='text/template'>
+    <h2 class='font-size-like-h1'>Agenda</h2>
+    - two examples
+    - one language
+    - two test tools
+
+Note:
+
+- dwie części, dwa przykłady
+- pierwszy: Jak TDD może zdjąć z nas trochę tej presji / odpowiedzialności?
+- a przy okazji: Jak lepiej zrozumieć swój język programowania?
+- drugi: Jak TDD może nam pomóc w ulepszaniu aplikacji?
+- Jak polepszyć jakość kodu bez zniszczenia działania aplikacji?
+- Jak to zrobić małymi krokami, a nie od razu?
+- kod w języku **Ruby**
+- testy pisane za pomocą narzędzi **RSpec** i **Mini Test**
+- zacznijmy od przypomnienia czym jest TDD
+  </script>
+</section>
+
+<section data-background='#fff' data-transition='slide-in fade-out'>
+  <h2 class='text-dark-blue font-size-like-h1'>Test-Driven Development</h2>
+  <img alt='TDD' class='pure' data-src='images/tdd.gif'>
+
+
+  <aside class='notes' data-markdown data-transition='slide-in fade-out'>
+- tworzenie aplikacji sterowanej testami
+- Red - Green - Refactoring
+- piszemy test, sprawdzamy że nie przechodzi
+- piszemy kod
+- sprawdzamy, czy test przechodzi (czy spełniliśmy wymaganie)
+- później patrzymy czy coś da się uprościć, napisać lepiej
+  </aside>
+</section>
+
+<section data-transition='slide-in fade-out'>
+  <section data-transition='slide-in fade-out' data-markdown>
+    <script type='text/template'>
+      <h2 class='big-font-size'>Example 1</h2>
+      <p>Follow your test</p>
+
+Note:
+- mały fragment dużego refaktoringu
+- wszystkie źródła na końcu
+- kod dotyczy pokerowej ręki
+- kolory i figury zostały już znormalizowane do liczb
+- chcemy sprawdzić czy mamy kolor w ręce
+- użyjemy do tego języka Ruby & RSpec do testów
+- to co tu zrobimy jest dobrym eksperymentem
+- nie chodzi też o to by wykonywać to za każdym razem
+- dostosowujemy kroki TDD do swoich potrzeb, raz większe, raz mniejsze
+    </script>
+  </section>
+
+  <section data-transition='slide-in fade-out'>
+    <h4 class='pull-left'>Create test</h4>
+    <div data-markdown>
+```ruby
+require 'spec_helper'
+describe 'flush?' do
+  it 'checks if array has one color' do
+    flush_rule = flush?([1, 1, 1, 1])
+    expect(flush_rule).to eq(true)
+  end
+end
+```
+    </div>
+    <div class='fragment' data-fragment-index='1'>
+      <h4 class='pull-left'>Run test</h4>
+      <div data-markdown>
+```bash
+$ rspec spec/lib/flush_spec.rb
+
+Randomized with seed 35317
+F
+
+Failures:
+
+  1) flush? checks if array has one color
+     Failure/Error: flush_rule = flush?([1, 1, 1, 1])
+
+     NoMethodError:
+       undefined method `flush?' for #<RSpec::ExampleGroups::Flush:0x00000002a73d50>
+     # ./spec/lib/flush_spec.rb:5:in `block (2 levels) in <top (required)>'
+
+Finished in 0.01294 seconds (files took 0.75094 seconds to load)
+1 example, 1 failure
+```
+      </div>
+    </div>
+    <aside class='notes' data-markdown>
+- piszemy test
+- ponieważ ten fragment jest wyrwany z kontekstu pozwoliłam sobie go uprościć
+- zamiast pisać test dla odpowiedniej klasy, metoda jest dostępna globalnie na potrzeby przykładu
+- sprawdzamy czy dla znormalizowanego koloru mamy w ręce jeden kolor
+- nie sprawdzamy tu czy mamy odpowiednią ilość kart!
+- test nie przechodzi i zwraca informację `undefined method 'flush?'`
+    </aside>
+  </section>
+
+  <section data-transition='slide-in fade-out'>
+    <h4 class='pull-left'>Create method</h4>
+    <div data-markdown>
+```ruby
+def flush?
+end
+```
+    </div>
+    <div class='fragment' data-fragment-index='1'>
+      <h4 class='pull-left'>Run test</h4>
+      <div data-markdown>
+```bash
+$ rspec spec/lib/flush_spec.rb
+
+Randomized with seed 28476
+F
+
+Failures:
+
+  1) flush? checks if array has one color
+     Failure/Error:
+       def flush?
+       end
+
+     ArgumentError:
+       wrong number of arguments (given 1, expected 0)
+     # ./spec/lib/flush_spec.rb:3:in `flush?'
+     # ./spec/lib/flush_spec.rb:9:in `block (2 levels) in <top (required)>'
+
+Finished in 0.01024 seconds (files took 0.66129 seconds to load)
+1 example, 1 failure
+```
+      </div>
+    </div>
+    <aside class='notes' data-markdown>
+- by to naprawić piszemy pustą metodę
+- nie musimy nawet myśleć
+- możemy to zrobić na autopilocie
+- zobaczmy co dalej nie działa
+- brakuje nam argumentu `wrong number of arguments`
+    </aside>
+  </section>
+
+  <section data-transition='slide-in fade-out'>
+    <h4 class='pull-left'>Add argument</h4>
+    <div data-markdown>
+
+```ruby
+def flush?(array)
+end
+```
+    </div>
+    <div class='fragment' data-fragment-index='1'>
+      <h4 class='pull-left'>Run test</h4>
+      <div data-markdown>
+```bash
+$ rspec spec/lib/flush_spec.rb
+
+Randomized with seed 34173
+F
+
+Failures:
+
+  1) flush? checks if array has one color
+     Failure/Error: expect(flush_rule).to eq(true)
+
+       expected: true
+            got: nil
+
+       (compared using ==)
+     # ./spec/lib/flush_spec.rb:10:in `block (2 levels) in <top (required)>'
+
+Finished in 0.05983 seconds (files took 0.83267 seconds to load)
+1 example, 1 failure
+```
+      </div>
+    </div>
+    <aside class='notes' data-markdown>
+- dodajemy brakujący argument
+- test w końcu się uruchamia
+- teraz widzimy, że metoda zwraca `nil` zamiast `true`
+- `nil` w Ruby to jak `null` w innych językach programowania
+    </aside>
+  </section>
+
+  <section data-transition='slide-in fade-out'>
+    <h4 class='pull-left'>Add first logic</h4>
+    <div data-markdown>
+```ruby
+def flush?(array)
+  true
+end
+```
+    </div>
+    <div class='fragment' data-fragment-index='1'>
+      <h4 class='pull-left'>Run test</h4>
+      <div data-markdown>
+```bash
+$ rspec spec/lib/flush_spec.rb
+
+Randomized with seed 40116
+.
+
+Finished in 0.01189 seconds (files took 0.65796 seconds to load)
+1 example, 0 failures
+```
+      </div>
+    </div>
+    <aside class='notes' data-markdown>
+- wpisujemy najprostszy kod jaki doprowadzi do spełnienia testu `true`
+- test spełniony
+- teraz powinniśmy przejść do refaktoringu
+- widzimy, że zarówno kod jak i nasz test powielają `true`
+- by się tego pozbyć zrobimy coś innego, zastosujemy **triangulację**
+- robimy pomiar/test z jednej strony i z drugiej strony, sprawdzając wynik na przecięciu
+- w naszym przypadku oznacza to dopisanie testu sprawdzającego kiedy warunek nie jest spełniony
+    </aside>
+  </section>
+
+  <section data-transition='slide-in fade-out'>
+    <h4 class='pull-left'>Add new test</h4>
+    <div data-markdown>
+```ruby
+describe 'flush?' do
+  it 'checks if array has one color'
+
+  it 'checks if array has more then one color' do
+    flush_rule = flush?([1, 1, 2, 1])
+    expect(flush_rule).to eq(false)
+  end
+end
+```
+    </div>
+    <div class='fragment' data-fragment-index='1'>
+      <h4 class='pull-left'>And run this tests</h4>
+      <div data-markdown>
+```bash
+$ rspec spec/lib/flush_spec.rb
+
+Randomized with seed 6606
+.F
+
+Failures:
+
+  1) flush? checks if array has more then one color
+     Failure/Error: expect(flush_rule).to eq(false)
+
+       expected: false
+            got: true
+
+       (compared using ==)
+     # ./spec/lib/flush_spec.rb:15:in `block (2 levels) in <top (required)>'
+
+Finished in 0.04907 seconds (files took 0.63654 seconds to load)
+2 examples, 1 failure
+```
+      </div>
+    </div>
+    <aside class='notes' data-markdown>
+- oto nasz test
+- teraz już nie możemy w tak prosty sposób pokombinować i dobrze!
+- zabieramy się za pisanie prawdziwego kodu logiki
+    </aside>
+  </section>
+
+  <section data-transition='slide-in fade-out'>
+    <h4 class='pull-left'>Add more logic</h4>
+    <div data-markdown>
+```ruby
+def flush?(array)
+  array.uniq.size == 1
+end
+```
+    </div>
+    <div class='fragment' data-fragment-index='1'>
+      <h4 class='pull-left'>Run tests</h4>
+      <div data-markdown>
+```bash
+$ rspec spec/lib/flush_spec.rb
+
+Randomized with seed 33907
+..
+
+Finished in 0.01092 seconds (files took 0.57891 seconds to load)
+2 examples, 0 failures
+```
+      </div>
+    </div>
+    <aside class='notes' data-markdown>
+- bierzemy tablicę z kolorami
+- zostawiamy w niej tylko unikalne elementy
+- jeżeli mamy tylko jeden element w tablicy to mamy jeden kolor
+- test nam przechodzi
+    </aside>
+  </section>
+  <section>
+    <h4 class='pull-left'>Unexpected usage</h4>
+    <div data-markdown>
+```ruby
+def flush?(array)
+  array.uniq.size == 1
+end
+
+flush?([1, 2, 1])
+# => false
+flush?(['#fff', '#fff', '#fff'])
+# => true
+```
+    </div>
+    <aside class='notes' data-markdown>
+- ponieważ w Ruby nie mamy silnego typowania
+- a nasza metoda jest bardzo prosta
+- możemy wykorzystywać ja na różnych elementach
+- nie tylko na liczbach, ale też na kolorach
+- moglibyśmy też zrobić to na własnych obiektach, po zaimplementowaniu nowej wersji równości elementów (własnej metody porównania)
+    </aside>
+  </section>
+</section><!-- Example 1 -->
+
+<section data-transition='slide-in fade-out'>
+  <section data-transition='slide-in fade-out' data-markdown>
+    <script type='text/template'>
+      <h2 class='big-font-size'>Example 2</h2>
+      <p>Trust your tests & do refactoring</p>
+
+Note:
+- dalej będziemy używać języka Ruby
+- do testów tym razem - Mini Test
+- małe zadanko, gdzie rozszerzymy funkcjonalność
+- nie do końca stan początkowy jest zgodny z TDD
+- Założenie: mamy już fragment kodu, który nie wynika bezpośrednio z testów i nie może zostać zmieniony
+- Zaczynamy!
+    </script>
+  </section>
+
+  <section data-transition='slide-in fade-out'>
+    <h4 class='pull-left'>Existing code</h4>
+    <div data-markdown>
+```ruby
+class BaseClass
+end
+```
+    </div>
+    <div class='fragment' data-fragment-index='1'>
+      <div data-markdown>
+```ruby
+class Item < BaseClass
+  attr_accessor :price, :name
+
+  def initialize(attributes = {})
+    @price = attributes[:price]
+    @name  = attributes[:name]
+  end
+
+  validates_presence_of :name
+  validates_numericality_of :price
+end
+```
+      </div>
+    </div>
+    <aside class='notes' data-markdown>
+- mamy pustą klasę `BaseClass`
+- mamy klasę `Item` dziedziczącą po `BaseClass`
+- w konstruktorze przypisujemy instancji klasy atrybuty `price` i `name`
+- mamy też dwie dziwne metody wywołane w środku klasy
+- zajmiemy się tym za chwilę
+- bo jak się za chwile okaże to one będą celem naszej pracy
+- musimy je zaimplementować
+    </aside>
+  </section>
+
+  <section data-transition='slide-in fade-out'>
+    <h4 class='pull-left'>Existing test</h4>
+    <div data-markdown>
+```ruby
+class TestItem < Minitest::Test
+  def test_validation
+    item1 = Item.new(:name => "Guitar")
+    item2 = Item.new(:price => 55)
+    item3 = Item.new()
+    item4 = Item.new(:name => "Guitar", :price => "ABC")
+    item5 = Item.new(:name => "Guitar", :price => 55)
+
+    assert !item1.valid?
+    assert item1.errors == ["price must be number"]
+
+    assert !item2.valid?
+    assert item2.errors == ["name can't be blank"]
+
+    assert !item3.valid?
+    assert item3.errors == ["name can't be blank", "price must be number"]
+
+    assert !item4.valid?
+    assert item4.errors == ["price must be number"]
+
+    assert item5.valid?
+  end
+end
+```
+    </div>
+    <aside class='notes' data-markdown>
+- zanim to się jednak stanie
+- przyjrzyjmy się jeszcze testowi jaki jest dołączony do kodu
+- nie jest to czyste TDD, jeden test robi wiele rzeczy od razu
+- ale testuje dokładnie to co chcemy napisać
+- testuje walidacje na `name` i `price`
+- moglibyśmy zacząć od przebudowania architektury na taką, która będzie elastyczna
+- ale to może też spowodować, że się w niej zakopiemy
+- zacznijmy od czegoś prostszego, uruchomimy test
+- postępując tak, jak w przykładzie pierwszym
+- podążajmy za testem
+    </aside>
+  </section>
+
+  <section data-transition='slide-in fade-out'>
+    <h4 class='pull-left'>Run test</h4>
+    <div data-markdown>
+```bash
+$ ruby item_test.rb
+Traceback (most recent call last):
+  3: from item_test.rb:1:in `<main>'
+  2: from item_test.rb:1:in `require_relative'
+  1: from /home/agnieszka/workspace/pair_programming/item.rb:6:in `<top (required)>'
+/home/agnieszka/workspace/pair_programming/item.rb:14:in `<class:Item>':
+undefined method `validates_presence_of' for Item:Class (NoMethodError)
+```
+    </div>
+    <div class='fragment' data-fragment-index='1'>
+      <h4 class='pull-left'>Write code</h4>
+      <div data-markdown>
+```ruby
+class BaseClass
+  def self.validates_presence_of
+  end
+end
+```
+      </div>
+    </div>
+    <aside class='notes' data-markdown>
+- nasz test nawet nie wywołał asercji
+- od razu zwrócił nam błąd
+- te dziwne metody to metody klasy nie obiektu
+- dla mnie osobiście MiniTest ma mniej czytelne opisy błędów niż z Rspec
+- brakuje metody `validates_presence_of`, nie wiele myśląc, wstawmy ją do kodu
+    </aside>
+  </section>
+
+  <section data-transition='slide-in fade-out'>
+    <h4 class='pull-left'>Run test</h4>
+    <div data-markdown>
+```bash
+$ ruby item_test.rb
+Traceback (most recent call last):
+  4: from item_test.rb:1:in `<main>'
+  3: from item_test.rb:1:in `require_relative'
+  2: from /home/agnieszka/workspace/pair_programming/item.rb:6:in `<top (required)>'
+  1: from /home/agnieszka/workspace/pair_programming/item.rb:14:in `<class:Item>'
+/home/agnieszka/workspace/pair_programming/base_class.rb:7:in `validates_presence_of':
+wrong number of arguments (given 1, expected 0) (ArgumentError)
+```
+    </div>
+    <div class='fragment' data-fragment-index='1'>
+      <h4 class='pull-left'>Write code</h4>
+      <div data-markdown>
+```ruby
+class BaseClass
+  def self.validates_presence_of(name)
+  end
+end
+```
+      </div>
+    </div>
+    <aside class='notes' data-markdown>
+- widzimy nowy błąd mówiący o brakującym argumencie
+- `wrong number of arguments`
+- dopiszmy ten argument
+    </aside>
+  </section>
+
+  <section data-transition='slide-in fade-out'>
+    <h4 class='pull-left'>Run test</h4>
+    <div data-markdown>
+```bash
+$ ruby item_test.rb
+Traceback (most recent call last):
+  3: from item_test.rb:1:in `<main>'
+  2: from item_test.rb:1:in `require_relative'
+  1: from /home/agnieszka/workspace/pair_programming/item.rb:6:in `<top (required)>'
+/home/agnieszka/workspace/pair_programming/item.rb:15:in `<class:Item>':
+undefined method `validates_numericality_of' for Item:Class (NoMethodError)
+Did you mean?  validates_presence_of
+```
+    </div>
+    <div class='fragment' data-fragment-index='1'>
+      <h4 class='pull-left'>Write code</h4>
+      <div data-markdown>
+```ruby
+class BaseClass
+  def self.validates_presence_of(name)
+  end
+
+  def self.validates_numericality_of
+  end
+end
+```
+      </div>
+    </div>
+    <aside class='notes' data-markdown>
+- kolejne dwa kroki są bardzo podobne
+- brak metody, dopisujemy
+- brak argumentu dopisujemy
+    </aside>
+  </section>
+
+  <section data-transition='slide-in fade-out'>
+    <h4 class='pull-left'>Run test</h4>
+    <div data-markdown>
+```bash
+$ ruby item_test.rb
+Traceback (most recent call last):
+  4: from item_test.rb:1:in `<main>'
+  3: from item_test.rb:1:in `require_relative'
+  2: from /home/agnieszka/workspace/pair_programming/item.rb:6:in `<top (required)>'
+  1: from /home/agnieszka/workspace/pair_programming/item.rb:15:in `<class:Item>'
+/home/agnieszka/workspace/pair_programming/base_class.rb:10:in `validates_numericality_of':
+wrong number of arguments (given 1, expected 0) (ArgumentError)
+```
+    </div>
+    <div class='fragment' data-fragment-index='1'>
+      <h4 class='pull-left'>Write code</h4>
+      <div data-markdown>
+```ruby
+class BaseClass
+  def self.validates_presence_of(name)
+  end
+
+  def self.validates_numericality_of(name)
+  end
+end
+```
+      </div>
+    </div>
+  </section>
+
+  <section data-transition='slide-in fade-out'>
+    <h4 class='pull-left'>Run test</h4>
+    <div data-markdown>
+```bash
+$ ruby item_test.rb
+Run options: --seed 43301
+
+# Running:
+
+E
+
+Finished in 0.000790s, 1265.3183 runs/s, 0.0000 assertions/s.
+
+  1) Error:
+TestItem#test_validation:
+NoMethodError: undefined method `valid?' for #<Item:0x0000000001a731d0 @price=nil, @name="Guitar">
+    item_test.rb:14:in `test_validation'
+
+1 runs, 0 assertions, 0 failures, 1 errors, 0 skips
+```
+    </div>
+    <div class='fragment' data-fragment-index='1'>
+      <h4 class='pull-left'>Write code</h4>
+      <div data-markdown>
+```ruby
+class BaseClass
+  def self.validates_presence_of(name)
+  end
+
+  def self.validates_numericality_of(name)
+  end
+
+  def valid?
+  end
+end
+```
+
+      </div>
+    </div>
+    <aside class='notes' data-markdown>
+- wreszcie nasz test się uruchamia i pokazuje nie przechodzącą asercję
+- brakuje nam metody `valid?`
+- dorzucamy
+    </aside>
+  </section>
+
+  <section data-transition='slide-in fade-out'>
+    <h4 class='pull-left'>Run test</h4>
+    <div data-markdown>
+```bash
+$ ruby item_test.rb
+Run options: --seed 14791
+
+# Running:
+
+E
+
+Finished in 0.000862s, 1159.7712 runs/s, 1159.7712 assertions/s.
+
+  1) Error:
+TestItem#test_validation:
+NoMethodError: undefined method `errors' for #<Item:0x000000000286b5f8 @price=nil, @name="Guitar">
+    item_test.rb:15:in `test_validation'
+
+1 runs, 1 assertions, 0 failures, 1 errors, 0 skips
+```
+    </div>
+    <div class='fragment' data-fragment-index='1'>
+      <h4 class='pull-left'>Write code</h4>
+      <div data-markdown>
+```ruby
+class BaseClass
+  def self.validates_presence_of(name)
+  end
+
+  def self.validates_numericality_of(name)
+  end
+
+  def valid?
+  end
+
+  def errors
+  end
+end
+```
+      </div>
+    </div>
+    <aside class='notes' data-markdown>
+- kolejny krok brakująca metoda `errors`
+- dopisujemy
+- uruchamiamy kolejny raz testy
+    </aside>
+  </section>
+
+  <section data-transition='slide-in fade-out'>
+    <h4 class='pull-left'>Run test</h4>
+    <div data-markdown>
+```bash
+$ ruby item_test.rb
+Run options: --seed 29139
+
+# Running:
+
+F
+
+Finished in 0.000691s, 1447.7416 runs/s, 2895.4832 assertions/s.
+
+  1) Failure:
+TestItem#test_validation [item_test.rb:15]:
+Expected false to be truthy.
+
+1 runs, 2 assertions, 1 failures, 0 errors, 0 skips
+```
+    </div>
+    <aside class='notes' data-markdown>
+- w końcu dostajemy informację, że w linii 15 oczekujemy `false`, a dostajemy `true`
+- dopiero teraz test sprawdza asercje
+- dopiero teraz jest nam potrzebna logika zaplanowana w teście
+- sprawdźmy linię 15
+    </aside>
+  </section>
+
+  <section data-transition='slide-in fade-out'>
+    <h4 class='pull-left'>Check assertions</h4>
+    <div data-markdown>
+```ruby
+class TestItem < Minitest::Test
+  def test_validation
+    item1 = Item.new(:name => "Guitar")
+    item2 = Item.new(:price => 55)
+    item3 = Item.new()
+    item4 = Item.new(:name => "Guitar", :price => "ABC")
+    item5 = Item.new(:name => "Guitar", :price => 55)
+
+    assert !item1.valid?
+    assert item1.errors == ["price must be number"]
+
+    assert !item2.valid?
+    assert item2.errors == ["name can't be blank"]
+
+    assert !item3.valid?
+    assert item3.errors == ["name can't be blank", "price must be number"]
+
+    assert !item4.valid?
+    assert item4.errors == ["price must be number"]
+
+    assert item5.valid?
+  end
+end
+```
+    </div>
+    <aside class='notes' data-markdown>
+- sprawdzamy linię 15 jest tam `["price must be number"]`
+- o ile tak jak mówi test walidacja miała się nie powieść
+- to potrzebujemy zwrócić tablice z błędami, czego na tą chwilę nie robimy
+- wróćmy do uruchomienia naszego testu
+- dopiszmy najprostszą implementacje
+    </aside>
+  </section>
+
+  <section data-transition='slide-in fade-out'>
+    <h4 class='pull-left'>Run test</h4>
+    <div data-markdown>
+```bash
+$ ruby item_test.rb
+Run options: --seed 29139
+
+# Running:
+
+F
+
+Finished in 0.000691s, 1447.7416 runs/s, 2895.4832 assertions/s.
+
+  1) Failure:
+TestItem#test_validation [item_test.rb:15]:
+Expected false to be truthy.
+
+1 runs, 2 assertions, 1 failures, 0 errors, 0 skips
+```
+    </div>
+    <div class='fragment' data-fragment-index='1'>
+      <h4 class='pull-left'>Write code</h4>
+      <div data-markdown>
+```ruby
+class BaseClass
+  def self.validates_presence_of(name)
+  end
+
+  def self.validates_numericality_of(name)
+  end
+
+  def valid?
+  end
+
+  def errors
+    ["price must be number"]
+  end
+end
+```
+      </div>
+    </div>
+    <aside class='notes' data-markdown>
+- dopisujemy implementację w bardzo naiwny sposób
+- zobaczmy co się teraz stanie po uruchomieniu testu
+    </aside>
+  </section>
+
+  <section data-transition='slide-in fade-out'>
+    <h4 class='pull-left'>Run test</h4>
+    <div data-markdown>
+```bash
+$ ruby item_test.rb
+Run options: --seed 15517
+
+# Running:
+
+F
+
+Finished in 0.000805s, 1242.0108 runs/s, 4968.0430 assertions/s.
+
+  1) Failure:
+TestItem#test_validation [item_test.rb:18]:
+Expected false to be truthy.
+
+1 runs, 4 assertions, 1 failures, 0 errors, 0 skips
+```
+    </div>
+    <aside class='notes' data-markdown>
+- widzimy, że przy tej bardzo naiwnej implementacji udało nam się przejść trochę dalej w teście
+- dotarliśmy do linii 18
+- można się tak dalej bawić, ale nie o to chodzi
+- zrobimy teraz większy skok
+- zaimplementujmy funkcjonalność banalnie, ale tak aby test przeszedł
+- później nastąpi najbardziej istotna część tego procesu refaktoryzaja
+- będziemy się nią zajmować do końca tego przykładu
+- zanim to się jednak stanie zerknijmy jeszcze raz na test
+    </aside>
+  </section>
+
+  <section data-transition='slide-in fade-out'>
+    <h4 class='pull-left'>Check assertions</h4>
+    <div data-markdown>
+```ruby
+class TestItem < Minitest::Test
+  def test_validation
+    item1 = Item.new(:name => "Guitar")
+    item2 = Item.new(:price => 55)
+    item3 = Item.new()
+    item4 = Item.new(:name => "Guitar", :price => "ABC")
+    item5 = Item.new(:name => "Guitar", :price => 55)
+
+    assert !item1.valid?
+    assert item1.errors == ["price must be number"]
+
+    assert !item2.valid?
+    assert item2.errors == ["name can't be blank"]
+
+    assert !item3.valid?
+    assert item3.errors == ["name can't be blank", "price must be number"]
+
+    assert !item4.valid?
+    assert item4.errors == ["price must be number"]
+
+    assert item5.valid?
+  end
+end
+```
+    </div>
+    <aside class='notes' data-markdown>
+- nasza implementacja ma zawierać walidację
+- sprawdzać czy `price` jest liczbą
+- sprawdzać czy `name` nie jest pustym stringiem
+    </aside>
+  </section>
+
+  <section data-transition='slide-in fade-out'>
+    <h4 class='pull-left'>Write code</h4>
+    <div data-markdown>
+```ruby
+class BaseClass
+  def self.validates_presence_of(name)
+  end
+
+  def self.validates_numericality_of(name)
+  end
+
+  def valid?
+    @errors_list = []
+    @errors_list << "name can't be blank" if @name.nil?
+    @errors_list << "price must be number" unless @price.is_a?(Integer)
+    @errors_list.size == 0
+  end
+
+  def errors
+    @errors_list
+  end
+end
+```
+    </div>
+    <div class='fragment' data-fragment-index='1'>
+      <h4 class='pull-left'>Run test</h4>
+      <div data-markdown>
+```bash
+$ ruby item_test.rb
+Run options: --seed 35483
+
+# Running:
+
+.
+
+Finished in 0.000730s, 1369.7898 runs/s, 12328.1085 assertions/s.
+
+1 runs, 9 assertions, 0 failures, 0 errors, 0 skips
+```
+      </div>
+    </div>
+    <aside class='notes' data-markdown>
+- oto nasza implementacja
+- tworzymy tablicę
+- jeżeli `name` jest puste dodajemy odpowiedni błąd do tablicy
+- analogicznie dla price (jeśli nie jest liczbą)
+- na koniec sprawdzamy czy mamy błędy
+- i zwracamy je z metody `errors`
+- test przechodzi
+- przyjrzyjmy się napisanemu kodowi
+- **używamy pola naszej instancji klasy zamiast geterów**
+- **cała implementacja errorów odbywa się w metodzie `valid?`**
+- powinniśmy tam tylko sprawdzać czy jest `valid?` czy nie
+- **w ogóle nie używamy metod klasy**
+- **to rozwiązanie nie jest na razie elastyczne**
+- jeżeli chcielibyśmy sprawdzić czy np. `price` jest `blank`
+- trzeba będzie zmieniać implementacje metody `valid?`
+- **podobnie będzie, gdy przyjdą inne walidacje np. na liczbę znaków**
+- naruszamy zasadę "Open Close"
+- pewnie znalazłoby się jeszcze pare innych rzeczy
+- posumujmy
+    </aside>
+  </section>
+
+  <section data-transition='slide-in fade-out'>
+    <h2>TODO list</h2>
+    <div data-markdown>
+- use Getters
+- use Class Methods
+- Single Resposibility Principle - `valid?` method
+- Open - Close rule
+    </div>
+  </section>
+
+  <section data-transition='slide-in fade-out'>
+    <h4 class='pull-left'>Use Getters</h4>
+    <div data-markdown>
+```ruby
+class BaseClass
+  def self.validates_presence_of(name)
+  end
+
+  def self.validates_numericality_of(name)
+  end
+
+  def valid?
+    @errors_list = []
+    errors_list << "name can't be blank" if name.nil?
+    errors_list << "price must be number" unless price.is_a?(Integer)
+    errors_list.size == 0
+  end
+
+  def errors
+    errors_list
+  end
+
+  private
+
+  attr_accessor :name, :price, :errors_list
+end
+```
+    </div>
+    <aside class='notes' data-markdown>
+- niewielka, ale szybka zmiana
+- użyliśmy gettera
+- po tej zmianie testy dalej przechodzą
+    </aside>
+  </section>
+
+  <section data-transition='slide-in fade-out'>
+    <h2>TODO list</h2>
+    <div data-markdown>
+- ~~use Getters~~
+- **use Class Methods**
+- Single Resposibility Principle - `valid?` method
+- Open - Close rule
+- more abstraction
+    </div>
+    <aside class='notes' data-markdown>
+- skreślamy z listy
+- zabieramy się za metody klasy
+    </aside>
+  </section>
+
+  <section data-transition='slide-in fade-out'>
+    <h4 class='pull-left'>Use Class Methods</h4>
+    <div data-markdown>
+```ruby
+class BaseClass
+  def self.validates_presence_of(name)
+    @@presence_array ||= []
+    @@presence_array << name
+  end
+
+  def self.validates_numericality_of(name)
+  end
+
+  def valid?
+    @errors_list = []
+    @@presence_array.each do |item|
+      errors_list << "#{item} can't be blank" if send(item).nil?
+    end
+    errors_list << "price must be number" unless price.is_a?(Integer)
+    errors_list.size == 0
+  end
+
+  def errors
+    errors_list
+  end
+
+  private
+
+  attr_accessor :name, :price, :errors_list
+end
+```
+    </div>
+    <aside class='notes' data-markdown>
+- wykorzystaliśmy metodę klasy
+- myśląc już trochę przyszłościowo
+- tworzymy tablicę atrybutów jakie chcemy sprawdzać
+- możliwe jest dodanie różnych atrybutów do naszych walidacji
+- dzięki temu bez przeszkód możemy sprawdzić **presence** na `price`
+- wykorzystujemy trochę meta programowania by wywołać konkretny getter, w naszym przypadku `name`
+- `send(item).nil?`
+- testy dalej przechodzą
+- teraz zrobimy podobną rzecz dla `price`
+    </aside>
+  </section>
+
+  <section data-transition='slide-in fade-out'>
+    <h4 class='pull-left'>Use class methods</h4>
+    <div data-markdown>
+```ruby
+class BaseClass
+  def self.validates_presence_of(name)
+    @@presence_array ||= []
+    @@presence_array << name
+  end
+
+  def self.validates_numericality_of(name)
+    @@numericality_array ||=[]
+    @@numericality_array << name
+  end
+
+  def valid?
+    @errors_list = []
+    @@presence_array.each do |item|
+      errors_list << "#{item} can't be blank" if send(item).nil?
+    end
+    @@numericality_array.each do |item|
+      errors_list << "#{item} must be number" unless send(item).is_a?(Integer)
+    end
+    errors_list.size == 0
+  end
+
+  def errors
+    errors_list
+  end
+
+  private
+
+  attr_accessor :name, :price, :errors_list
+end
+```
+    </div>
+    <aside class='notes' data-markdown>
+- **powieliliśmy kod**
+- widać, że to się zachowuje bardzo podobnie
+- testy dalej przechodzą
+- dalej metoda `valid?` wie za dużo o reszcie logiki
+- za każdym razem jak dojdzie nowa reguła trzeba będzie ją zmienić
+- spróbujemy wyciągnąć kod do osobnej klasy, która będzie się tylko tym zajmować
+- zobaczmy co mamy do zrobienia
+    </aside>
+  </section>
+
+  <section data-transition='slide-in fade-out'>
+    <h2>TODO list</h2>
+    <div data-markdown>
+- ~~use Getters~~
+- ~~use Class Methods~~
+- **Single Resposibility Principle - `valid?` method**
+- duplication
+- Open - Close rule
+- more abstraction
+    </div>
+  </section>
+
+  <section data-transition='slide-in fade-out'>
+    <h4 class='pull-left'>Single Responsibility Principle</h4>
+    <div data-markdown>
+```ruby
+class PresenceValidator
+  attr_reader :name
+
+  def initialize(name)
+    @name = name
+  end
+
+  def error_message
+    "#{name} can't be blank"
+  end
+
+  def valid?(item)
+    !item.nil?
+  end
+end
+```
+    </div>
+    <aside class='notes' data-markdown>
+- wyciągamy kod związany z walidacją do osobnej klasy
+- klasa zajmuje się tylko tym, tylko walidacją
+- zauważcie, że nie napisałam do niej testu
+- zakładam, że jeżeli działa jej użycie w klasie bazowej `BaseClass`
+- to klasa jest poprawna
+- jeżeli kogoś to nie satysfakcjonuje może dopisać testy _post mortem_ (po ptokach po naszemu)
+- używamy tej klasy w naszym kodzie
+    </aside>
+  </section>
+
+  <section data-transition='slide-in fade-out'>
+    <h4 class='pull-left'>Single Responsibility Principle</h4>
+    <div data-markdown>
+```ruby
+class BaseClass
+  def self.validates_presence_of(name)
+    @@validators ||= []
+    @@validators << PresenceValidator.new(name)
+  end
+
+  def self.validates_numericality_of(name)
+    @@numericality_array ||=[]
+    @@numericality_array << name
+  end
+
+  def valid?
+    @errors_list = []
+    @@validators.each do |item|
+      errors_list << item.error_message unless item.valid?(send(item.name))
+    end
+    @@numericality_array.each do |item|
+      errors_list << "#{item} must be number" unless send(item).is_a?(Integer)
+    end
+    errors_list.size == 0
+  end
+
+  def errors
+    errors_list
+  end
+
+  private
+
+  attr_accessor :name, :price, :errors_list
+end
+```
+    </div>
+    <aside class='notes' data-markdown>
+- kod jest podobny do poprzedniego kodu w metodzie klasy
+- jest więcej zachodu z metaprogramowaniem
+- `item.valid?(send(item.name))`
+- do klasy walidatora musimy przekazać wartość gettera, a nie jego nazwę
+- dopiero na tej wartości robimy walidacje
+- analogicznie postępujemy z drugim walidatorem
+    </aside>
+  </section>
+
+  <section data-transition='slide-in fade-out'>
+    <h4 class='pull-left'>Single responsibility principle</h4>
+    <div data-markdown>
+```ruby
+class NumericallityValidator
+  attr_reader :name
+
+  def initialize(name)
+    @name = name
+  end
+
+  def error_message
+    "#{name} must be number"
+  end
+
+  def valid?(item)
+    item.is_a?(Integer)
+  end
+end
+```
+    </div>
+  </section>
+
+  <section data-transition='slide-in fade-out'>
+    <h4 class='pull-left'>Single responsibility principle</h4>
+    <div data-markdown>
+```ruby
+class BaseClass
+  def self.validates_presence_of(name)
+    @@validators ||= []
+    @@validators << PresenceValidator.new(name)
+  end
+
+  def self.validates_numericality_of(name)
+    @@validators ||= []
+    @@validators << NumericallityValidator.new(name)
+  end
+
+  def valid?
+    @errors_list = []
+    @@validators.each do |item|
+      errors_list << item.error_message unless item.valid?(send(item.name))
+    end
+    errors_list.size == 0
+  end
+
+  def errors
+    errors_list
+  end
+
+  private
+
+  attr_accessor :name, :price, :errors_list
+end
+```
+    </div>
+    <aside class='notes' data-markdown>
+- pozbyliśmy się części duplikacji
+- operujemy teraz na jednej zmiennej klasy `@@validators`
+- wyciągnęliśmy logikę do osobnych klas
+- test dalej przechodzi
+- zanim przejdziemy dalej, zrobimy teraz takie małe poprawki, czyli refaktoring
+    </aside>
+  </section>
+
+  <section data-transition='slide-in fade-out'>
+    <h4 class='pull-left'>Small fixes</h4>
+    <div data-markdown>
+```ruby
+class BaseClass
+  attr_reader :errors
+
+  def self.validates_presence_of(name)
+    @validators ||= []
+    @validators << PresenceValidator.new(name)
+  end
+
+  def self.validates_numericality_of(name)
+    @validators ||= []
+    @validators << NumericallityValidator.new(name)
+  end
+
+  def valid?
+    @errors = []
+    self.class.instance_variable_get(:@validators).each do |item|
+      errors << item.error_message unless item.valid?(send(item.name))
+    end
+    errors.empty?
+  end
+
+  private
+
+  attr_writer :errors
+end
+```
+    </div>
+    <aside class='notes' data-markdown>
+- użyliśmy zmiennej instancji, a nie klasy
+- co powoduje że inaczej musimy się do niej dostać
+- `self.class.instance_variable_get(:@validators)`
+- usunęliśmy niepotrzebne accessory
+- udostępniliśmy getter dla `errors` i pozbyliśmy się `errors_list`
+- sprawdzamy warunek `empty?` zamiast `==`
+- wróćmy do naszej listy TODO
+    </aside>
+  </section>
+
+  <section data-transition='slide-in fade-out'>
+    <h2>TODO list</h2>
+    <div data-markdown>
+- ~~use Getters~~
+- ~~use Class Methods~~
+- ~~Single Resposibility Principle - `valid?` method~~ ??
+- duplication ???
+- ~~Open - Close rule~~
+- ~~more abstraction~~
+- more ???
+    </div>
+    <aside class='notes' data-markdown>
+- nie musimy już zmieniać metody `valid?`, jeżeli pojawi się nowa walidacja
+- nie do końca `valid?` ma jedna odpowiedzialność
+- dalej ona zajmuje się ustawieniem tablicy błędów po zwalidowaniu
+- mamy trochę duplikacji w naszych nowych klasach do walidacji
+- można by spróbować zastosować dziedziczenie by się duplikacji pozbyć
+- jedyny powód do otwarcia tej klasy będzie, gdy pojawi się nowa metoda walidacji
+- będzie trzeba ją dopisać
+- by tego nie robić można by tu zastosować **konwencję** i **metaprogramowanie**
+- automatycznie sprawdzać zależności
+- można dalej kontynuować ten refaktoring
+- ja chciałabym się tu zatrzymać i podsumować to co zrobiliśmy
+    </aside>
+  </section>
+
+  <section data-transition='slide-in fade-out'>
+    <h4 class='pull-left'>From</h4>
+    <div data-markdown>
+```ruby
+class BaseClass
+  def self.validates_presence_of(name)
+  end
+
+  def self.validates_numericality_of(name)
+  end
+
+  def valid?
+    @errors_list = []
+    @errors_list << "name can't be blank" if @name.nil?
+    @errors_list << "price must be number" unless @price.is_a?(Integer)
+    @errors_list.size == 0
+  end
+
+  def errors
+    @errors_list
+  end
+end
+```
+    </div>
+    <aside class='notes' data-markdown>
+- od bardzo naiwnej implementacji
+- **zaleta** - szybkość uzyskania działającego kodu
+- **zaleta** - zrozumiałość, choć również naiwność
+- **wada** - trudna do utrzymania
+- **wada** - bardzo podatna na modyfikacje
+    </aside>
+  </section>
+
+  <section data-transition='slide-in fade-out'>
+    <h4 class='pull-left'>To</h4>
+    <div data-markdown>
+```ruby
+class BaseClass
+  attr_reader :errors
+
+  def self.validates_presence_of(name)
+    @validators ||= []
+    @validators << PresenceValidator.new(name)
+  end
+
+  def self.validates_numericality_of(name)
+    @validators ||= []
+    @validators << NumericallityValidator.new(name)
+  end
+
+  def valid?
+    @errors = []
+    self.class.instance_variable_get(:@validators).each do |item|
+      errors << item.error_message unless item.valid?(send(item.name))
+    end
+    errors.empty?
+  end
+
+  private
+
+  attr_writer :errors
+end
+```
+    </div>
+    <aside class='notes' data-markdown>
+- do kodu który jest rozszerzalny i elastyczny
+- ciągle czytelny
+    </aside>
+  </section>
+</section><!-- Example 2 -->
+
+<section data-markdown data-transition='slide-in fade-out'>
+  <script type='text/template'>
+    <h2 class='font-size-like-h1'>Summary</h2>
+
+Note:
+
+- dzięki TDD (pisaniu testów przed kodem) mamy dobre pokrycie testami kodu
+- to daje nam _względną_ pewność, że nie zepsujemy funkcjonalności przy refaktoringu
+- możemy zaufać naszym testom
+- chciałam pokazać tu, że testy mogą nam pomóc na co dzień
+- że TDD może nam pomóc
+- może się wydawać, że przez testy nasza praca jest wolniejsza
+- jesteśmy trochę jak żółw i zając
+- żółw idzie do przodu powoli, ale systematycznie
+- testy mogą wyeliminować wiele stresu
+- nawet pozwolić na eksperymenty
+- fail fast i możemy się wycofać z rozwiązania jeżeli nie działa (używajcie gita)
+- przykład dopracowywanie kodu iteracyjnie
+- małymi krokami
+- nie tylko testerzy są odpowiedzialni za poprawne działanie aplikacji
+- developerzy też, wszyscy zaangażowani w projekt
+- **na koniec bonus**
+- testowanie nie musi być nudne i można sobie umilić życie czasami
+  </script>
+</section>
+
+<section data-markdown data-transition='slide-in fade-out'>
+  <script type='text/template'>
+    <h2 class='font-size-like-h1'>Running tests</h2>
+    <img alt='How looks console when all tests passed - rainbow style.' class='pure' data-src='images/minitest-rainbow.png'>
+  </script>
+</section>
+
+<section data-markdown data-transition='slide-in fade-out'>
+  <script type='text/template'>
+    <h2 class='font-size-like-h1'>Nyan Cat</h2>
+    <img alt='Running test in Nyan Cat style.' class='pure' data-src='images/nyancat.gif'>
+  </script>
+</section>
+
+<section class='left-list' data-transition='slide-in fade-out' data-markdown>
+  <script type='text/template'>
+    <h2 class='font-size-like-h1'>Ruby Testing Tools</h2>
+
+- [Minitest](https://github.com/seattlerb/minitest)
+- [RSpec](https://rspec.info/)
+- [Capybara](https://teamcapybara.github.io/capybara/)
+- [Cucumber](https://cucumber.io/)
+- [Bacon](https://github.com/chneukirchen/bacon)
+- [Riot](https://github.com/thumblemonks/riot)
+- [Assert](https://github.com/redding/assert)
+- [Fix](https://github.com/fixrb/fix)
+  </script>
+</section>
+
+<section data-transition='slide-in fade-out' data-markdown>
+  <script type='text/template'>
+    <!-- <h2 class='font-size-like-h1'>Books & Resorces</h2> -->
+### Books
+- [Test Driven Development: By Example - Ken Beck](https://helion.pl/view/10301k/tddszt.htm#format/d)
+- [The Pragmatic Programmer: From Journeyman to Master - Andrew Hund, David Thomas](https://helion.pl/view/10301k/pragpv.htm#format/d)
+- [Clean Code: A Handbook of Agile Software Craftsmanship - Robert C. Martin](https://helion.pl/view/10301k/czykov.htm#format/d)
+- [Design Patterns in Ruby - Russ Olsen](https://helion.pl/view/10301k/rubywz.htm#format/d)
+- [Practical Object-Oriented Design in Ruby: An Agile Primer - Sandi Metz](https://www.amazon.com/Practical-Object-Oriented-Design-Ruby-Addison-Wesley/dp/0321721330)
+
+### Presentations
+- [All the Little Things by Sandi Metz](https://www.youtube.com/watch?v=8bZh5LMaSmE)
+- [Nothing is Something by Sandi Metz](https://www.youtube.com/watch?v=OMPfEXIlTVE)
+- [Best Ruby on Rails refactoring talks](https://infinum.co/the-capsized-eight/best-ruby-on-rails-refactoring-talks)
+- [Are you an Egoistic Programmer? - presentation about refactoring](https://womanonrails.com/presentation-refactoring-egoistic-programmer/#1)
+  </script>
+</section>
+
+<section data-markdown>
+  <script type='text/template'>
+### Credentials
+
+- <a href='https://www.flickr.com/photos/jzsinr/4401860036' rel='nofollow noopener noreferrer' target='_blank'>flickr.com/photos/jzsinr/4401860036</a>
+- <a href='https://www.flickr.com/photos/14915441@N07/3622125089' rel='nofollow noopener noreferrer' target='_blank'>flickr.com/photos/14915441@N07/3622125089</a>
+- <a href='https://www.flickr.com/photos/hamur0w0/6984884135' rel='nofollow noopener noreferrer' target='_blank'>flickr.com/photos/hamur0w0/6984884135</a>
+  </script>
+</section>
+
+
+<section class='pull-right' data-background='images/unicorn.jpg'>
+  <img alt='Woman on Rails logotype' class='pure' data-src='images/womanonrails.png' height='94' width='300'>
+  <h2 class='text-dark-blue'>Agnieszka Matysek</h2>
+  <p class='text-dark-blue'>agnieszka (at) fractalsoft (dot) org</p>
+
+  <div class='links'>
+    <p>
+      <a href='https://womanonrails.com/' target='_blank' title='Web development from woman perspective'>
+        WomanOnRails.com
+      </a>
+    </p>
+    <p>
+      <a href='https://twitter.com/womanonrails' rel='nofollow noopener' target='_blank' title='Twitter @womanonrails'>
+      <span class='zocial-twitter'></span> @womanonrails
+    </a>
+    </p>
+    <p>
+      <a href='https://fractalsoft.org/pl' target='_blank' title='Programiści Ruby on Rails i JavaScript'>
+        <span>
+          <img alt='Fractal Soft logo' class='pure' data-src='images/icons/svg/fractalsoft.svg' style='width: 25px;'>
+          Fractal Soft
+        </span>
+      </a>
+    </p>
+  </div>
+
+  <p class='social'>
+    <a href='https://github.com/womanonrails' rel='nofollow noopener' target='_blank' title='GitHub'>
+      <span class='zocial-github'></span>
+    </a>
+    <a href='https://www.instagram.com/womanonrails' rel='nofollow noopener' target='_blank' title='Istagram'>
+      <span class='zocial-instagram'></span>
+    </a>
+    <a href='https://www.youtube.com/channel/UCudKRFuddrf8saaxUEoo0xQ' rel='nofollow noopener' target='_blank' title='YouTube'>
+      <span class='zocial-youtube'></span>
+    </a>
+    <a href='https://vimeo.com/womanonrails' rel='nofollow noopener' target='_blank' title='Vimeo'>
+      <span class='zocial-vimeo'></span>
+    </a>
+  </p>
+</section>
+
+      </div>
+    </div>
+
+    <script src='lib/js/head.min.js'></script>
+    <script src='js/reveal.min.js'></script>
+
+    <script>
+      // More info about config & dependencies:
+      // - https://github.com/hakimel/reveal.js#configuration
+      // - https://github.com/hakimel/reveal.js#dependencies
+      Reveal.initialize({
+        // Transition style for full page slide backgrounds
+        backgroundTransition: 'fade', // none/fade/slide/convex/concave/zoom
+
+        // Vertical centering of slides
+        center: true,
+
+        // Display presentation control arrows
+        controls: false,
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden" or "visible"
+        controlsBackArrows: 'faded',
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: 39,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL, so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        // Flags if we should show a help overlay when the questionmark key is pressed
+        help: true,
+
+        // Hides the address bar on mobile devices
+        hideAddressBar: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Display a presentation progress bar
+        progress: false,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Display the page number of the current slide
+        slideNumber: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Transition style
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+        // Transition speed
+        transitionSpeed: 'default', // default/fast/slow
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        dependencies: [
+          { src: 'plugin/markdown/marked.js' },
+          { src: 'plugin/markdown/markdown.js' },
+          { src: 'plugin/notes/notes.js', async: true },
+          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+        ]
+      });
+    </script>
+  </body>
+</html>
