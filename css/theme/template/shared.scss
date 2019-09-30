@@ -1,0 +1,130 @@
+@import "source_code";
+
+@import url(../../lib/font/source-sans-pro/source-sans-pro.css);
+@import url(http://weloveiconfonts.com/api/?family=zocial);
+
+/* zocial */
+[class*="zocial-"]:before {
+  font-family: 'zocial', sans-serif;
+}
+
+$mainFontSize: 42px;
+$mainFont: 'Source Sans Pro', Helvetica, sans-serif;
+$headingFont: 'Source Sans Pro', Helvetica, sans-serif;
+$headingTextShadow: none;
+$headingLetterSpacing: normal;
+$headingFontWeight: 600;
+
+// $headingTextTransform: uppercase;
+$headingTextTransform: normal;
+
+$heading1Size: 2.5em;
+$heading2Size: 1.6em;
+$heading3Size: 1.3em;
+$heading4Size: 1.0em;
+
+$socialLinkColor: #2289d4;
+
+.reveal section {
+  &.pull-right {
+    text-align: right;
+  }
+
+  img {
+    &.no-border {
+      border-width: 0;
+    }
+
+    .no-effects {
+      background: transparent;
+      box-shadow: none;
+    }
+
+    &.one-size {
+      width: 80%;
+    }
+
+    &.pure {
+      background: none;
+      border:none;
+      box-shadow: none;
+      margin: 0;
+    }
+  }
+
+  .links {
+    margin-top: 100px;
+  }
+
+  .social a {
+    display: inline-block;
+    padding-right: 5px;
+  }
+
+  .left-side-column {
+    float: left;
+    width: 30%;
+  }
+
+  .middle-side-column {
+    float: left;
+    width: 30%;
+  }
+
+  .right-side-column {
+    float: right;
+    width: 30%;
+  }
+
+  .left-column {
+    float: left;
+    width: 50%;
+  }
+
+  .right-column {
+    float: right;
+    width: 50%;
+  }
+
+
+  .small-size pre code {
+    font-size: 4.5pt;
+    line-height: 1.3em;
+    max-height: none;
+  }
+
+  .middle-size pre code {
+    font-size: 15pt;
+    line-height: 1.3em;
+    max-height: none;
+  }
+
+  .no-max-height pre code {
+    max-height: none;
+  }
+
+  .no-shadow pre {
+    box-shadow: none;
+  }
+}
+
+.theme-box {
+  display: inline-block;
+  height: 10px;
+  width: 10px;
+}
+
+#theme-black {
+  border: 1px solid white;
+  background: black;
+}
+
+#theme-white {
+  border: 1px solid black;
+  background: white;
+}
+
+.author-mail,
+.author-name {
+  color: #091c2b !important;
+}

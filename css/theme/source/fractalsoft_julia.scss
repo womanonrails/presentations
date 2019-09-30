@@ -1,16 +1,8 @@
 @import "../template/mixins";
 @import "../template/settings";
+@import "../template/shared";
 
-// Include theme-specific fonts
-@import url(../../lib/font/league-gothic/league-gothic.css);
 @import url(https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic);
-
-@import url(http://weloveiconfonts.com/api/?family=zocial);
-
-/* zocial */
-[class*="zocial-"]:before {
-  font-family: 'zocial', sans-serif;
-}
 
 // colors
 $backgroundColor: #091c2b;
@@ -42,96 +34,7 @@ $heading4Size: 1.0em;
   @include radial-gradient( rgba(9, 28, 43, 1), rgba(20, 60, 95, 1) );
 }
 
-.hljs {
-  background: #eee;
-  color: #000;
-  display: block;
-  overflow-x: auto;
-  padding: 0.5em;
-}
-
-.hljs-comment {
-  color: #a7a7b0;
-}
-
-.hljs-emphasis {
-  font-style: italic;
-}
-
-// like class, def, end
-.hljs-keyword {
-  color: #0000fd;
-  font-weight: bold;
-}
-
-// address url
-.hljs-link {
-  color: #119453;
-  font-style: italic;
-}
-
-// like nil
-.hljs-literal {
-  color: #c5060b;
-}
-
-// tag name between characters < and >
-.hljs-name {
-  color: #6911ff;
-}
-
-.hljs-number {
-  color: #ff7800;
-}
-
-.hljs-string {
-  color: #00b0b0;
-}
-
-.hljs-strong {
-  font-weight: bold;
-}
-
-.hljs-symbol {
-  color: #5c5cb0;
-}
-
-// characters < and > and html properties like data-*
-.hljs-tag {
-  color: #126dff;
-}
-
-// like class name, method name
-.hljs-title {
-  color: #3669a2;
-}
-
-.hljs-addition,
-.hljs-attribute,
-.hljs-built_in,
-.hljs-builtin-name,
-.hljs-bullet,
-.hljs-deletion,
-.hljs-emphasis,
-.hljs-meta,
-.hljs-quote,
-.hljs-section,
-.hljs-selector-class,
-.hljs-selector-id,
-.hljs-selector-tag,
-.hljs-strong,
-.hljs-subst,
-.hljs-template-tag,
-.hljs-template-variable,
-.hljs-type,
-.hljs-variable {
-}
-
 .reveal section {
-  &.pull-right {
-    text-align: right;
-  }
-
   .pull-left {
     text-align: left;
     margin-left: 45px;
@@ -144,13 +47,6 @@ $heading4Size: 1.0em;
   i.fa {
     font-family: 'FontAwesome';
     font-style: normal;
-  }
-
-  img.pure {
-    background: none;
-    border:none;
-    box-shadow: none;
-    margin: 0;
   }
 
   img.middle-size {

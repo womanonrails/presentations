@@ -1,0 +1,28 @@
+@import "../template/mixins";
+@import "../template/settings";
+@import "../template/shared";
+
+$backgroundColor: #fff;
+
+$mainColor: #222;
+$headingColor: #222;
+
+$linkColor: #2a76dd;
+$linkColorHover: lighten( $linkColor, 15% );
+$selectionBackgroundColor: lighten( $linkColor, 25% );
+
+section.has-dark-background {
+  &, h1, h2, h3, h4, h5, h6 {
+    color: #fff;
+  }
+}
+
+.highlight-red {
+  color: #ff2c2d;
+}
+
+.highlight-green {
+  color: #00994d;
+}
+
+@import "../template/theme";
