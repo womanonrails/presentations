@@ -95,8 +95,16 @@
   float: right;
   width: 50%; }
 
+.reveal section .no-margin pre {
+  margin-top: 0; }
+
 .reveal section .small-size pre code {
   font-size: 4.5pt;
+  line-height: 1.3em;
+  max-height: none; }
+
+.reveal section .midi-size pre code {
+  font-size: 13pt;
   line-height: 1.3em;
   max-height: none; }
 

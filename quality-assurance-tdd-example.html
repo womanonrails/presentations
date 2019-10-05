@@ -8,7 +8,7 @@
     <meta name='description' content='How to help with Quality Assurance from programmer perspective?'>
 
     <link rel='stylesheet' href='css/reveal.min.css'>
-    <link rel='stylesheet' href='css/theme/fractalsoft_julia.css'>
+    <link rel='stylesheet' href='css/theme/fractalsoft_white.css' id='theme'>
 
     <!-- Printing and PDF exports -->
     <script>
@@ -23,45 +23,45 @@
     <div class='reveal'>
       <div class='slides'>
 
-<section>
+<section data-transition='slide-in slide-out'>
   <h1>Quality Assurance - Based on TDD example</h1>
-  <h4>Programmer helping with quality</h4>
+  <!-- <h4>Programmer helping with quality</h4> -->
   <p>
     <a href='https://womanonrails.com' target='_blank' title='Web development from woman perspective'>Agnieszka Matysek</a> at <a href='https://fractalsoft.org' target='_blank' title='Ruby on Rails developers'>Fractal Soft</a>
   </p>
+
+  <a class='theme-box'
+     id='theme-black'
+     href="#"
+     onclick="document.getElementById('theme').setAttribute('href','css/theme/fractalsoft_black.css'); return false;"></a>
+  <a class='theme-box'
+     id='theme-white'
+     href="#"
+     onclick="document.getElementById('theme').setAttribute('href','css/theme/fractalsoft_white.css'); return false;"></a>
 </section>
 
-<section data-markdown data-background='images/quality-assurance/you.jpg'>
-  <script type='text/template'>
-
-Note:
-
+<section data-background='images/quality-assurance/you.jpg'>
+  <aside class='notes' data-markdown>
 - Agnieszka Matysek
 - programistka zajmująca się wykorzystywaniem i wdrażaniem nowych technologii w szeroko rozumianym rolnictwie
 - team leader, mentor i organizator wielu szkoleń z programowania
 - współwłaściciel firmy Fractal Soft Sp. z o.o.
 - zainteresowania: good code standard, refactoring, testing
 - Po pracy: zwolenniczka minimalizmu, miłośniczka tańca i fotografowania
-  </script>
+  </aside>
 </section>
 
-<section data-markdown data-background='images/quality-assurance/flower.jpg'>
-  <script type='text/template'>
-
-Note:
-
+<section data-background='images/quality-assurance/flower.jpg'>
+  <aside class='notes' data-markdown>
 - zaczynamy projekt i wszystko jest pięknie
 - proste, logiczne, tworzy sensowna całość
 - idzie nam szybko, dostarczamy nowe funkcjonalności
 - aż tu nagle...
-  </script>
+  </aside>
 </section>
 
-<section data-markdown data-background='images/quality-assurance/mess.jpg'>
-  <script type='text/template'>
-
-Note:
-
+<section data-background='images/quality-assurance/mess.jpg'>
+  <aside class='notes' data-markdown>
 - bumm!
 - aplikacji nie da się ogarnąć umysłem
 - dodajemy jakąś funkcjonalność, a inna się psuje
@@ -69,14 +69,11 @@ Note:
 - ciężko cokolwiek zrobić
 - są miejsca gdzie lepiej nie wchodzić
 - itd.
-  </script>
+  </aside>
 </section>
 
-<section data-markdown data-background='images/quality-assurance/help.jpg'>
-  <script type='text/template'>
-
-Note:
-
+<section data-background='images/quality-assurance/help.jpg'>
+  <aside class='notes' data-markdown>
 - pojawia się strach
 - nie jesteśmy w stanie zapanować nad systemem
 - nagle przestajemy ogarniać
@@ -84,15 +81,12 @@ Note:
 - co dopiero powiedzieć że działa poprawnie
 - najchętniej to udawalibyśmy, że nas nie ma
 - ale najważniejsza jest...
-  </script>
+  </aside>
 </section>
 
-<section data-markdown data-transition='slide-in fade-out'>
-  <script type='text/template'>
-    <h2 class='font-size-like-h1'>Responsibility</h2>
-
-Note:
-
+<section data-transition='slide-in fade-out'>
+  <h2 class='font-size-like-h1'>Responsibility</h2>
+  <aside class='notes' data-markdown>
 - odpowiedzialność
 - każdego z nas
 - za jakiś fragment, wycinek systemu, procesu, aplikacji
@@ -108,33 +102,29 @@ Note:
 - nie możemy zwalić winny np. na testerów, że źle sprawdzili / przetestowali
 - lub developerów, że źle zaprojektowali
 - trzeba siąść razem i wspólnie dbać o jakość
-  </script>
+  </aside>
 </section>
 
-<section data-markdown data-transition='slide-in fade-out'>
-  <script type='text/template'>
-    <h2 class='font-size-like-h1'>Quality</h2>
-
-Note:
-
+<section data-transition='slide-in fade-out'>
+  <h2 class='font-size-like-h1'>Quality</h2>
+  <aside class='notes' data-markdown>
 - jakość to odpowiedzialność nas wszystkich
 - lecz każdy z nas patrzy na nią z innej strony
 - programiści od strony kodu
 - testerzy od strony testów
 - UX designerzy od użytkowości
 - itd.
-  </script>
+  </aside>
 </section>
 
-<section data-markdown data-transition='slide-in fade-out'>
-  <script type='text/template'>
-    <h2 class='font-size-like-h1'>Agenda</h2>
-    - two examples
-    - one language
-    - two test tools
-
-Note:
-
+<section data-transition='slide-in fade-out'>
+  <h2 class='font-size-like-h1'>Agenda</h2>
+  <ul>
+    <li>two examples</li>
+    <li>one language</li>
+    <li>two test tools</li>
+  </ul>
+  <aside class='notes' data-markdown>
 - dwie części, dwa przykłady
 - pierwszy: Jak TDD może zdjąć z nas trochę tej presji / odpowiedzialności?
 - a przy okazji: Jak lepiej zrozumieć swój język programowania?
@@ -151,8 +141,7 @@ Note:
   <h2 class='text-dark-blue font-size-like-h1'>Test-Driven Development</h2>
   <img alt='TDD' class='pure' data-src='images/tdd.gif'>
 
-
-  <aside class='notes' data-markdown data-transition='slide-in fade-out'>
+  <aside class='notes' data-markdown>
 - tworzenie aplikacji sterowanej testami
 - Red - Green - Refactoring
 - piszemy test, sprawdzamy że nie przechodzi
@@ -163,12 +152,10 @@ Note:
 </section>
 
 <section data-transition='slide-in fade-out'>
-  <section data-transition='slide-in fade-out' data-markdown>
-    <script type='text/template'>
-      <h2 class='big-font-size'>Example 1</h2>
-      <p>Follow your test</p>
-
-Note:
+  <section data-transition='slide-in fade-out'>
+    <h2 class='big-font-size'>Example 1</h2>
+    <p>Follow your test</p>
+    <aside class='notes' data-markdown>
 - mały fragment dużego refaktoringu
 - wszystkie źródła na końcu
 - kod dotyczy pokerowej ręki
@@ -178,12 +165,12 @@ Note:
 - to co tu zrobimy jest dobrym eksperymentem
 - nie chodzi też o to by wykonywać to za każdym razem
 - dostosowujemy kroki TDD do swoich potrzeb, raz większe, raz mniejsze
-    </script>
+    </aside>
   </section>
 
   <section data-transition='slide-in fade-out'>
-    <h4 class='pull-left'>Create test</h4>
-    <div data-markdown>
+    <h4>Create test</h4>
+    <div data-markdown class='no-shadow'>
 ```ruby
 require 'spec_helper'
 describe 'flush?' do
@@ -194,9 +181,10 @@ describe 'flush?' do
 end
 ```
     </div>
-    <div class='fragment' data-fragment-index='1'>
-      <h4 class='pull-left'>Run test</h4>
-      <div data-markdown>
+  </section>
+  <section data-transition='slide-in fade-out'>
+    <h4>Run test</h4>
+    <div data-markdown class='no-shadow no-max-height'>
 ```bash
 $ rspec spec/lib/flush_spec.rb
 
@@ -215,7 +203,6 @@ Failures:
 Finished in 0.01294 seconds (files took 0.75094 seconds to load)
 1 example, 1 failure
 ```
-      </div>
     </div>
     <aside class='notes' data-markdown>
 - piszemy test
@@ -228,16 +215,17 @@ Finished in 0.01294 seconds (files took 0.75094 seconds to load)
   </section>
 
   <section data-transition='slide-in fade-out'>
-    <h4 class='pull-left'>Create method</h4>
-    <div data-markdown>
+    <h4>Create method</h4>
+    <div data-markdown class='no-shadow'>
 ```ruby
 def flush?
 end
 ```
     </div>
-    <div class='fragment' data-fragment-index='1'>
-      <h4 class='pull-left'>Run test</h4>
-      <div data-markdown>
+  </section>
+  <section data-transition='slide-in fade-out'>
+    <h4>Run test</h4>
+    <div data-markdown class='no-shadow no-max-height'>
 ```bash
 $ rspec spec/lib/flush_spec.rb
 
@@ -259,7 +247,6 @@ Failures:
 Finished in 0.01024 seconds (files took 0.66129 seconds to load)
 1 example, 1 failure
 ```
-      </div>
     </div>
     <aside class='notes' data-markdown>
 - by to naprawić piszemy pustą metodę
@@ -271,17 +258,17 @@ Finished in 0.01024 seconds (files took 0.66129 seconds to load)
   </section>
 
   <section data-transition='slide-in fade-out'>
-    <h4 class='pull-left'>Add argument</h4>
-    <div data-markdown>
-
+    <h4>Add argument</h4>
+    <div data-markdown class='no-shadow'>
 ```ruby
 def flush?(array)
 end
 ```
     </div>
-    <div class='fragment' data-fragment-index='1'>
-      <h4 class='pull-left'>Run test</h4>
-      <div data-markdown>
+  </section>
+  <section data-transition='slide-in fade-out'>
+    <h4>Run test</h4>
+    <div data-markdown class='no-shadow no-max-height'>
 ```bash
 $ rspec spec/lib/flush_spec.rb
 
@@ -302,7 +289,6 @@ Failures:
 Finished in 0.05983 seconds (files took 0.83267 seconds to load)
 1 example, 1 failure
 ```
-      </div>
     </div>
     <aside class='notes' data-markdown>
 - dodajemy brakujący argument
@@ -313,8 +299,8 @@ Finished in 0.05983 seconds (files took 0.83267 seconds to load)
   </section>
 
   <section data-transition='slide-in fade-out'>
-    <h4 class='pull-left'>Add first logic</h4>
-    <div data-markdown>
+    <h4>Add first logic</h4>
+    <div data-markdown class='no-shadow'>
 ```ruby
 def flush?(array)
   true
@@ -322,8 +308,8 @@ end
 ```
     </div>
     <div class='fragment' data-fragment-index='1'>
-      <h4 class='pull-left'>Run test</h4>
-      <div data-markdown>
+      <h4>Run test</h4>
+      <div data-markdown class='no-shadow'>
 ```bash
 $ rspec spec/lib/flush_spec.rb
 
@@ -347,8 +333,8 @@ Finished in 0.01189 seconds (files took 0.65796 seconds to load)
   </section>
 
   <section data-transition='slide-in fade-out'>
-    <h4 class='pull-left'>Add new test</h4>
-    <div data-markdown>
+    <h4>Add new test</h4>
+    <div data-markdown class='no-shadow'>
 ```ruby
 describe 'flush?' do
   it 'checks if array has one color'
@@ -360,9 +346,10 @@ describe 'flush?' do
 end
 ```
     </div>
-    <div class='fragment' data-fragment-index='1'>
-      <h4 class='pull-left'>And run this tests</h4>
-      <div data-markdown>
+  </section>
+  <section data-transition='slide-in fade-out'>
+    <h4>And run this tests</h4>
+    <div data-markdown class='no-shadow no-max-height'>
 ```bash
 $ rspec spec/lib/flush_spec.rb
 
@@ -383,7 +370,6 @@ Failures:
 Finished in 0.04907 seconds (files took 0.63654 seconds to load)
 2 examples, 1 failure
 ```
-      </div>
     </div>
     <aside class='notes' data-markdown>
 - oto nasz test
@@ -393,8 +379,8 @@ Finished in 0.04907 seconds (files took 0.63654 seconds to load)
   </section>
 
   <section data-transition='slide-in fade-out'>
-    <h4 class='pull-left'>Add more logic</h4>
-    <div data-markdown>
+    <h4>Add more logic</h4>
+    <div data-markdown class='no-shadow'>
 ```ruby
 def flush?(array)
   array.uniq.size == 1
@@ -402,8 +388,8 @@ end
 ```
     </div>
     <div class='fragment' data-fragment-index='1'>
-      <h4 class='pull-left'>Run tests</h4>
-      <div data-markdown>
+      <h4>Run tests</h4>
+      <div data-markdown class='no-shadow'>
 ```bash
 $ rspec spec/lib/flush_spec.rb
 
@@ -423,8 +409,8 @@ Finished in 0.01092 seconds (files took 0.57891 seconds to load)
     </aside>
   </section>
   <section>
-    <h4 class='pull-left'>Unexpected usage</h4>
-    <div data-markdown>
+    <h4>Unexpected usage</h4>
+    <div data-markdown class='no-shadow'>
 ```ruby
 def flush?(array)
   array.uniq.size == 1
@@ -447,31 +433,29 @@ flush?(['#fff', '#fff', '#fff'])
 </section><!-- Example 1 -->
 
 <section data-transition='slide-in fade-out'>
-  <section data-transition='slide-in fade-out' data-markdown>
-    <script type='text/template'>
-      <h2 class='big-font-size'>Example 2</h2>
-      <p>Trust your tests & do refactoring</p>
-
-Note:
+  <section data-transition='slide-in fade-out'>
+    <h2 class='big-font-size'>Example 2</h2>
+    <p>Trust your tests & do refactoring</p>
+    <aside class='notes' data-markdown>
 - dalej będziemy używać języka Ruby
 - do testów tym razem - Mini Test
 - małe zadanko, gdzie rozszerzymy funkcjonalność
 - nie do końca stan początkowy jest zgodny z TDD
 - Założenie: mamy już fragment kodu, który nie wynika bezpośrednio z testów i nie może zostać zmieniony
 - Zaczynamy!
-    </script>
+    </aside>
   </section>
 
   <section data-transition='slide-in fade-out'>
-    <h4 class='pull-left'>Existing code</h4>
-    <div data-markdown>
+    <h4>Existing code</h4>
+    <div data-markdown class='no-shadow'>
 ```ruby
 class BaseClass
 end
 ```
     </div>
     <div class='fragment' data-fragment-index='1'>
-      <div data-markdown>
+      <div data-markdown class='no-shadow'>
 ```ruby
 class Item < BaseClass
   attr_accessor :price, :name
@@ -499,8 +483,8 @@ end
   </section>
 
   <section data-transition='slide-in fade-out'>
-    <h4 class='pull-left'>Existing test</h4>
-    <div data-markdown>
+    <h4>Existing test</h4>
+    <div data-markdown class='no-shadow no-max-height middle-size'>
 ```ruby
 class TestItem < Minitest::Test
   def test_validation
@@ -542,8 +526,8 @@ end
   </section>
 
   <section data-transition='slide-in fade-out'>
-    <h4 class='pull-left'>Run test</h4>
-    <div data-markdown>
+    <h4>Run test</h4>
+    <div data-markdown class='no-shadow'>
 ```bash
 $ ruby item_test.rb
 Traceback (most recent call last):
@@ -555,8 +539,8 @@ undefined method `validates_presence_of' for Item:Class (NoMethodError)
 ```
     </div>
     <div class='fragment' data-fragment-index='1'>
-      <h4 class='pull-left'>Write code</h4>
-      <div data-markdown>
+      <h4>Write code</h4>
+      <div data-markdown class='no-shadow'>
 ```ruby
 class BaseClass
   def self.validates_presence_of
@@ -575,8 +559,8 @@ end
   </section>
 
   <section data-transition='slide-in fade-out'>
-    <h4 class='pull-left'>Run test</h4>
-    <div data-markdown>
+    <h4>Run test</h4>
+    <div data-markdown class='no-shadow'>
 ```bash
 $ ruby item_test.rb
 Traceback (most recent call last):
@@ -589,8 +573,8 @@ wrong number of arguments (given 1, expected 0) (ArgumentError)
 ```
     </div>
     <div class='fragment' data-fragment-index='1'>
-      <h4 class='pull-left'>Write code</h4>
-      <div data-markdown>
+      <h4>Write code</h4>
+      <div data-markdown class='no-shadow'>
 ```ruby
 class BaseClass
   def self.validates_presence_of(name)
@@ -607,8 +591,8 @@ end
   </section>
 
   <section data-transition='slide-in fade-out'>
-    <h4 class='pull-left'>Run test</h4>
-    <div data-markdown>
+    <h4>Run test</h4>
+    <div data-markdown class='no-shadow'>
 ```bash
 $ ruby item_test.rb
 Traceback (most recent call last):
@@ -621,8 +605,8 @@ Did you mean?  validates_presence_of
 ```
     </div>
     <div class='fragment' data-fragment-index='1'>
-      <h4 class='pull-left'>Write code</h4>
-      <div data-markdown>
+      <h4>Write code</h4>
+      <div data-markdown class='no-shadow'>
 ```ruby
 class BaseClass
   def self.validates_presence_of(name)
@@ -642,8 +626,8 @@ end
   </section>
 
   <section data-transition='slide-in fade-out'>
-    <h4 class='pull-left'>Run test</h4>
-    <div data-markdown>
+    <h4>Run test</h4>
+    <div data-markdown class='no-shadow'>
 ```bash
 $ ruby item_test.rb
 Traceback (most recent call last):
@@ -656,8 +640,8 @@ wrong number of arguments (given 1, expected 0) (ArgumentError)
 ```
     </div>
     <div class='fragment' data-fragment-index='1'>
-      <h4 class='pull-left'>Write code</h4>
-      <div data-markdown>
+      <h4>Write code</h4>
+      <div data-markdown class='no-shadow'>
 ```ruby
 class BaseClass
   def self.validates_presence_of(name)
@@ -672,8 +656,8 @@ end
   </section>
 
   <section data-transition='slide-in fade-out'>
-    <h4 class='pull-left'>Run test</h4>
-    <div data-markdown>
+    <h4>Run test</h4>
+    <div data-markdown class='no-shadow no-max-height'>
 ```bash
 $ ruby item_test.rb
 Run options: --seed 43301
@@ -692,9 +676,10 @@ NoMethodError: undefined method `valid?' for #<Item:0x0000000001a731d0 @price=ni
 1 runs, 0 assertions, 0 failures, 1 errors, 0 skips
 ```
     </div>
-    <div class='fragment' data-fragment-index='1'>
-      <h4 class='pull-left'>Write code</h4>
-      <div data-markdown>
+  </section>
+  <section data-transition='slide-in fade-out'>
+    <h4>Write code</h4>
+    <div data-markdown class='no-shadow'>
 ```ruby
 class BaseClass
   def self.validates_presence_of(name)
@@ -707,8 +692,6 @@ class BaseClass
   end
 end
 ```
-
-      </div>
     </div>
     <aside class='notes' data-markdown>
 - wreszcie nasz test się uruchamia i pokazuje nie przechodzącą asercję
@@ -718,8 +701,8 @@ end
   </section>
 
   <section data-transition='slide-in fade-out'>
-    <h4 class='pull-left'>Run test</h4>
-    <div data-markdown>
+    <h4>Run test</h4>
+    <div data-markdown class='no-shadow no-max-height'>
 ```bash
 $ ruby item_test.rb
 Run options: --seed 14791
@@ -738,9 +721,10 @@ NoMethodError: undefined method `errors' for #<Item:0x000000000286b5f8 @price=ni
 1 runs, 1 assertions, 0 failures, 1 errors, 0 skips
 ```
     </div>
-    <div class='fragment' data-fragment-index='1'>
-      <h4 class='pull-left'>Write code</h4>
-      <div data-markdown>
+  </section>
+  <section data-transition='slide-in fade-out'>
+    <h4>Write code</h4>
+    <div data-markdown class='no-shadow'>
 ```ruby
 class BaseClass
   def self.validates_presence_of(name)
@@ -756,7 +740,6 @@ class BaseClass
   end
 end
 ```
-      </div>
     </div>
     <aside class='notes' data-markdown>
 - kolejny krok brakująca metoda `errors`
@@ -766,8 +749,8 @@ end
   </section>
 
   <section data-transition='slide-in fade-out'>
-    <h4 class='pull-left'>Run test</h4>
-    <div data-markdown>
+    <h4>Run test</h4>
+    <div data-markdown class='no-shadow'>
 ```bash
 $ ruby item_test.rb
 Run options: --seed 29139
@@ -794,8 +777,8 @@ Expected false to be truthy.
   </section>
 
   <section data-transition='slide-in fade-out'>
-    <h4 class='pull-left'>Check assertions</h4>
-    <div data-markdown>
+    <h4>Check assertions</h4>
+    <div data-markdown class='no-shadow no-max-height middle-size'>
 ```ruby
 class TestItem < Minitest::Test
   def test_validation
@@ -832,8 +815,8 @@ end
   </section>
 
   <section data-transition='slide-in fade-out'>
-    <h4 class='pull-left'>Run test</h4>
-    <div data-markdown>
+    <h4>Run test</h4>
+    <div data-markdown class='no-shadow'>
 ```bash
 $ ruby item_test.rb
 Run options: --seed 29139
@@ -851,9 +834,11 @@ Expected false to be truthy.
 1 runs, 2 assertions, 1 failures, 0 errors, 0 skips
 ```
     </div>
-    <div class='fragment' data-fragment-index='1'>
-      <h4 class='pull-left'>Write code</h4>
-      <div data-markdown>
+  </section>
+
+  <section data-transition='slide-in fade-out'>
+    <h4>Write code</h4>
+    <div data-markdown class='no-shadow'>
 ```ruby
 class BaseClass
   def self.validates_presence_of(name)
@@ -870,7 +855,6 @@ class BaseClass
   end
 end
 ```
-      </div>
     </div>
     <aside class='notes' data-markdown>
 - dopisujemy implementację w bardzo naiwny sposób
@@ -879,8 +863,8 @@ end
   </section>
 
   <section data-transition='slide-in fade-out'>
-    <h4 class='pull-left'>Run test</h4>
-    <div data-markdown>
+    <h4>Run test</h4>
+    <div data-markdown class='no-shadow'>
 ```bash
 $ ruby item_test.rb
 Run options: --seed 15517
@@ -911,8 +895,8 @@ Expected false to be truthy.
   </section>
 
   <section data-transition='slide-in fade-out'>
-    <h4 class='pull-left'>Check assertions</h4>
-    <div data-markdown>
+    <h4>Check assertions</h4>
+    <div data-markdown class='no-shadow no-max-height middle-size'>
 ```ruby
 class TestItem < Minitest::Test
   def test_validation
@@ -947,8 +931,8 @@ end
   </section>
 
   <section data-transition='slide-in fade-out'>
-    <h4 class='pull-left'>Write code</h4>
-    <div data-markdown>
+    <h4>Write code</h4>
+    <div data-markdown class='no-shadow no-max-height'>
 ```ruby
 class BaseClass
   def self.validates_presence_of(name)
@@ -970,9 +954,10 @@ class BaseClass
 end
 ```
     </div>
-    <div class='fragment' data-fragment-index='1'>
-      <h4 class='pull-left'>Run test</h4>
-      <div data-markdown>
+  </section>
+  <section data-transition='slide-in fade-out'>
+    <h4>Run test</h4>
+    <div data-markdown class='no-shadow'>
 ```bash
 $ ruby item_test.rb
 Run options: --seed 35483
@@ -985,7 +970,6 @@ Finished in 0.000730s, 1369.7898 runs/s, 12328.1085 assertions/s.
 
 1 runs, 9 assertions, 0 failures, 0 errors, 0 skips
 ```
-      </div>
     </div>
     <aside class='notes' data-markdown>
 - oto nasza implementacja
@@ -1017,12 +1001,13 @@ Finished in 0.000730s, 1369.7898 runs/s, 12328.1085 assertions/s.
 - use Class Methods
 - Single Resposibility Principle - `valid?` method
 - Open - Close rule
+- more abstraction
     </div>
   </section>
 
   <section data-transition='slide-in fade-out'>
-    <h4 class='pull-left'>Use Getters</h4>
-    <div data-markdown>
+    <h4>Use Getters</h4>
+    <div data-markdown class='no-shadow no-max-height middle-size'>
 ```ruby
 class BaseClass
   def self.validates_presence_of(name)
@@ -1071,8 +1056,11 @@ end
   </section>
 
   <section data-transition='slide-in fade-out'>
-    <h4 class='pull-left'>Use Class Methods</h4>
-    <div data-markdown>
+    <h2>Use Class Methods</h2>
+  </section>
+
+  <section data-transition='slide-in fade-out'>
+    <div data-markdown class='no-shadow no-max-height middle-size no-margin'>
 ```ruby
 class BaseClass
   def self.validates_presence_of(name)
@@ -1115,9 +1103,8 @@ end
     </aside>
   </section>
 
-  <section data-transition='slide-in fade-out'>
-    <h4 class='pull-left'>Use class methods</h4>
-    <div data-markdown>
+  <section data-transition='fade-in fade-out'>
+    <div data-markdown class='no-shadow no-max-height midi-size no-margin'>
 ```ruby
 class BaseClass
   def self.validates_presence_of(name)
@@ -1175,8 +1162,8 @@ end
   </section>
 
   <section data-transition='slide-in fade-out'>
-    <h4 class='pull-left'>Single Responsibility Principle</h4>
-    <div data-markdown>
+    <h4>Single Responsibility Principle</h4>
+    <div data-markdown class='no-shadow no-max-height'>
 ```ruby
 class PresenceValidator
   attr_reader :name
@@ -1207,8 +1194,7 @@ end
   </section>
 
   <section data-transition='slide-in fade-out'>
-    <h4 class='pull-left'>Single Responsibility Principle</h4>
-    <div data-markdown>
+    <div data-markdown class='no-shadow no-max-height midi-size no-margin'>
 ```ruby
 class BaseClass
   def self.validates_presence_of(name)
@@ -1253,8 +1239,8 @@ end
   </section>
 
   <section data-transition='slide-in fade-out'>
-    <h4 class='pull-left'>Single responsibility principle</h4>
-    <div data-markdown>
+    <h4>Single responsibility principle</h4>
+    <div data-markdown class='no-shadow no-max-height'>
 ```ruby
 class NumericallityValidator
   attr_reader :name
@@ -1276,8 +1262,7 @@ end
   </section>
 
   <section data-transition='slide-in fade-out'>
-    <h4 class='pull-left'>Single responsibility principle</h4>
-    <div data-markdown>
+    <div data-markdown class='no-shadow no-max-height middle-size no-margin'>
 ```ruby
 class BaseClass
   def self.validates_presence_of(name)
@@ -1317,9 +1302,12 @@ end
     </aside>
   </section>
 
-  <section data-transition='slide-in fade-out'>
-    <h4 class='pull-left'>Small fixes</h4>
-    <div data-markdown>
+  <section data-transition='fade-in fade-out'>
+    <h2>Small fixes</h2>
+  </section>
+
+  <section data-transition='fade-in fade-out'>
+    <div data-markdown class='no-shadow no-max-height middle-size'>
 ```ruby
 class BaseClass
   attr_reader :errors
@@ -1386,8 +1374,8 @@ end
   </section>
 
   <section data-transition='slide-in fade-out'>
-    <h4 class='pull-left'>From</h4>
-    <div data-markdown>
+    <h4>From</h4>
+    <div data-markdown class='no-shadow no-max-height'>
 ```ruby
 class BaseClass
   def self.validates_presence_of(name)
@@ -1418,9 +1406,8 @@ end
     </aside>
   </section>
 
-  <section data-transition='slide-in fade-out'>
-    <h4 class='pull-left'>To</h4>
-    <div data-markdown>
+  <section data-transition='fade-in fade-out'>
+    <div data-markdown class='no-shadow no-max-height middle-size'>
 ```ruby
 class BaseClass
   attr_reader :errors
@@ -1456,12 +1443,9 @@ end
   </section>
 </section><!-- Example 2 -->
 
-<section data-markdown data-transition='slide-in fade-out'>
-  <script type='text/template'>
-    <h2 class='font-size-like-h1'>Summary</h2>
-
-Note:
-
+<section data-transition='slide-in fade-out'>
+  <h2 class='font-size-like-h1'>Summary</h2>
+  <aside class='notes' data-markdown>
 - dzięki TDD (pisaniu testów przed kodem) mamy dobre pokrycie testami kodu
 - to daje nam _względną_ pewność, że nie zepsujemy funkcjonalności przy refaktoringu
 - możemy zaufać naszym testom
@@ -1479,27 +1463,23 @@ Note:
 - developerzy też, wszyscy zaangażowani w projekt
 - **na koniec bonus**
 - testowanie nie musi być nudne i można sobie umilić życie czasami
-  </script>
+  </aside>
 </section>
 
-<section data-markdown data-transition='slide-in fade-out'>
-  <script type='text/template'>
-    <h2 class='font-size-like-h1'>Running tests</h2>
-    <img alt='How looks console when all tests passed - rainbow style.' class='pure' data-src='images/minitest-rainbow.png'>
-  </script>
+<section data-transition='slide-in fade-out'>
+  <h2 class='font-size-like-h1'>Running tests</h2>
+  <img alt='How looks console when all tests passed - rainbow style.' class='pure' data-src='images/minitest-rainbow.png'>
 </section>
 
-<section data-markdown data-transition='slide-in fade-out'>
-  <script type='text/template'>
-    <h2 class='font-size-like-h1'>Nyan Cat</h2>
-    <img alt='Running test in Nyan Cat style.' class='pure' data-src='images/nyancat.gif'>
-  </script>
+<section data-transition='slide-in fade-out'>
+  <h2 class='font-size-like-h1'>Nyan Cat</h2>
+  <img alt='Running test in Nyan Cat style.' class='pure' data-src='images/nyancat.gif'>
 </section>
 
-<section class='left-list' data-transition='slide-in fade-out' data-markdown>
-  <script type='text/template'>
-    <h2 class='font-size-like-h1'>Ruby Testing Tools</h2>
-
+<section class='left-list' data-transition='slide-in fade-out'>
+  <h2 class='font-size-like-h1'>Ruby Testing Tools</h2>
+  <div data-markdown>
+    <script type='text/template'>
 - [Minitest](https://github.com/seattlerb/minitest)
 - [RSpec](https://rspec.info/)
 - [Capybara](https://teamcapybara.github.io/capybara/)
@@ -1508,19 +1488,23 @@ Note:
 - [Riot](https://github.com/thumblemonks/riot)
 - [Assert](https://github.com/redding/assert)
 - [Fix](https://github.com/fixrb/fix)
-  </script>
+    </script>
+  </div>
 </section>
 
 <section data-transition='slide-in fade-out' data-markdown>
   <script type='text/template'>
-    <!-- <h2 class='font-size-like-h1'>Books & Resorces</h2> -->
 ### Books
 - [Test Driven Development: By Example - Ken Beck](https://helion.pl/view/10301k/tddszt.htm#format/d)
 - [The Pragmatic Programmer: From Journeyman to Master - Andrew Hund, David Thomas](https://helion.pl/view/10301k/pragpv.htm#format/d)
 - [Clean Code: A Handbook of Agile Software Craftsmanship - Robert C. Martin](https://helion.pl/view/10301k/czykov.htm#format/d)
 - [Design Patterns in Ruby - Russ Olsen](https://helion.pl/view/10301k/rubywz.htm#format/d)
 - [Practical Object-Oriented Design in Ruby: An Agile Primer - Sandi Metz](https://www.amazon.com/Practical-Object-Oriented-Design-Ruby-Addison-Wesley/dp/0321721330)
+  </script>
+</section>
 
+<section data-transition='slide-in fade-out' data-markdown>
+  <script type='text/template'>
 ### Presentations
 - [All the Little Things by Sandi Metz](https://www.youtube.com/watch?v=8bZh5LMaSmE)
 - [Nothing is Something by Sandi Metz](https://www.youtube.com/watch?v=OMPfEXIlTVE)
@@ -1529,21 +1513,10 @@ Note:
   </script>
 </section>
 
-<section data-markdown>
-  <script type='text/template'>
-### Credentials
-
-- <a href='https://www.flickr.com/photos/jzsinr/4401860036' rel='nofollow noopener noreferrer' target='_blank'>flickr.com/photos/jzsinr/4401860036</a>
-- <a href='https://www.flickr.com/photos/14915441@N07/3622125089' rel='nofollow noopener noreferrer' target='_blank'>flickr.com/photos/14915441@N07/3622125089</a>
-- <a href='https://www.flickr.com/photos/hamur0w0/6984884135' rel='nofollow noopener noreferrer' target='_blank'>flickr.com/photos/hamur0w0/6984884135</a>
-  </script>
-</section>
-
-
-<section class='pull-right' data-background='images/unicorn.jpg'>
+<section class='pull-right last-section' data-background='images/unicorn-agnieszka.jpg'>
   <img alt='Woman on Rails logotype' class='pure' data-src='images/womanonrails.png' height='94' width='300'>
-  <h2 class='text-dark-blue'>Agnieszka Matysek</h2>
-  <p class='text-dark-blue'>agnieszka (at) fractalsoft (dot) org</p>
+  <h2 class='author-name'>Agnieszka Matysek</h2>
+  <p class='author-mail'>agnieszka (at) fractalsoft (dot) org</p>
 
   <div class='links'>
     <p>
@@ -1570,7 +1543,7 @@ Note:
     <a href='https://github.com/womanonrails' rel='nofollow noopener' target='_blank' title='GitHub'>
       <span class='zocial-github'></span>
     </a>
-    <a href='https://www.instagram.com/womanonrails' rel='nofollow noopener' target='_blank' title='Istagram'>
+    <a href='https://www.instagram.com/womanonrails' rel='nofollow noopener' target='_blank' title='Instagram'>
       <span class='zocial-instagram'></span>
     </a>
     <a href='https://www.youtube.com/channel/UCudKRFuddrf8saaxUEoo0xQ' rel='nofollow noopener' target='_blank' title='YouTube'>

@@ -87,8 +87,18 @@ $socialLinkColor: #2289d4;
   }
 
 
+  .no-margin pre {
+    margin-top: 0;
+  }
+
   .small-size pre code {
     font-size: 4.5pt;
+    line-height: 1.3em;
+    max-height: none;
+  }
+
+  .midi-size pre code {
+    font-size: 13pt;
     line-height: 1.3em;
     max-height: none;
   }
