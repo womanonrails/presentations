@@ -5,8 +5,8 @@
 .idea/
 .sass-cache
 .svn
-css/reveal.css
-js/reveal.js
+# css/reveal.css
+# js/reveal.js
 log/*.log
 node_modules/
 npm-debug.log
