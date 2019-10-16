@@ -7,7 +7,8 @@
     <title>Are you an Egoistic Programmer?</title>
     <meta name='description' content='Clean code in practice'>
 
-    <link rel='stylesheet' href='css/reveal.min.css'>
+    <link rel='stylesheet' href='css/reset.css'>
+    <link rel='stylesheet' href='css/reveal.css'>
     <link rel='stylesheet' href='css/theme/fractalsoft_white.css' id='theme'>
 
     <!-- Printing and PDF exports -->
@@ -18,7 +19,10 @@
       link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
       document.getElementsByTagName( 'head' )[0].appendChild( link );
     </script>
-    <!-- <script type="text/javascript" src="plugin/zoom-js/zoom.js"></script> -->
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
   </head>
   <body>
     <div class='reveal'>
@@ -46,57 +50,52 @@
   </aside>
 </section>
 
-<section data-background='images/egoistic-programmer/farm.jpg'>
-
-  <aside class='notes' data-markdown>
+<section data-background='images/egoistic-programmer/farm.jpg'
+         data-markdown>
+Notes:
 - Agnieszka Matysek
 - nowe technologie w rolnictwie
 - 8 lat doświadczenia
 - team leader, mentor
 - współwłaściciel firmy Fractal Soft
 - zainteresowania: good code standard, refactoring, testing
-  </aside>
 </section>
 
-<section data-background='images/egoistic-programmer/ruby.jpg'>
-
-  <aside class='notes' data-markdown>
+<section data-background='images/shared/ruby.jpg'
+         data-markdown>
+Notes:
 - większość przykładów w Ruby
 - pracuje i lubię ten język
-  </aside>
 </section>
 
-<section data-background='images/quality-assurance/help.jpg'>
-
-  <aside class='notes' data-markdown>
+<section data-background='images/quality-assurance/help.jpg'
+         data-markdown>
+Notes:
 - projekt w kiepskiej sytuacji
 - nic nie pasuje do niczego
 - pojawia się strach
 - wołamy o pomoc
-  </aside>
 </section>
 
+<section data-markdown
+         data-transition='slide-in fade-out'>
+## What did we wrong?
 
-<section data-transition='slide-in fade-out'>
-  <h2 class='font-size-like-h1'>What did we wrong?</h2>
-
-  <aside class='notes' data-markdown>
+Notes:
 - co poszło nie tak?
 - przerzucamy się winą
 - To wina technologii - nie jest dostosowana do potrzeb
 - To wina klienta - naciska tylko na nowe funkcjonalności
 - nie mogłem inaczej
-  </aside>
 </section>
 
-<section data-background='images/egoistic-programmer/camp.jpg'>
-
-  <aside class='notes' data-markdown>
+<section data-background='images/egoistic-programmer/camp.jpg'
+         data-markdown>
+Notes:
 - zamiast obwiniać się to dbać
 - być jak skauci / harcerze
 - pozostaw miejsce obozowania czystsze niż było
 - wchodzisz do pliku z kodem i zostawiasz go czystszym, lepszym
-  </aside>
 </section>
 
 <section data-transition='slide-in fade-out'>
@@ -112,7 +111,8 @@
 </section>
 
 <section data-transition='slide-in fade-out'>
-  <div data-markdown class='small-size no-shadow left-side-column'>
+  <div class='small-size left-side-column'
+       data-markdown>
 ```ruby
 module Poker
   # Poker hand
@@ -201,7 +201,7 @@ module Poker
 ```
   </div>
 
-  <div data-markdown class='small-size no-shadow middle-side-column' style="margin-left: 5%;">
+  <div data-markdown class='small-size middle-side-column' style="margin-left: 5%;">
 ```ruby
     def straight_with_ace?(array)
       if true_straight?(array)
@@ -282,7 +282,7 @@ module Poker
 ```
   </div>
 
-  <div data-markdown class='small-size no-shadow right-side-column'>
+  <div data-markdown class='small-size right-side-column'>
 ```ruby
     def one_pair?(array)
       tmp = array.clone
@@ -386,7 +386,7 @@ end
 </section>
 
 <section data-transition='slide-in fade-out'>
-  <div data-markdown class='no-shadow'>
+  <div data-markdown>
 ## Step 1 - Linter cleanups
 
 #### Code before change:
@@ -403,7 +403,7 @@ end
   </div>
 
   <div class='fragment' data-fragment-index='1'>
-    <div data-markdown class='no-shadow'>
+    <div data-markdown>
 #### Code after change:
 
 ```ruby
@@ -429,7 +429,7 @@ end
 </section>
 
 <section data-transition='slide-in fade-out'>
-  <div data-markdown class='no-shadow middle-size'>
+  <div data-markdown class='middle-size'>
 ## Step 2 - Simplify logic
 
 #### Code before change:
@@ -465,7 +465,7 @@ end
 </section>
 
 <section data-transition='slide-in fade-out'>
-  <div data-markdown class='no-shadow'>
+  <div data-markdown>
 ## Step 2 - Simplify logic
 
 #### Code after:
@@ -523,8 +523,8 @@ Repeat:
   </aside>
 </section>
 
-<section data-transition='slide-in fade-out'>
-  <div data-markdown class='no-shadow'>
+<section data-markdown
+         data-transition='slide-in fade-out'>
 ## Step 3 - From procedural to more OOP
 
 #### Array everywhere
@@ -536,17 +536,15 @@ def three_of_a_kind?(array)
   hash.values.include?(3)
 end
 ```
-  </div>
 
-  <aside class='notes' data-markdown>
+Notes:
 - w każdej metodzie tak samo
 - `array` argument
 - przekazujemy stan
-  </aside>
 </section>
 
 <section data-transition='slide-in fade-out'>
-  <div data-markdown class='no-shadow'>
+  <div data-markdown>
 #### Add initializer
 
 ```ruby
@@ -557,7 +555,7 @@ end
 ```
   </div>
 
-  <div data-markdown class='fragment no-shadow fade-in-then-semi-out' data-fragment-index='1'>
+  <div data-markdown class='fragment fade-in-then-semi-out' data-fragment-index='1'>
 #### Before
 ```ruby
 def three_of_a_kind?(array)
@@ -568,7 +566,7 @@ end
 ```
   </div>
 
-  <div data-markdown class='fragment no-shadow' data-fragment-index='2'>
+  <div data-markdown class='fragment' data-fragment-index='2'>
 #### After
 ```ruby
 def three_of_a_kind?
@@ -588,7 +586,7 @@ end
 </section>
 
 <section data-transition='slide-in fade-out'>
-  <div data-markdown class='small-size no-shadow'>
+  <div data-markdown class='small-size'>
 ```ruby
 class Hand
   def initialize(array)
@@ -717,7 +715,7 @@ end
 </section>
 
 <section data-transition='slide-in fade-out'>
-  <div data-markdown class='no-shadow'>
+  <div data-markdown>
 ## Step 4 - Remove duplication
 
 ```ruby
@@ -735,7 +733,7 @@ end
 </section>
 
 <section data-transition='slide-in fade-out'>
-  <div data-markdown class='no-shadow'>
+  <div data-markdown>
 ## Step 4 - Remove duplication
 
 #### Change initializer
@@ -749,7 +747,9 @@ end
 ```
   </div>
 
-  <div data-markdown class='fragment no-shadow' data-fragment-index='1'>
+  <div class='fragment'
+       data-fragment-index='1'
+       data-markdown>
 #### New method
 
 ```ruby
@@ -761,14 +761,15 @@ end
 ```
   </div>
 
-  <aside class='notes' data-markdown>
+  <aside class='notes'
+         data-markdown>
 - liczymy ilość figur w konstruktorze (initializer)
 - usuwamy duplikację
   </aside>
 </section>
 
 <section data-transition='slide-in fade-out'>
-  <div data-markdown class='no-shadow'>
+  <div data-markdown>
 ## Step 4 - Remove duplication
 
 #### Before
@@ -782,7 +783,9 @@ end
 ```
   </div>
 
-  <div data-markdown class='fragment no-shadow' data-fragment-index='1'>
+  <div class='fragment'
+       data-fragment-index='1'
+       data-markdown>
 #### After
 
 ```ruby
@@ -839,7 +842,8 @@ end
 <section data-transition='slide-in fade-out'>
   <!-- <h2>Step 5 - small public interface</h2> -->
 
-  <div data-markdown class='small-size no-shadow'>
+  <div class='small-size'
+       data-markdown>
 ```ruby
 class Hand
   def initialize(array)
@@ -914,7 +918,7 @@ end
 ```
   </div>
 
-  <aside class='notes' data-markdown>
+  <aside class='notes'>
 - wszystkie metody są publiczne
 - czy muszą być?
 - nie - popatrzmy na testy
@@ -922,7 +926,8 @@ end
 </section>
 
 <section data-transition='slide-in fade-out'>
-  <div data-markdown class='no-shadow middle-size'>
+  <div class='middle-size'
+       data-markdown>
 ## Step 5 - small public interface
 
 ```ruby
@@ -946,7 +951,8 @@ end
 ```
   </div>
 
-  <aside class='notes' data-markdown>
+  <aside class='notes'
+         data-markdown>
 - big public interface is hard to maintain
 - less confusion
 - do not allow to unexpected behavior
@@ -993,8 +999,8 @@ end
   </aside>
 </section>
 
-<section data-transition='slide-in fade-out'>
-  <div data-markdown class='no-shadow'>
+<section data-markdown
+         data-transition='slide-in fade-out'>
 ## Step 6 - More descriptive output
 
 #### Before
@@ -1013,16 +1019,14 @@ def check
   return 0
 end
 ```
-  </div>
 
-  <aside class='notes' data-markdown>
+Notes:
 - liczby nie wiele nam mówią
 - za każdym razem trzeba sprawdzać
-  </aside>
 </section>
 
-<section data-transition='fade-in fade-out'>
-  <div data-markdown class='no-shadow'>
+<section data-markdown
+         data-transition='fade-in fade-out'>
 ## Step 6 - More descriptive output
 
 #### After
@@ -1041,28 +1045,29 @@ def check
   return :none
 end
 ```
-  </div>
 
-  <aside class='notes' data-markdown>
+Notes:
 - zmiana testów!!!
-  </aside>
 </section>
 
 <section data-transition='slide-in fade-out'>
-  <div data-markdown class='no-shadow'>
+  <div data-markdown>
 ## BONUS - Meta-programming
 
 #### Add to initializer
 
 ```ruby
 @order_checking = [
-  :straight_flush, :four_of_a_kind, :full_house, :flush, :straight,
-  :three_of_a_kind, :two_pair, :one_pair, :high_card, :none
+  :straight_flush, :four_of_a_kind, :full_house, :flush,
+  :straight, :three_of_a_kind, :two_pair, :one_pair,
+  :high_card, :none
 ]
 ```
   </div>
 
-  <div data-markdown class='fragment no-shadow' data-fragment-index='1'>
+  <div class='fragment'
+       data-fragment-index='1'
+       data-markdown>
 #### Code after
 
 ```ruby
@@ -1075,7 +1080,8 @@ end
 ```
   </div>
 
-  <aside class='notes' data-markdown>
+  <aside class='notes'
+         data-markdown>
 - dodatkowo można jeszcze to uprościć
 - meta-programming
   </aside>
@@ -1122,7 +1128,8 @@ end
 </section>
 
 <section data-transition='slide-in fade-out'>
-  <div data-markdown class='no-max-height middle-size no-shadow'>
+  <div class='midi-size'
+       data-markdown>
 ## Step 7 - Small object
 
 ```ruby
@@ -1154,13 +1161,15 @@ end
 ```
   </div>
 
-  <aside class='notes' data-markdown>
+  <aside class='notes'
+         data-markdown>
+Notes:
 - Move logic to separate class
   </aside>
 </section>
 
 <section data-transition='slide-in fade-out'>
-  <div data-markdown class='no-max-height no-shadow'>
+  <div data-markdown class='no-max-height'>
 ## Step 7 - Small object
 
 #### Create/modify `if` statement
@@ -1189,7 +1198,8 @@ end
 </section>
 
 <section data-transition='slide-in fade-out'>
-  <div data-markdown class='no-max-height no-shadow middle-size'>
+  <div class='middle-size'
+       data-markdown>
 ## Step 7 - Small object
 
 ```ruby
@@ -1315,7 +1325,7 @@ Repeat:
 <section data-transition='fade-in fade-out'>
   <h4 class='font-size-like-h1'>Names with meaning</h4>
 
-  <div data-markdown class='no-shadow'>
+  <div data-markdown>
 ```ruby
 n12
 n1n2
@@ -1332,7 +1342,7 @@ n1n2
 <section data-transition='fade-in fade-out'>
   <h4 class='font-size-like-h1'>Names with meaning</h4>
 
-  <div data-markdown class='no-shadow'>
+  <div data-markdown>
 ```ruby
 n12 = n1 ^ 2
 n1n2 = n1 * n2
@@ -1348,13 +1358,13 @@ n1n2 = n1 * n2
 
 <section data-transition='slide-in fade-out'>
   <h4 class='font-size-like-h1'>Names with meaning</h4>
-  <div data-markdown class='no-shadow'>
+  <div data-markdown>
 ```ruby
 field_ids
 ```
   </div>
   <div class='fragment fade-in-then-semi-out' data-fragment-index='1'>
-    <div data-markdown class='no-shadow'>
+    <div data-markdown>
 #### Bad
 ```ruby
 field_ids = Field.pluck(:number)
@@ -1362,7 +1372,7 @@ field_ids = Field.pluck(:number)
     </div>
   </div>
   <div class='fragment' data-fragment-index='2'>
-    <div data-markdown class='no-shadow'>
+    <div data-markdown>
 #### Good
 ```ruby
 field_ids = Field.pluck(:id)
@@ -1385,7 +1395,7 @@ field_ids = Field.pluck(:id)
 <section data-transition='slide-in fade-out'>
   <h4 class='font-size-like-h1'>Simple conditions/logic</h4>
 
-  <div data-markdown class='no-shadow'>
+  <div data-markdown>
 ```javascript
 if (this.isContext && !item.hasContextId) {} else {
   // more logic here
@@ -1415,14 +1425,14 @@ if (this.isContext && !item.hasContextId) {} else {
 <section data-transition='fade-in fade-out'>
   <h4 class='font-size-like-h1'>What does this code?</h4>
   <div style='visibility: hidden;'>
-    <div data-markdown class='no-shadow'>
+    <div data-markdown>
 ```basic
 m1 = 2
 ```
     </div>
   </div>
 
-  <div data-markdown class='no-shadow'>
+  <div data-markdown>
 ```basic
 For i = 1 To m1
 For j = 1 To m1
@@ -1446,14 +1456,14 @@ Next i
 <section data-transition='fade-in fade-out'>
   <h4 class='font-size-like-h1'>Is it helpful?</h4>
   <div class='fragment' data-fragment-index='1'>
-    <div data-markdown class='no-shadow'>
+    <div data-markdown>
 ```basic
 m1 = 2
 ```
     </div>
   </div>
 
-  <div data-markdown class='no-shadow'>
+  <div data-markdown>
 ```basic
 For i = 1 To m1
   For j = 1 To m1
@@ -1478,7 +1488,7 @@ Next i
 
 <section data-transition='slide-in fade-out'>
   <h4 class='font-size-like-h1'>Solution 1</h4>
-  <div data-markdown class='no-shadow'>
+  <div data-markdown>
 ```ruby
 array = [
   [1, 0],
@@ -1489,7 +1499,7 @@ array = [
 
   <div class='fragment' data-fragment-index='1'>
     <h4 class='font-size-like-h1'>Solution 2</h4>
-    <div data-markdown class='no-shadow'>
+    <div data-markdown>
 ```basic
 For i = 1 To m1
   For j = 1 To m1
@@ -1632,7 +1642,8 @@ Next i
 
  -->
 
-<section data-transition='slide-in fade-out' data-markdown>
+<section data-markdown
+         data-transition='slide-in fade-out'>
   <script type='text/template'>
 ### Books
 - [The Pragmatic Programmer: From Journeyman to Master - Andrew Hund, David Thomas](https://helion.pl/view/10301k/pragpv.htm#format/d)
@@ -1666,7 +1677,7 @@ Next i
 
 </section>
 
-<section class='pull-right last-section' data-background='images/unicorn-agnieszka.jpg'>
+<section class='pull-right last-section' data-background='images/shared/unicorn-agnieszka.jpg'>
   <img alt='Woman on Rails logotype' class='pure' data-src='images/womanonrails.png' height='94' width='300'>
   <h2 class='author-name'>Agnieszka Matysek</h2>
   <p class='author-mail'>agnieszka (at) fractalsoft (dot) org</p>
@@ -1679,13 +1690,13 @@ Next i
     </p>
     <p>
       <a href='https://twitter.com/womanonrails' rel='nofollow noopener' target='_blank' title='Twitter @womanonrails'>
-      <span class='zocial-twitter'></span> @womanonrails
-    </a>
+        <span class='zocial-twitter'></span> @womanonrails
+      </a>
     </p>
     <p>
       <a href='https://fractalsoft.org/pl' target='_blank' title='Programiści Ruby on Rails i JavaScript'>
         <span>
-          <img alt='Fractal Soft logo' class='pure' data-src='images/icons/svg/fractalsoft.svg' style='width: 25px;'>
+          <img alt='Fractal Soft logo' class='pure' data-src='images/icons/svg/fractalsoft.svg' style='width: 30px;'>
           Fractal Soft
         </span>
       </a>
@@ -1699,6 +1710,9 @@ Next i
     <a href='https://www.instagram.com/womanonrails' rel='nofollow noopener' target='_blank' title='Instagram'>
       <span class='zocial-instagram'></span>
     </a>
+    <a href='https://www.facebook.com/107403177317825/' rel='nofollow noopener' target='_blank' title='Facebook'>
+      <span class='zocial-facebook'></span>
+    </a>
     <a href='https://www.youtube.com/channel/UCudKRFuddrf8saaxUEoo0xQ' rel='nofollow noopener' target='_blank' title='YouTube'>
       <span class='zocial-youtube'></span>
     </a>
@@ -1711,8 +1725,7 @@ Next i
       </div>
     </div>
 
-    <script src='lib/js/head.min.js'></script>
-    <script src='js/reveal.min.js'></script>
+    <script src='js/reveal.js'></script>
 
     <script>
       // More info about config & dependencies:
@@ -1788,10 +1801,12 @@ Next i
         viewDistance: 3,
 
         dependencies: [
-          { src: 'plugin/markdown/marked.js' },
-          { src: 'plugin/markdown/markdown.js' },
-          { src: 'plugin/notes/notes.js', async: true },
-          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+          { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'plugin/search/search.js', async: true },
+          { src: 'plugin/zoom-js/zoom.js', async: true },
+          { src: 'plugin/notes/notes.js', async: true }
         ]
       });
     </script>

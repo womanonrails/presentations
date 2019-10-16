@@ -7,8 +7,9 @@
     <title>You can love TDD - short test story</title>
     <meta name='description' content='Testing is for everyone - presentation about what tests are and how to start testing'>
 
-    <link rel='stylesheet' href='css/reveal.min.css'>
-    <link rel='stylesheet' href='css/theme/fractalsoft_julia.css'>
+    <link rel='stylesheet' href='css/reset.css'>
+    <link rel='stylesheet' href='css/reveal.css'>
+    <link rel='stylesheet' href='css/theme/fractalsoft_julia.css' id='theme'>
 
     <!-- Printing and PDF exports -->
     <script>
@@ -231,17 +232,17 @@ assert_equal 2, average([1, 2, 3])
 </section>
 
 <section data-markdown>
-  <script type='text/template'>
-    <h2 class='font-size-like-h1'>Running tests</h2>
-    <img alt='How looks console when all tests passed - rainbow style.' class='pure' data-src='images/minitest-rainbow.png'>
-  </script>
+  <h2 class='font-size-like-h1'>Running tests</h2>
+  <img alt='How looks console when all tests passed - rainbow style.'
+       class='pure'
+       data-src='images/shared/testing/nopaperwork-minitest-rainbow.png'>
 </section>
 
 <section data-markdown>
-  <script type='text/template'>
-    <h2 class='font-size-like-h1'>Nyan Cat</h2>
-    <img alt='Running test in Nyan Cat style.' class='pure' data-src='images/nyancat.gif'>
-  </script>
+  <h2 class='font-size-like-h1'>Nyan Cat</h2>
+  <img alt='Running test in Nyan Cat style.'
+       class='pure'
+       data-src='images/shared/testing/rspec-nyan-cat.gif'>
 </section>
 
 <section data-markdown>
@@ -267,7 +268,7 @@ Note:
 <section>
   <section data-background='#fff'>
     <h2 class='text-dark-blue font-size-like-h1'>Test-driven development</h2>
-    <img alt='TDD' class='pure' data-src='images/tdd.gif'>
+    <img alt='TDD' class='pure' data-src='images/shared/tdd.gif'>
 
 
     <aside class='notes' data-markdown>
@@ -555,7 +556,8 @@ Finished in 0.01092 seconds (files took 0.57891 seconds to load)
   </script>
 </section>
 
-<section data-transition='fade-in slide-out' data-markdown>
+<section data-markdown
+         data-transition='fade-in slide-out'>
   <script type='text/template'>
     <h2 class='font-size-like-h1'>Work</h2>
 - Tester
@@ -637,8 +639,7 @@ Note:
       </div>
     </div>
 
-    <script src='lib/js/head.min.js'></script>
-    <script src='js/reveal.min.js'></script>
+    <script src='js/reveal.js'></script>
 
     <script>
       // More info about config & dependencies:
@@ -714,10 +715,12 @@ Note:
         viewDistance: 3,
 
         dependencies: [
-          { src: 'plugin/markdown/marked.js' },
-          { src: 'plugin/markdown/markdown.js' },
-          { src: 'plugin/notes/notes.js', async: true },
-          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+          { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'plugin/search/search.js', async: true },
+          { src: 'plugin/zoom-js/zoom.js', async: true },
+          { src: 'plugin/notes/notes.js', async: true }
         ]
       });
     </script>

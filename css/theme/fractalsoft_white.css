@@ -1,7 +1,7 @@
 @import url(../../lib/font/source-sans-pro/source-sans-pro.css);
 @import url(http://weloveiconfonts.com/api/?family=zocial);
 .hljs {
-  background: #eee;
+  background: #ddd;
   color: #000;
   display: block;
   overflow-x: auto;
@@ -45,6 +45,31 @@
 .hljs-title {
   color: #3669a2; }
 
+.reveal .slides section .fragment.current-only {
+  display: none;
+  opacity: 1;
+  visibility: visible; }
+
+.reveal .slides section .fragment.current-only.current-fragment {
+  display: block; }
+
+.line {
+  display: block;
+  border-left-color: #abcdef;
+  border-left-style: solid;
+  border-left-width: 5px;
+  border-right-color: #abcdef;
+  border-right-style: solid;
+  border-right-width: 5px; }
+  .line.focus {
+    background: #fff;
+    border-left-color: red;
+    border-left-style: solid;
+    border-left-width: 5px;
+    border-right-color: red;
+    border-right-style: solid;
+    border-right-width: 5px; }
+
 /* zocial */
 [class*="zocial-"]:before {
   font-family: 'zocial', sans-serif; }
@@ -67,6 +92,9 @@
   border: none;
   box-shadow: none;
   margin: 0; }
+
+.reveal section pre {
+  box-shadow: none !important; }
 
 .reveal section .links {
   margin-top: 100px; }
@@ -116,9 +144,6 @@
 .reveal section .no-max-height pre code {
   max-height: none; }
 
-.reveal section .no-shadow pre {
-  box-shadow: none; }
-
 .theme-box {
   display: inline-block;
   height: 10px;
@@ -135,6 +160,73 @@
 .author-mail,
 .author-name {
   color: #091c2b !important; }
+
+.fractalsoft-slide .row {
+  align-items: stretch;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%; }
+
+.fractalsoft-slide .column {
+  display: flex;
+  flex-basis: 100%;
+  flex-direction: column;
+  flex: 1; }
+
+.fractalsoft-slide .vertical-middle {
+  vertical-align: middle; }
+
+.fractalsoft-slide .fractalsoft-name {
+  color: #000;
+  font-family: Verdana, sans-serif !important;
+  font-size: 2.6em !important;
+  font-weight: 900;
+  margin-bottom: 0; }
+
+.railsgirls-name,
+.railsgirls-name a {
+  color: #d2232a !important; }
+
+.uppercase {
+  text-transform: uppercase; }
+
+.stamp {
+  border-radius: 1rem;
+  border: 0.25rem solid #555;
+  color: #555;
+  display: inline-block;
+  font-family: 'Courier';
+  font-size: 5rem !important;
+  font-weight: 800;
+  padding: 0.25rem 1rem;
+  text-transform: uppercase;
+  transform: rotate(-16deg);
+  -webkit-mask-image: url("../../images/shared/stamp-image.png");
+  -webkit-mask-size: 944px 604px;
+  mix-blend-mode: multiply; }
+
+.is-approved {
+  border-radius: 0;
+  border: 0.5rem solid #0A9928;
+  color: #0A9928;
+  transform: rotate(-16deg);
+  -webkit-mask-position: 13rem 6rem; }
+
+.fragment.bold.visible {
+  font-weight: 700; }
+
+.fragment.bold:not(.visible) {
+  font-weight: 400; }
+
+.fragment.unbold:not(.visible) {
+  font-weight: 700; }
+
+.fragment.unbold.visible {
+  font-weight: 400; }
+
+.huge-font {
+  font-size: 3.2em !important; }
 
 section.has-dark-background, section.has-dark-background h1, section.has-dark-background h2, section.has-dark-background h3, section.has-dark-background h4, section.has-dark-background h5, section.has-dark-background h6 {
   color: #fff; }

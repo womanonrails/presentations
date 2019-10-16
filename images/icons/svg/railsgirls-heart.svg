@@ -1,0 +1,12 @@
+<svg height='6' width='7' version='1.2' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'>
+  <rect id='box' fill='#d2232a' height='1' width='1' x='1' y='3' />
+  <use xlink:href='#box' x='1' y='1' />
+  <use xlink:href='#box' x='2' y='2' />
+  <use xlink:href='#box' x='3' y='1' />
+  <use xlink:href='#box' x='4' y='0' />
+  <use xlink:href='#box' x='2' y='-2' />
+  <rect id='one' fill='#d2232a' height='2' width='1' x='0' y='1' />
+  <use xlink:href='#one' x='6' y='0' />
+  <rect id='two' fill='#d2232a' height='1' width='2' x='1' y='0' />
+  <use xlink:href='#two' x='3' y='0' />
+</svg>
