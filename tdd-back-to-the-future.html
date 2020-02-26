@@ -4,8 +4,8 @@
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'>
 
-    <title>Quality Assurance - Based on TDD example</title>
-    <meta name='description' content='How to help with Quality Assurance from programmer perspective?'>
+    <title>TDD - Back to the Future</title>
+    <meta name='description' content='TDD helps with Quality Assurance from programmer perspective.'>
 
     <link rel='stylesheet' href='css/reset.css'>
     <link rel='stylesheet' href='css/reveal.css'>
@@ -30,9 +30,8 @@
 
 <section data-transition='slide-in slide-out'>
   <h1>
-    Quality Assurance - Based on TDD example
+    TDD - Back to the Future
   </h1>
-  <!-- Programmer helping with quality -->
 
   <p>
     <a href='https://womanonrails.com' target='_blank' title='Web development from woman perspective'>Agnieszka Małaszkiewicz</a> at <a href='https://fractalsoft.org' target='_blank' title='Ruby on Rails developers'>Fractal Soft</a>
@@ -48,90 +47,136 @@
      onclick="document.getElementById('theme').setAttribute('href','css/theme/fractalsoft_white.css'); return false;"></a>
 
   <aside class='notes' data-markdown>
-- 5 lat temu - projekt z 250 testów
-- 20 testów modelu - OK
-- reszta nie przechodzi
-- testy integracyjne out
-- reszta do naprawy
-- nowe testy do napisania
-- later: 3500 tests, 86% coverage
-- **przekonać, że test są fajne i potrzebne**
+- 1999 - _test-first programming_
+- extreme programming
+- 2002 - Kent Beck - _TDD by example_
+- reminds me old movie
   </aside>
+</section>
+
+<section data-background='images/tdd-back-to-the-future/car.jpg'
+         data-markdown>
+Notes:
+- 1985
+- Do you remember it?
+- look young
+- my childhood
+- TDD like this movie (old, out of date, boring)
 </section>
 
 <section data-background='images/quality-assurance/you.jpg'
          data-markdown>
 Notes:
-- Agnieszka Małaszkiewicz
-- nowe technologie w rolnictwie
-- 8 lat doświadczenia
-- team leader, mentor
-- współwłaściciel firmy Fractal Soft
-- zainteresowania: good code standard, refactoring, testing
-</section>
-
-<section data-background='images/shared/ruby.jpg'
-         data-markdown>
-Notes:
-- przykłady Ruby
-- pracuje i lubię ten język
-</section>
-
-<section data-background='images/quality-assurance/help.jpg'
-         data-markdown>
-Notes:
-- nie do opanowania, nie do ogarnięcia
-- strach przed zmianą
-- wołamy o pomoc
+- me in numbers
+- 5 years ago
 </section>
 
 <section data-transition='slide-in fade-out'>
   <h2 class='font-size-like-h1'>
-    Quality Asurance<br>
+    <span class='fragment strike' data-fragment-index='1'>250</span><br>
+    <span class='fragment' data-fragment-index='2'>20</span>
+  </h2>
+
+  <aside class='notes' data-markdown>
+- 250 tests
+- 20 tests pass
+- rest failed
+- legacy code - almost no tests
+- integration tests out
+- rest to be fixed
+- new tests to write
+- terrifying/terrific
+- Who agrees with me?
+- Anyone has been in this kind of situation?
+- group therapy
+  </aside>
+</section>
+
+<section data-transition='fade-in fade-out'>
+  <h2 class='font-size-like-h1'>3500</h2>
+
+  <aside class='notes' data-markdown>
+- 3500 tests
+- new functionality - TDD
+- old code - ongoing process
+- believe or not, but I enjoyed this process
+- test, refactoring
+  </aside>
+</section>
+
+<section data-transition='fade-in fade-out'>
+  <h2 class='font-size-like-h1'>86%</h2>
+
+  <aside class='notes' data-markdown>
+- coverage
+- I don't trust this metric
+  </aside>
+</section>
+
+<section data-background='images/tdd-back-to-the-future/transmission.jpg'
+         data-markdown>
+Notes:
+- based on my example and this presentation
+- convince you that TDD can be done
+- can be useful, beneficial
+- can be fun
+</section>
+
+<section data-background='images/tdd-back-to-the-future/ok.jpg'
+         data-markdown>
+Notes:
+- you look like that right now
+- kind of...
+- you don't look sure about that
+</section>
+
+<section data-background='images/tdd-back-to-the-future/start.jpg'
+         data-markdown>
+Notes:
+- shall we start?
+- I think so
+- let's check what we have here
+</section>
+
+<section data-transition='slide-in fade-out'>
+  <h2 class='font-size-like-h1'>
+    Quality Assurance<br>
     <span class='fragment' data-fragment-index='2'>?</span><br>
     <span class='fragment' data-fragment-index='1'>Tests</span>
   </h2>
 
   <aside class='notes' data-markdown>
+- this next couple of slides are for me
+- one clarification
 - QA is a way of **preventing** mistakes
-- Test - the way to check correctness of something
+- Test - the way to check the correctness of something
   </aside>
 </section>
 
 <section data-transition='slide-in fade-out'>
   <blockquote cite="https://www.neotys.com/blog/test-engineer-or-qa-engineer/">
-    “QA and Testing both have to make software better, but QA enhances the quality via an improvement of development process and testing enhances it via finding bugs.”
+    “QA and Testing both have to <span class="fragment bold highlight-blue">make software better</span>,
+     but QA enhances the quality via an <span class="fragment bold highlight-blue">improvement of development process</span>
+     and testing enhances it via <span class="fragment bold highlight-blue"> finding bugs</span>.”
   </blockquote>
   <aside class='notes' data-markdown>
-- oba poprawiają
-- QA - udoskanala proces developmentu
-- Testing - znajduje/sprawdza czy są błedy
+- both improve, make software better
+- QA - improve the development process as a whole
+- Testing - find bugs
   </aside>
 </section>
 
 <section data-transition='slide-in fade-out'>
   <h2 class='font-size-like-h1'>
-    Quality Asurance<br>
+    Quality Assurance<br>
     <span class='fragment' data-fragment-index='1'>></span><br>
     Tests
   </h2>
 
   <aside class='notes' data-markdown>
-- QA to więcej niż testing
-- testowanie to sposób na QA
+- QA more than testing
+- testing is a one way of having quality
   </aside>
-</section>
-
-<section data-transition='slide-in fade-out'>
-  <h2 class='font-size-like-h1'>
-    Two examples
-  </h2>
-
-  <aside class='notes' data-markdown>
-- 1. TDD jako sposób wytrwarzania oprogramowania
-- 2. Sposób na zrozumienie działania języka
-- 3. Refaktoring bez obaw
-  </script>
 </section>
 
 <section data-background='#fff'
@@ -142,12 +187,23 @@ Notes:
   <img alt='TDD' class='pure' data-src='images/shared/tdd.gif'>
 
   <aside class='notes' data-markdown>
-- tworzenie aplikacji sterowanej testami
+- Who knows what TDD is?
+- Who uses TDD on daily bases?
+- software development driven by tests
+- **1. TDD the way of Software Development**
+- **2. The way to better understand the programming language**
+- **3. Fearless refactoring**
 - Red - Green - Refactoring
-- piszemy test, sprawdzamy go
-- piszemy kod, prawdzamy go
-- upraszczamy, ulepszamy
+- write test -> check it
+- write code -> check it
+- simplify, refactor, improve
   </aside>
+</section>
+
+<section data-transition='slide-in fade-out'>
+  <h2 class='font-size-like-h1'>
+    Two examples
+  </h2>
 </section>
 
 <section>
@@ -158,9 +214,10 @@ Notes:
     <p>Follow your test</p>
 
     <aside class='notes' data-markdown>
-- napisanie 1 metody
-- kod ręki pokerowej
-- kolory i figury znormalizowane do liczb
+- write one method using TDD
+- poker hand
+- the same color/the same suit
+- cards normalized (rank, color/suit)
 - RSpec
     </aside>
   </section>
@@ -213,8 +270,8 @@ Finished in 0.01294 seconds (files took 0.75094 seconds to load)
 <span class='fragment current-only' data-code-focus='12'></span>
 
 Notes:
-- test nie przechodzi
-- informacja `undefined method 'flush?'`
+- test failed
+- `undefined method 'flush?'`
     </script>
   </section>
 
@@ -259,8 +316,9 @@ Finished in 0.01024 seconds (files took 0.66129 seconds to load)
 <span class='fragment current-only' data-code-focus='14'></span>
 
 Notes:
-- nie trzeba myśleć - autopilot
-- utrzymujemy flow
+- autopilot
+- don't need to think
+- just flow
     </script>
   </section>
 
@@ -304,8 +362,7 @@ Finished in 0.05983 seconds (files took 0.83267 seconds to load)
 <span class='fragment current-only' data-code-focus='11-12'></span>
 
 Notes:
-- metoda zwraca `nil` zamiast `true`
-- `nil` to jak `null`
+- `nil` instead of `true`
     </script>
   </section>
 
@@ -340,10 +397,12 @@ Finished in 0.01189 seconds (files took 0.65796 seconds to load)
 
     <aside class='notes'
            data-markdown>
-- najprostszy kod spełnieniający test: `true`
-- refaktoring: kod i test powielają `true`
-- zastosujemy **triangulację**
-- pomiar/test z jednej i z drugiej strony, wynik na przecięciu
+- the simplest code: `true`
+- refactoring: code and test have both `true`
+- **triangulation**
+- two object you can find position of third
+- or distance between two elements
+- crossing lines
     </aside>
   </section>
 
@@ -437,8 +496,8 @@ Finished in 0.01092 seconds (files took 0.57891 seconds to load)
     </div>
 
     <aside class='notes' data-markdown>
-- zostawiamy unikalne elementy
-- `size == 1` to jeden kolor
+- take only unique elements
+- `size == 1` one color
     </aside>
   </section>
 
@@ -462,7 +521,7 @@ flush?(['#fff', '#fff', '#fff'])
 
 Notes:
 - power of Ruby
-- power of simplisity
+- power of simplicity
     </script>
   </section>
 
@@ -475,9 +534,9 @@ Notes:
 - assurance <!-- .element: class="fragment" -->
 
 Notes:
-- testy nas prowadzą
-- dostosowujemy kroki TDD do swoich potrzeb, raz większe, raz mniejsze
-- pewność działania kodu
+- tests give us the ways(road)
+- step size (smaller, bigger steps)
+- sure, that code is working
     </script>
   </section>
 </section><!-- Example 1 -->
@@ -492,8 +551,8 @@ Trust your tests & do refactoring
 
 Notes:
 - Mini Test
-- mamy testy -> piszemy kod
-- usuwamy kod i co dalej
+- have tests -> write code
+- like removing code to do refactoring
     </script>
   </section>
 
@@ -529,11 +588,13 @@ end
 </div>
 
 Notes:
-- pusta klasa `BaseClass`
-- klasa `Item` dziedziczącą po `BaseClass`
-- atrybuty instancji klasy `price` i `name`
-- gettery i settery
-- dwie metody do validacji
+- empty `BaseClass`
+- `Item` class inherits `BaseClass`
+- stay with the same interface
+- instance variables `price` and `name`
+- getters & setters, reader & writer
+- 2 validation methods
+- it tastes like rails
     </script>
   </section>
 
@@ -602,8 +663,9 @@ end
 </div>
 
 Notes:
-- testy się nie uruchamiają
-- brakuje metody `validates_presence_of`
+- tests are not working
+- missing method for Item class: `validates_presence_of`
+- class method
     </script>
   </section>
 
@@ -673,7 +735,9 @@ end
 </div>
 
 Notes:
-- podobne kroki
+- similar steps
+- we know what happened
+- we could change the size of the step
     </script>
   </section>
 
@@ -739,7 +803,8 @@ NoMethodError: undefined method `valid?' for #<Item:0x0000000001a731d0 @price=ni
 <span class='fragment current-only' data-code-focus='12'></span>
 
 Notes:
-- test uruchmia się
+- test is running
+- failing
     </script>
   </section>
 
@@ -836,8 +901,8 @@ Expected false to be truthy.
 <span class='fragment current-only' data-code-focus='11'></span>
 
 Notes:
-- logika
-- w linii 15 oczekujemy `false` zamiast `true`
+- time for logic
+- line 15 expect `false` to be truthy
     </script>
   </section>
 
@@ -877,9 +942,9 @@ end
 <span class='fragment current-only' data-code-focus='10'></span>
 
 Notes:
-- walidacja zwraca `false`
-- nie ma `["price must be number"]`
-- banalna implementacja
+- validation returns `false`
+- missing `["price must be number"]`
+- trivial implementation
     </script>
   </section>
 
@@ -930,11 +995,11 @@ Expected false to be truthy.
 1 runs, 4 assertions, 1 failures, 0 errors, 0 skips
 ```
 <span class='fragment current-only' data-code-focus='6'></span>
+<span class='fragment current-only' data-code-focus='12'></span>
 <span class='fragment current-only' data-code-focus='11'></span>
 
 Notes:
-- linia 18
-- większy skok
+- line 18
     </script>
   </section>
 
@@ -972,8 +1037,8 @@ end
 <span class='fragment current-only' data-code-focus='13'></span>
 
 Notes:
-- sprawdzać czy `price` jest liczbą
-- sprawdzać czy `name` nie jest pustym stringiem
+- check if `price` is a number
+- check if `name` is not empty string
     </script>
   </section>
 
@@ -1027,9 +1092,9 @@ Finished in 0.000730s, 1369.7898 runs/s, 12328.1085 assertions/s.
 ```
 
 Notes:
-- test przechodzi
-- 5-10 min - działający kod
-- czas na refaktoring
+- finally, test pass
+- 5-10 min - working code
+- time for refactoring
   </section>
 
   <section class='no-max-height'
@@ -1063,12 +1128,12 @@ end
 <span class='fragment current-only' data-code-focus='2-6'></span>
 
 Notes:
-- lista rzeczy todo
-- **zmienna instancji klasy zamiast geterów**
-- **implementacja errorów w metodzie `valid?`**
-- **nie używamy metod klasy**
-- **nie elastyczne** - sprawdzić np. `price` jest `blank`
-- naruszamy zasadę "Open Close"
+- TODO list
+- **instance variable instead of getters/readers**
+- **logic for errors inside `valid?` method**
+- **don't use class method**
+- **elasticity** - how check `price` is `blank`
+- "Open Close" rule
     </script>
   </section>
 
@@ -1077,8 +1142,8 @@ Notes:
     <script type='text/template'>
 ## TODO list
 
-- use Getters <!-- .element: class="fragment bold highlight-blue" -->
-- Single Resposibility Principle - `valid?` method
+- use getters <!-- .element: class="fragment bold highlight-blue" -->
+- Single Responsibility Principle - `valid?` method
 - use Class Methods
 - more abstraction
 - Open - Close rule
@@ -1089,7 +1154,7 @@ Notes:
            data-markdown
            data-transition='slide-in fade-out'>
     <script type='text/template'>
-#### Use Getters
+#### Use getters
 
 ```ruby
 class BaseClass
@@ -1112,7 +1177,7 @@ class BaseClass
 
   private
 
-  attr_accessor :name, :price, :errors_list
+  attr_accessor :errors_list
 end
 ```
 <span class='fragment current-only' data-code-focus='21'></span>
@@ -1120,7 +1185,7 @@ end
 <span class='fragment current-only' data-code-focus='16'></span>
 
 Notes:
-- sprawdzamy testy po każdej zmianie
+- check tests after each change
     </script>
   </section>
 
@@ -1129,8 +1194,8 @@ Notes:
     <script type='text/template'>
 ## TODO list
 
-- **use Getters** <!-- .element: class="fragment strike unbold" -->
-- Single Resposibility Principle - `valid?` method
+- **use getters** <!-- .element: class="fragment strike unbold" -->
+- Single Responsibility Principle - `valid?` method
 - use Class Methods <!-- .element: class="fragment bold highlight-blue" -->
 - more abstraction
 - Open - Close rule
@@ -1166,7 +1231,7 @@ class BaseClass
 
   private
 
-  attr_accessor :name, :price, :errors_list
+  attr_accessor :errors_list
 end
 ```
 <span class='fragment current-only' data-code-focus='2-5'></span>
@@ -1177,8 +1242,8 @@ end
 <span class='fragment current-only' data-code-focus='13'></span>
 
 Notes:
-- tablicę atrybutów
-- możliwe **presence** na `price`
+- allow table of attributes
+- it is possible to do **presence** on `price`
     </script>
   </section>
 
@@ -1215,7 +1280,7 @@ class BaseClass
 
   private
 
-  attr_accessor :name, :price, :errors_list
+  attr_accessor :errors_list
 end
 ```
 <span class='fragment current-only' data-code-focus='7-10'></span>
@@ -1224,9 +1289,9 @@ end
 <span class='fragment current-only' data-code-focus='14-19'></span>
 
 Notes:
-- DRY - **powieliliśmy kod**
-- `valid?` wie za dużo
-- nowa reguła - zmiana `valid?`
+- DRY - **duplication**
+- `valid?` knows too much
+- new validation rule - change in `valid?`
     </script>
   </section>
 
@@ -1235,15 +1300,16 @@ Notes:
     <script type='text/template'>
 ## TODO list
 
-- ~~use Getters~~
-- Single Resposibility Principle - valid? method <!-- .element: class="fragment bold highlight-blue" data-fragment-index="3" -->
+- ~~use getters~~
+- Single Responsibility Principle - valid? method <!-- .element: class="fragment bold highlight-blue" data-fragment-index="3" -->
 - use Class Methods <!-- .element: class="fragment strike unbold" data-fragment-index="1" -->
 - more abstraction
 - Open - Close rule
 - code duplication <!-- .element: class="fragment" data-fragment-index="2" -->
 
 Notes:
-- Logika walidatora w osobnej klasie
+- extract logic from `valid?`
+- validation logic in new class
     </script>
   </section>
 
@@ -1275,10 +1341,11 @@ end
 <span class='fragment current-only' data-code-focus='12-14'></span>
 
 Notes:
-- odpowiedzialność tylko walidacją
-- nie ma testu
-- jeżeli działa w klasie bazowej `BaseClass` to jest poprawna
-- można dopisać testy _post mortem_ (po ptokach po naszemu)
+- responsible only for validation
+- **don't have tests**
+- if works in base class, then should work here
+- tests _post mortem_, after code
+- no new logic, logic extraction
     </script>
   </section>
 
@@ -1315,7 +1382,7 @@ class BaseClass
 
   private
 
-  attr_accessor :name, :price, :errors_list
+  attr_accessor :errors_list
 end
 ```
 <span class='fragment current-only' data-code-focus='2'></span>
@@ -1323,8 +1390,9 @@ end
 <span class='fragment current-only' data-code-focus='14-16'></span>
 
 Notes:
-- metaprogramowanie
+- metaprogramming
 - `item.valid?(send(item.name))`
+- tricky, need reader in base class
     </script>
   </section>
 
@@ -1354,6 +1422,10 @@ end
 <span class='fragment current-only' data-code-focus='1'></span>
 <span class='fragment current-only' data-code-focus='9'></span>
 <span class='fragment current-only' data-code-focus='12-14'></span>
+
+Notes:
+- similar code for next validator
+- more extraction - base validation class
     </script>
   </section>
 
@@ -1387,7 +1459,7 @@ class BaseClass
 
   private
 
-  attr_accessor :name, :price, :errors_list
+  attr_accessor :errors_list
 end
 ```
 <span class='fragment current-only' data-code-focus='7'></span>
@@ -1395,9 +1467,9 @@ end
 <span class='fragment current-only' data-code-focus='14-16'></span>
 
 Notes:
-- jedna zmienna klasy `@@validators`
-- mniej duplikacji
-- logika w osobnych klasach
+- one variable `@@validators`
+- less duplication
+- logic in separate classes
     </script>
   </section>
 
@@ -1438,12 +1510,13 @@ class BaseClass
 end
 ```
 <span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='24'></span>
 <span class='fragment current-only' data-code-focus='15'></span>
 <span class='fragment current-only' data-code-focus='16'></span>
 <span class='fragment current-only' data-code-focus='19'></span>
 
 Notes:
-- zmienna instancji, a nie klasy
+- instance variable, instead of class variable
 - `self.class.instance_variable_get(:@validators)`
     </script>
   </section>
@@ -1453,7 +1526,7 @@ Notes:
     <script type='text/template'>
 ## TODO list
 
-- ~~use Getters~~
+- ~~use getters~~
 - Single Resposibility Principle - valid? method <!-- .element: class="fragment strike unbold" -->
 - ~~use Class Methods~~
 - more abstraction <!-- .element: class="fragment strike" -->
@@ -1462,8 +1535,8 @@ Notes:
 - more ??? <!-- .element: class="fragment fade-in" -->
 
 Notes:
-- metoda `valid?` bardziej stabilna O-C
-- dziedziczenie, konwencja, metaprogamowanie
+- `valid?` more stable O-C
+- inheritance, convention, metaprogramming
     </script>
   </section>
 
@@ -1492,11 +1565,11 @@ end
 ```
 
 Notes:
-- naiwna implementacja
-- **zaleta** - działa
-- **zaleta** - zrozumiała
-- **wada** - trudna do utrzymania
-- **wada** - nieadaptuje się do zmian
+- trivial implementation
+- **good** - is working
+- **good** - readable
+- **bad** - hard to maintenance
+- **bad** - not agile (no adapting to changes)
   </section>
 
   <section class='middle-size'
@@ -1531,9 +1604,9 @@ end
 ```
 
 Notes:
-- elastyczny kod
-- ławiejsza rozszerzalność
-- ciągle czytelny
+- more agile, elastic
+- easy to expand
+- still readable, maybe less
   </section>
 </section><!-- Example 2 -->
 
@@ -1551,12 +1624,13 @@ Notes:
 - can be fun <!-- .element: class="fragment" -->
 
 Notes:
-- TDD (pisaniu testów przed kodem) - pokrycie kodu
-- TDD pomaga
-- żółw i zając
-- żółw idzie do przodu powoli, ale systematycznie
+- TDD (tests before code) - better coverage
+- TDD helps
+- turtle and hare
+- turtle slow but step by step to goal
+- hare fast on beginning
 - test coverage
-- fail fast - wycofać się z rozwiązania jeżeli nie działa
+- fail fast - not working you can revert it fast
   </script>
 </section>
 
@@ -1564,7 +1638,7 @@ Notes:
   <h2 class='font-size-like-h1'>
     Running tests
   </h2>
-  <img alt='How looks console when all tests passed - rainbow style.'
+  <img alt='How looks console when all tests passed - rainbow style'
        class='pure'
        data-src='images/shared/testing/nopaperwork-minitest-rainbow.png'>
 </section>
@@ -1573,22 +1647,21 @@ Notes:
   <h2 class='font-size-like-h1'>
     Nyan Cat
   </h2>
-  <img alt='Running test in Nyan Cat style.'
+  <img alt='Running test with Nyan Cat style'
        class='pure'
        data-src='images/shared/testing/rspec-nyan-cat.gif'>
 </section>
 
-<section data-background='images/quality-assurance/piggy-bank.jpg'
-         data-markdown
-         data-transition='slide-in fade-out'>
-Notes:
-- mój projekt jest inny
-- testy jak z oszczędzaniem
-- plan dalekosiężny
-- krótkowzroczne, instant gratification
-- to co zaoszczędzisz teraz, stracisz później
+<section data-transition='slide-in fade-out'>
+  <h2 class='font-size-like-h1'>
+    My project is different...
+  </h2>
+  <aside class='notes' data-markdown>
+- excuse
+- can't imagine TDD in your project
+- start small - from kata
+  </aside>
 </section>
-
 
 <section data-background='#fff'
          data-transition='slide-in fade-out'>
@@ -1606,9 +1679,50 @@ Notes:
     </a>
   </p>
   <aside class='notes' data-markdown>
-- to były ćwiczenia
-- sami możecie poćwiczyć
-- różne języki
+- exercise
+- different languages (Java, Scala, Go, Rust)
+  </aside>
+</section>
+
+<section data-transition='slide-in fade-out'>
+  <img alt='Saving trap'
+       class='pure'
+       data-src='images/tdd-back-to-the-future/saving.png'>
+  <aside class='notes' data-markdown>
+- don't save on tests
+- stiupid saving
+- short term saving
+- more troubles in future
+  </aside>
+</section>
+
+<section data-transition='slide-in fade-out'>
+  <img alt='Angry hare'
+       class='pure'
+       data-src='images/tdd-back-to-the-future/hare.png'>
+  <aside class='notes' data-markdown>
+- don't be like hare
+- fast at the beginning
+- but slow later, leazy
+  </aside>
+</section>
+
+<section data-transition='slide-in fade-out'>
+  <img alt='Happy turtle'
+       class='pure'
+       data-src='images/tdd-back-to-the-future/turtle.svg'>
+  <aside class='notes' data-markdown>
+- be like a turtle
+- step by step to achieve your goal
+- good code quality
+  </aside>
+</section>
+
+<section data-background='images/tdd-back-to-the-future/ninja-turtles.jpg'
+         data-transition='slide-in fade-out'>
+
+  <aside class='notes' data-markdown>
+- Teenage Mutant Ninja Turtles
   </aside>
 </section>
 
@@ -1655,16 +1769,11 @@ Notes:
       Rails Girls
     </a>
   </h2>
-</section>
-
-<section data-background='#fff'
-         data-transition='slide-in fade-out'>
-  <img alt='CoderDojo logo' class='pure' data-src='images/shared/coderdojo.png'>
-</section>
-
-<section data-background='#fff'
-         data-transition='slide-in fade-out'>
-  <img alt='CoderDojo Poland logo' class='pure' data-src='images/shared/coderdojo-poland.png'>
+  <aside class='notes' data-markdown>
+- I support RG
+- What is RG?
+- bring women in IT
+  </aside>
 </section>
 
 <section data-markdown
@@ -1684,34 +1793,20 @@ Notes:
   </h3>
 </section>
 
-<section class='left-list'
-         data-markdown
-         data-transition='slide-in fade-out'>
-### Ruby Testing Tools
-
-- [Minitest](https://github.com/seattlerb/minitest)
-- [RSpec](https://rspec.info/)
-- [Capybara](https://teamcapybara.github.io/capybara/)
-- [Cucumber](https://cucumber.io/)
-- [Bacon](https://github.com/chneukirchen/bacon)
-- [Riot](https://github.com/thumblemonks/riot)
-- [Assert](https://github.com/redding/assert)
-- [Fix](https://github.com/fixrb/fix)
-</section>
-
 <section data-markdown
-         data-transition='slide-in fade-out'>
-### Books
-- [Test Driven Development: By Example - Ken Beck](https://helion.pl/view/10301k/tddszt.htm#format/d)
-- [The Pragmatic Programmer: From Journeyman to Master - Andrew Hund, David Thomas](https://helion.pl/view/10301k/pragpv.htm#format/d)
-- [Clean Code: A Handbook of Agile Software Craftsmanship - Robert C. Martin](https://helion.pl/view/10301k/czykov.htm#format/d)
-- [Design Patterns in Ruby - Russ Olsen](https://helion.pl/view/10301k/rubywz.htm#format/d)
-- [Practical Object-Oriented Design in Ruby: An Agile Primer - Sandi Metz](https://amzn.to/37WN3hl)
-</section>
+         data-transition='slide-in fade-out'
+         style='font-size: 20pt; text-align: left;'>
+### Bibliography
 
-<section data-markdown
-         data-transition='slide-in fade-out'>
-### Presentations
+#### Books
+- [Test Driven Development: By Example - Ken Beck](https://amzn.to/2HXdSHy)
+- [Working Effectively with Legacy Code - Michael Feathers](https://amzn.to/2v36esF)
+- [Clean Code: A Handbook of Agile Software Craftsmanship - Robert C. Martin](https://amzn.to/395gxuM)
+- [Design Patterns in Ruby - Russ Olsen](https://amzn.to/32qK8fQ)
+- [Practical Object-Oriented Design in Ruby: An Agile Primer - Sandi Metz](https://amzn.to/2Vk9Vox)
+- [The Pragmatic Programmer: From Journeyman to Master - Andrew Hund, David Thomas](https://amzn.to/2TgmfTR)
+
+#### Presentations
 - [All the Little Things by Sandi Metz](https://www.youtube.com/watch?v=8bZh5LMaSmE)
 - [Nothing is Something by Sandi Metz](https://www.youtube.com/watch?v=OMPfEXIlTVE)
 - [Best Ruby on Rails refactoring talks](https://infinum.co/the-capsized-eight/best-ruby-on-rails-refactoring-talks)
@@ -1735,7 +1830,7 @@ Notes:
     </a>
     </p>
     <p>
-      <a href='https://fractalsoft.org/pl' target='_blank' title='Programiści Ruby on Rails i JavaScript'>
+      <a href='https://fractalsoft.org/pl' target='_blank' title='Ruby on Rails and JavaScript programmers'>
         <span>
           <img alt='Fractal Soft logo' class='pure' data-src='images/icons/svg/fractalsoft.svg' style='width: 30px;'>
           Fractal Soft
