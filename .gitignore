@@ -13,3 +13,4 @@ npm-debug.log
 out/
 package-lock.json
 tmp/**
+.vscode/
