@@ -22,3 +22,4 @@
 - [Occupational Burnout Syndrome - How to still feel passion, even after years of programming?](https://womanonrails.com/presentations/occupational-burnout-syndrome.html)
 - [About Occupational Burnout Syndrome in 15 minutes](https://womanonrails.com/presentations/15min-about-burnout-syndrome.html)
 - [How to focus? - Improve your efficiency](https://womanonrails.com/presentations/15min-about-how-to-focus.html)
+- [Pokaż się z najlepszej strony - Jak przygotować swój profil do pracy w IT](https://womanonrails.com/presentations/your-it-best-side.html)
