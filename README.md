@@ -10,7 +10,7 @@
 ## Ruby
 
 - [Pattern matching in Ruby](https://womanonrails.com/presentations/ruby-pattern-matching.html)
-
+- [Ruby Rendezvous: Method Call, Proc, and Beyond](https://womanonrails.github.io/presentations/ruby-rendezvous.html#/)
 
 ## Refactoring
 
