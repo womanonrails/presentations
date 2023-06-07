@@ -1,0 +1,1309 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+
+    <title>Ruby Rendezvous: Method Call, Proc, and Beyond</title>
+    <meta name='description' content="On a daily basis, Ruby is our trusted companion, and we often take its conventions for granted in our work. However, let's take a moment to pause and ponder. Let's step away from big projects and dive into the world of small Ruby syntax gems. In this presentation, we will explore the art of method calling in Ruby, uncover the versatility of Procs, and discover other hidden treasures within the language.">
+
+    <link rel='stylesheet' href='css/reset.css'>
+    <link rel='stylesheet' href='css/reveal.css'>
+    <link rel='stylesheet' href='css/theme/fractalsoft_white.css' id='theme'>
+
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class='reveal'>
+      <div class='slides'>
+
+<section data-transition='slide-in slide-out'>
+  <h1>
+    Ruby Rendezvous
+  </h1>
+  <h3>Method Call, Proc, and Beyond</h3>
+
+  <p>
+    <a href='https://womanonrails.com' target='_blank' title='Web development from woman perspective'>Agnieszka Małaszkiewicz</a> at <a href='https://fractalsoft.org' target='_blank' title='Ruby on Rails developers'>Fractal Soft</a>
+  </p>
+
+  <a class='theme-box'
+     id='theme-black'
+     href="#"
+     onclick="document.getElementById('theme').setAttribute('href','css/theme/fractalsoft_black.css'); return false;"></a>
+  <a class='theme-box'
+     id='theme-white'
+     href="#"
+     onclick="document.getElementById('theme').setAttribute('href','css/theme/fractalsoft_white.css'); return false;"></a>
+
+  <aside class='notes' data-markdown>
+- thanks for organizers for having me
+- thanks for coming here today
+- normally I talk to fast so I start slow today
+- Did you know this is my second presentation at this stage?
+  </aside>
+</section>
+
+<section data-transition='slide-in slide-out'>
+  <h3>
+    Mastering Ruby's Methodology: Unleashing the Power of Procs, Mapping Techniques, and Rubinius' to_proc Method
+  </h3>
+
+  <aside class='notes' data-markdown>
+- what presentation is about
+- chat GPT
+  </aside>
+</section>
+
+<section data-transition='slide-in slide-out'>
+  <h3>
+    Unlocking the Potential of Ruby: Deep Dive into Method Invocation, Proc Utilization, and the Intricacies of map and to_proc
+  </h3>
+
+  <aside class='notes' data-markdown>
+- now you know what we will discuss on this presentation
+  </aside>
+</section>
+
+<section data-transition='slide-in slide-out'>
+  <h2>
+    Ruby Rendezvous: Method Call, Proc, and Beyond
+  </h2>
+
+  <aside class='notes' data-markdown>
+- current title
+- interesting
+  </aside>
+</section>
+
+<section data-background='#fff'
+         data-transition='slide-in fade-out'>
+  <img alt='TDD' class='pure' data-src='images/ruby-rendezvous/wrocloverb-2020.png'>
+  <aside class='notes' data-markdown>
+- second time as a speaker on Wroclove-rb
+- first time as ghost speaker at 2020 pandemic year
+- this time for real
+- funny is that people congratulate me my first presentation here in Wrocław
+  </aside>
+</section>
+
+<section data-transition='slide-in fade-out'>
+  <h2 class='font-size-like-h1'>
+    I joined Ruby community when...
+  </h2>
+  <h4>
+    <span class='fragment' data-fragment-index='1'>Ruby 1.9.3</span><br>
+    <span class='fragment' data-fragment-index='2'>Rails 3.0</span>
+  </h4>
+
+  <aside class='notes' data-markdown>
+- I joined Ruby community when...
+- It was about 2011/2012
+- over 10 years - nostalgic
+- I started working when the first edition was create
+  </aside>
+</section>
+
+<section data-background='#fff'
+         data-transition='slide-in fade-out'>
+  <img alt='TDD' class='pure' data-src='images/ruby-rendezvous/old-wrocloverb-logo.jpg'>
+  <aside class='notes' data-markdown>
+- I remember the old logo
+- I wasn't on all editions
+- Do we have here someone who was on all editions? Besides Andrzej
+  </aside>
+</section>
+
+<section data-background='#fff'
+         data-transition='slide-in fade-out'>
+  <img alt='TDD' class='pure' data-src='images/ruby-rendezvous/wat.jpg'>
+  <p class='fragment' data-fragment-index='1'>
+    A lightning talk by<br><strong>Gary Bernhardt</strong> from <strong>CodeMash</strong> 2012
+  </p>
+  <aside class='notes' data-markdown>
+- I also remember the Wat presentation
+- anyone know that?
+- even now it is still funny for me
+- links do everything in the end
+- back then I was thinking Wow! That's so fun!
+- I want to find more of these Ruby flavors
+- here we are
+  </aside>
+</section>
+
+<section data-markdown
+           data-transition='slide-in fade-out'>
+  <script type='text/template'>
+#### Ruby 3.2.1
+
+```ruby
+a = a
+#  => nil
+
+ruby has no bare words
+(irb):2:in `<main>': undefined local variable or method `words' for main:Object (NameError)
+        from /home/agnieszka/.rvm/rubies/ruby-3.2.1/lib/ruby/gems/3.2.0/gems/irb-1.6.2/exe/irb:11:in `<top (required)>'
+        from /home/agnieszka/.rvm/rubies/ruby-3.2.1/bin/irb:31:in `load'
+        from /home/agnieszka/.rvm/rubies/ruby-3.2.1/bin/irb:31:in `<main>
+
+def method_missing(*args); args.join(' '); end
+(irb):3: warning: redefining Object#method_missing may cause infinite loop
+(irb):3:in `join': stack level too deep (SystemStackError)
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='4'></span>
+<span class='fragment current-only' data-code-focus='5'></span>
+<span class='fragment current-only' data-code-focus='10'></span>
+<span class='fragment current-only' data-code-focus='11'></span>
+
+Notes:
+- let's quickly check wat lightning talk in Ruby 3.2.1
+- a = a still working the same
+- method_missing may cause infinite loops
+- bare words trick - is not working anymore - that's sad
+- it's not working in Ruby 2.6.4
+  </script>
+</section>
+
+<section data-markdown
+           data-transition='slide-in fade-out'>
+  <script type='text/template'>
+```ruby
+"ruby" "has" "no" "bare" "words"
+#  => "rubyhasnobarewords"
+
+%q{ruby} "has" 'no' "bare" 'words'
+#  => "rubyhasnobarewords"
+
+"ruby" "has" "no" "bare"\
+'words'
+#  => "rubyhasnobarewords"
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='4'></span>
+<span class='fragment current-only' data-code-focus='7-8'></span>
+
+Notes:
+- but in Ruby 3.2 we can do this
+- we can mix different ways of declaring String
+- we can do it in multiple lines
+- combine multiple string by space between them without any additional method
+- we can do this is any Ruby
+- string concatenation is working also in Python, C, C++
+  </script>
+</section>
+
+<section data-markdown
+           data-transition='slide-in fade-out'>
+  <script type='text/template'>
+#### parse.y
+
+```bash
+string		: tCHAR
+          | string1
+          | string string1
+              {
+              /*%%%*/
+                 $$ = literal_concat(p, $1, $2, &@$);
+              /*% %*/
+              /*% ripper: string_concat!($1, $2) %*/
+              }
+          ;
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='3'></span>
+<span class='fragment current-only' data-code-focus='6'></span>
+
+Notes:
+- why it is possible?
+- lets go to file `parse.y` in Ruby source for implementation details
+- in next slides will be even worst ;)
+- which has notation similar to BNF - Backus-Naur Form
+- which is used by Yacc (Yet Another Compiler-Compiler) to parser generation
+- Output is generated in C
+- what it mean?
+- A Ruby string is either a tCHAR (e.g. ?q),
+- a string1 (e.g. "q", 'q', or %q{q}),
+- or a recursive definition of the concatenation of string1 and string itself,
+- which results in string expressions like "foo" "bar" being concatenated
+- when `%q{}` is not on the beginning `%` is considered a modulus operator
+  </script>
+</section>
+
+<section data-transition='slide-in fade-out'>
+  <h2 class='font-size-like-h1'>
+    Call a method in Ruby
+  </h2>
+
+  <aside class='notes' data-markdown>
+- I started to think what else can be interesting
+- calling method in ruby
+  </aside>
+</section>
+
+<section data-background='#fff'
+         data-transition='slide-in fade-out'>
+  <img alt='TDD' class='pure' data-src='images/ruby-rendezvous/12-ways-to-call-a-method-in-ruby.png'>
+  <aside class='notes' data-markdown>
+- grate article by Gregory Witek
+- but I know two more ways to call method in Ruby
+  </aside>
+</section>
+
+<section data-markdown
+           data-transition='slide-in fade-out'>
+  <script type='text/template'>
+```ruby
+class User
+  def initialize(name)
+    @name = name
+  end
+
+  def hello
+    puts "Hello, #{@name}!"
+  end
+
+  def method_missing(_)
+    hello
+  end
+end
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='6'></span>
+
+Notes:
+- I will use the same code like Gregory in his article
+  </script>
+</section>
+
+<section data-markdown
+           data-transition='slide-in fade-out'>
+  <script type='text/template'>
+```ruby
+user = User.new('Agnieszka')
+
+user.hello
+# Hello, Agnieszka!
+#  => nil
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='3'></span>
+
+Notes:
+- declare instance
+- and call method
+- we all know that
+  </script>
+</section>
+
+<section data-background='#fff'
+         data-transition='slide-in fade-out'>
+  <img alt='TDD' class='pure' data-src='images/ruby-rendezvous/ruby-archaeology.png'>
+  <aside class='notes' data-markdown>
+- two more calls
+- first from Ruby Archaeology talk by Nick Schwaderer
+- btw I like the title Ruby detective which he use
+- this is what we will do a little bit today
+- from Merb framework
+- Who remember merb?
+  </aside>
+</section>
+
+<section data-markdown
+           data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### Colons call
+
+```ruby
+user = User.new('Agnieszka')
+
+user::hello
+# Hello, Agnieszka!
+#  => nil
+```
+<span class='fragment current-only' data-code-focus='3'></span>
+
+Notes:
+- colons call
+- 13 way of calling method
+  </script>
+</section>
+
+<section data-markdown
+           data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### Difference between :: and .
+
+```ruby
+user::hello
+# Hello, Agnieszka!
+#  => nil
+
+user.hello
+# Hello, Agnieszka!
+#  => nil
+
+Workplace::User
+#  => Workplace::User
+
+Workplace.User
+# (irb):62:in `<main>': undefined method `User' for Workplace:Module (NoMethodError)
+# 	from /home/agnieszka/.rvm/rubies/ruby-3.0.3/lib/ruby/gems/3.0.0/gems/irb-1.3.5/exe/irb:11:in `<top (required)>'
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='5'></span>
+<span class='fragment current-only' data-code-focus='9'></span>
+<span class='fragment current-only' data-code-focus='12'></span>
+<span class='fragment current-only' data-code-focus='13'></span>
+
+Notes:
+- double colons and dot are not the same
+- difference for scope usage
+  </script>
+</section>
+
+<section data-markdown
+           data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### Double colons (Rubocop doc)
+
+<blockquote cite='https://github.com/rubocop/ruby-style-guide#double-colons' class='small-font'>
+Use :: only to reference constants (this includes classes and modules) and constructors (like Array() or Nokogiri::HTML()). Do not use :: for regular method calls.
+</blockquote>
+
+```ruby
+# bad
+SomeClass::some_method
+some_object::some_method
+
+# good
+SomeClass.some_method
+some_object.some_method
+SomeModule::SomeClass::SOME_CONST
+SomeModule::SomeClass()
+```
+<span class='fragment current-only' data-code-focus='3'></span>
+<span class='fragment current-only' data-code-focus='7'></span>
+
+Notes:
+- Rubocop doc
+- Read this text
+- We decided to forgot this way
+  </script>
+</section>
+
+<section data-transition='slide-in fade-out'>
+  <h2 class='font-size-like-h1'>
+    Proc call
+  </h2>
+
+  <aside class='notes' data-markdown>
+- proc definition
+  </aside>
+</section>
+
+<section data-markdown
+           data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### Proc call
+
+```ruby
+:hello.to_proc.call(user)
+# Hello, Agnieszka!
+#  => nil
+
+:hello.to_proc.yield(user)
+# Hello, Agnieszka!
+#  => nil
+
+:hello.to_proc[user]
+# Hello, Agnieszka!
+#  => nil
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='5'></span>
+<span class='fragment current-only' data-code-focus='9'></span>
+
+Notes:
+- turn symbol to proc and call it on user
+- call, yield - which is on the Gregory list
+- but there is one more way to call a proc
+- is it so obvious for others?
+- well I risk and ask Gregory about that
+  </script>
+</section>
+
+<section data-markdown
+           data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### Rubinius implementation
+
+```ruby
+# Returns a Proc object which respond to the given method by sym.
+def to_proc
+  # Put sym in the outer enclosure so that this proc can be instance_eval'd.
+  # If we used self in the block and the block is passed to instance_eval, then
+  # self becomes the object instance_eval was called on. So to get around this,
+  # we leave the symbol in sym and use it in the block.
+  #
+  sym = self
+  Proc.new do |*args, &b|
+    raise ArgumentError, "no receiver given" if args.empty?
+    args.shift.__send__(sym, *args, &b)
+  end
+end
+```
+<span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='8'></span>
+<span class='fragment current-only' data-code-focus='9'></span>
+<span class='fragment current-only' data-code-focus='10'></span>
+<span class='fragment current-only' data-code-focus='11'></span>
+
+Notes:
+- a `to_proc` method
+- store `self` symbol in local variable (avoid changing the current self)
+- check if we have object on which we call method
+- last - the real call of our method
+  </script>
+</section>
+
+<section data-markdown
+           data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### Use our example
+
+```ruby
+# Returns a Proc object which respond to the given method by sym.
+def to_proc
+  # Put sym in the outer enclosure so that this proc can be instance_eval'd.
+  # If we used self in the block and the block is passed to instance_eval, then
+  # self becomes the object instance_eval was called on. So to get around this,
+  # we leave the symbol in sym and use it in the block.
+  #
+  sym = :hello
+  Proc.new do |*args, &b|
+    raise ArgumentError, "no receiver given" if [user].empty?
+    user.__send__(:hello, *[], &b)
+  end
+end
+```
+<span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='8'></span>
+<span class='fragment current-only' data-code-focus='9'></span>
+<span class='fragment current-only' data-code-focus='10'></span>
+<span class='fragment current-only' data-code-focus='11'></span>
+
+Notes:
+- a `to_proc` method
+- `self` is a :hello symbol
+- `args` has `user`, so it is not empty
+- So we send :hello to user object without any additional arguments
+  </script>
+</section>
+
+<section data-background='#fff'
+         data-transition='slide-in fade-out'>
+  <img alt='TDD' class='pure' data-src='images/ruby-rendezvous/agnieszka-twit.png'>
+  <aside class='notes' data-markdown>
+- this is my twit
+- yes there is a misspell
+  </aside>
+</section>
+
+<section data-background='#fff'
+         data-transition='slide-in fade-out'>
+  <img alt='TDD' class='pure' data-src='images/ruby-rendezvous/gregory-twit.png'>
+  <aside class='notes' data-markdown>
+- and I get answer
+- answer for Gregory question. First version of Ruby where I found === method is 1.9.1
+- in Ryby 1.8.6 I didn't see that in the documentation
+- so I decided to put it here
+  </aside>
+</section>
+
+<section data-markdown
+           data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### One more proc call
+
+```ruby
+:hello.to_proc === user
+# Hello, Agnieszka!
+#  => nil
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+
+Notes:
+- but proc is called also when we use ===
+- 14 way of calling method
+- I put it separately, because it allow us to do one more thing
+  </script>
+</section>
+
+<section data-transition='slide-in fade-out'>
+  <h2 class='font-size-like-h1'>
+    Proc in case
+  </h2>
+
+  <aside class='notes' data-markdown>
+- since proc respond to `===` we can use it in case
+  </aside>
+</section>
+
+<section data-markdown
+           data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### Use proc in case
+
+```ruby
+def check_type(name)
+  message_type = proc { |name| name.include?('Message') }
+
+  case name
+  when message_type then "It's a message type!"
+  else
+    'Other type'
+  end
+end
+
+check_type('ConversationAdded')
+# => "Other type"
+check_type('SingleMessageAdded')
+# => "It's a message type!"
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='4'></span>
+<span class='fragment current-only' data-code-focus='5'></span>
+<span class='fragment current-only' data-code-focus='7'></span>
+<span class='fragment current-only' data-code-focus='11'></span>
+<span class='fragment current-only' data-code-focus='7'></span>
+<span class='fragment current-only' data-code-focus='13'></span>
+<span class='fragment current-only' data-code-focus='5'></span>
+
+Notes:
+- I create a method just for the example
+- create a proc in that method
+- prepare a case
+- we can all this method with different arguments
+- in first example we go to this line
+- in the next example we fulfill the proc condition
+  </script>
+</section>
+
+<section data-transition='slide-in fade-out'>
+  <h2 class='font-size-like-h1'>
+    Call method with argument
+  </h2>
+
+  <aside class='notes' data-markdown>
+- method with argument with call proc
+  </aside>
+</section>
+
+<section data-markdown
+           data-transition='slide-in fade-out'>
+  <script type='text/template'>
+```ruby
+class User
+  def initialize(name)
+    @name = name
+  end
+
+  def say_my_age(age)
+    puts "I'm #{age} years ago"
+  end
+end
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='6'></span>
+
+Notes:
+- Let's extend User with method having one argument
+- When I put the method name I head in my head Beyonce song say my name
+  </script>
+</section>
+
+<section data-background='#fff'
+         data-transition='slide-in fade-out'>
+  <h3>Say my name</h3>
+  <img alt='TDD' class='pure' data-src='images/ruby-rendezvous/beyonce-saymyname.gif'>
+  <aside class='notes' data-markdown>
+- I know this is not funny
+  </aside>
+</section>
+
+<section data-markdown
+           data-transition='slide-in fade-out'>
+  <script type='text/template'>
+```ruby
+user = User.new('Agnieszka')
+
+user.say_my_age(15)
+# I'm 15 years ago
+#  => nil
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='3'></span>
+<span class='fragment current-only' data-code-focus='4'></span>
+<span class='fragment current-only' data-code-focus='3'></span>
+
+Notes:
+- one more time we create our user
+- I will not tell you my real age
+- but because I think I still look like teenager
+- 15 is OK
+- sometimes is annoying that people think like your younger then you are
+- but theirs face when they already know you are older is priceless ;)
+- anyway we can normally call a method - obviously
+  </script>
+</section>
+
+<section data-background='#fff'
+         data-transition='slide-in fade-out'>
+  <h3>Obviously</h3>
+  <img alt='TDD' class='pure' data-src='images/ruby-rendezvous/obviously.gif'>
+  <aside class='notes' data-markdown>
+  </aside>
+</section>
+
+<section data-markdown
+           data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### Call with call ;)
+
+```ruby
+user = User.new('Agnieszka')
+
+:say_my_age.to_proc.call(user, 15)
+# I'm 15 years ago
+#  => nil
+
+:say_my_age.to_proc.yield(user, 15)
+# I'm 15 years ago
+#  => nil
+```
+<span class='fragment current-only' data-code-focus='3'></span>
+<span class='fragment current-only' data-code-focus='7'></span>
+
+Notes:
+- let's check how we can call it with proc
+- with yield and call is easy
+- you put the object and the argument to a call and everything works fine.
+- what about triple equal sign?
+  </script>
+</section>
+
+<section data-markdown
+           data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### Use our example
+
+```ruby
+# Returns a Proc object which respond to the given method by sym.
+def to_proc
+  # Put sym in the outer enclosure so that this proc can be instance_eval'd.
+  # If we used self in the block and the block is passed to instance_eval, then
+  # self becomes the object instance_eval was called on. So to get around this,
+  # we leave the symbol in sym and use it in the block.
+  #
+  sym = :say_my_age
+  Proc.new do |*args, &b|
+    raise ArgumentError, "no receiver given" if [user, 15].empty?
+    user.__send__(:say_my_age, *[15], &b)
+  end
+end
+```
+<span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='8'></span>
+<span class='fragment current-only' data-code-focus='9'></span>
+<span class='fragment current-only' data-code-focus='10'></span>
+<span class='fragment current-only' data-code-focus='11'></span>
+
+Notes:
+- use our example
+- a `to_proc` method
+- `self` is a :say_my_age symbol
+- `args` has `user` and 15, so it is not empty
+- So we send :say_my_age to user object with 15 as additional argument, without a block
+  </script>
+</section>
+
+<section data-markdown
+           data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### Call with ===
+
+```ruby
+user = User.new('Agnieszka')
+
+:say_my_age.to_proc === user, 15
+# `eval': (irb):16: syntax error, unexpected ',', expecting end-of-input (SyntaxError)
+#  :say_my_age.to_proc === user, 15
+#                               ^
+
+:say_my_age.to_proc.=== user, 15
+# I'm 15 years ago
+#  => nil
+```
+<span class='fragment current-only' data-code-focus='3'></span>
+<span class='fragment current-only' data-code-focus='4'></span>
+<span class='fragment current-only' data-code-focus='8'></span>
+
+Notes:
+- it's not so simple
+- we cannot do that, but we can that
+- but what if we want to remove this little dot and have only triple =
+  </script>
+</section>
+
+<section data-markdown
+           data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### Call with ===
+
+```ruby
+user = User.new('Agnieszka')
+
+(:say_my_age.to_proc.curry(2) === user)[15]
+# I'm 15 years ago
+#  => nil
+
+(:say_my_age.to_proc.curry(2) === user).call(15)
+# I'm 15 years ago
+#  => nil
+```
+<span class='fragment current-only' data-code-focus='3'></span>
+<span class='fragment current-only' data-code-focus='7'></span>
+<span class='fragment current-only' data-code-focus='3'></span>
+
+Notes:
+- we can use `curry` method here
+- `curry` not as spices
+- `curry` allows us to tell proc how many arguments its need
+- it will wait with a call till we provide all arguments
+- or more precises when we want 2 arguments and we provide only one we will get another proc but with one argument
+- when we call it with this one argument the basic proc will be called
+  </script>
+</section>
+
+<section data-markdown
+           data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### Curry
+
+```ruby
+proc_1 = :say_my_age.to_proc.curry(2)
+proc_2 = proc_1.call(user)
+proc_2.call(15)
+# I'm 15 years ago
+#  => nil
+
+proc_1[user][15]
+# I'm 15 years ago
+#  => nil
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='3'></span>
+<span class='fragment current-only' data-code-focus='7'></span>
+
+Notes:
+- prepare proc
+- then next
+- real call
+- fancy call
+  </script>
+</section>
+
+<section data-transition='slide-in fade-out'>
+  <h2 class='font-size-like-h1'>
+    map(&:name)
+  </h2>
+
+  <aside class='notes' data-markdown>
+- since we are taking about procs let's check map with &
+  </aside>
+</section>
+
+<section data-markdown
+           data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### map(&:name)
+
+```ruby
+[1, 2, 3].map(&:next)
+#  => [2, 3, 4]
+
+[1, 2, 3].map { |item| item.next }
+#  => [2, 3, 4]
+
+[1, 2, 3].map(&:next.to_proc)
+#  => [2, 3, 4]
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='4'></span>
+<span class='fragment current-only' data-code-focus='7'></span>
+
+Notes:
+- people often think that this is shortcut for second call
+- it is shortcut for second one
+- so we call `proc` in `map` as a block argument
+  </script>
+</section>
+
+<section data-markdown
+           data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### map(&:name)
+
+```ruby
+my_next = Proc.new { |item| item.next }
+#  => #<Proc:0x000055acb457fd30 (irb):4>
+
+[1, 2, 3].map(&my_next)
+#  => [2, 3, 4]
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='4'></span>
+
+Notes:
+- this is not a magic
+- just normal `map` with block argument
+  </script>
+</section>
+
+<section data-transition='slide-in fade-out'>
+  <h2 class='font-size-like-h1'>
+    Call map with argument method
+  </h2>
+
+  <aside class='notes' data-markdown>
+- lets ask the same question one more time
+- we want to increase about 2
+  </aside>
+</section>
+
+<section data-markdown
+           data-transition='slide-in fade-out'>
+  <script type='text/template'>
+```ruby
+[1, 2, 3].map(&:+(2))
+# /home/agnieszka/.rvm/rubies/ruby-3.0.3/lib/ruby/3.0.0/irb/workspace.rb:116:in
+#   `eval': (irb):19: syntax error, unexpected '(', expecting ')' (SyntaxError)
+
+[1, 2, 3].map(&2.method(:+))
+#  => [3, 4, 5]
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='5'></span>
+
+Notes:
+- for first one we get error
+- second is OK
+- let's look closer to this
+  </script>
+</section>
+
+<section data-markdown
+           data-transition='slide-in fade-out'>
+  <script type='text/template'>
+```ruby
+2.method(:+)
+#  => #<Method: Integer#+(_)>
+
+2.method(:+).call(1)
+#  => 3
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='4'></span>
+
+Notes:
+- we create method + on object 2
+- then we call it with argument 1
+  </script>
+</section>
+
+<section data-markdown
+           data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### Other possibilities
+```ruby
+[1, 2, 3].to_enum.with_object(2).map(&:+)
+#  => [3, 4, 5]
+
+[1, 2, 3].map(&:+.to_proc.curry(2).call(2))
+#  => [3, 4, 5]
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='4'></span>
+
+Notes:
+- We convert Array to Enumerable object.
+- Then inject the 2 object into it.
+- In the end, we iterate through each element of the Array and do the addition.
+- we can use also lambda, proc, own method
+- or curry we convert + to proc and tell that it can be called only with 2 arguments
+- and the first one is 2, second is from array
+  </script>
+</section>
+
+<section data-transition='slide-in fade-out'>
+  <h2 class='font-size-like-h1'>
+    Hash in map
+  </h2>
+
+  <aside class='notes' data-markdown>
+- Do you know that you can use hash in the map
+  </aside>
+</section>
+
+<section data-markdown
+           data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### Hash in map
+```ruby
+[:check, :my, :keys].map(&{ my: 2 })
+#  => [nil, 2, nil]
+
+{ my: 2 }.to_proc.call(:my)
+#  => 2
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='4'></span>
+
+Notes:
+- Hash implement to_proc method so we can use it in a map
+- It's working because when we call proc on hash it behaves like this
+  </script>
+</section>
+
+<section data-markdown
+           data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### Rubinius implementation
+```ruby
+def to_proc
+  method(:[]).to_proc
+end
+
+{ my: 2 }.to_proc.call(:my)
+#  => 2
+
+{ my: 2 }[:my]
+#  => 2
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='5'></span>
+<span class='fragment current-only' data-code-focus='8'></span>
+
+Notes:
+- Which is in Rubinius implementation just simple a proc from from square bracket method
+- So basically proc call in that case is just
+  </script>
+</section>
+
+<section data-markdown
+           data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### Objects implement to_proc method
+```ruby
+[1, 2, 3].map(&:next)
+#  => [2, 3, 4]
+
+[1, 2, 3].map(&2.method(:+))
+#  => [3, 4, 5]
+
+[:check, :my, :keys].map(&{ my: 2 })
+#  => [nil, 2, nil]
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='4'></span>
+<span class='fragment current-only' data-code-focus='7'></span>
+
+Notes:
+- Hash is the last one of basic object where `to_proc`
+- Symbol, Hash, Method implements to_proc method
+- let stay for a moment with map
+  </script>
+</section>
+
+<section data-transition='slide-in fade-out'>
+  <h2 class='font-size-like-h1'>
+    Passing argument to map
+  </h2>
+
+  <aside class='notes' data-markdown>
+- Do you know that you can use hash in the map
+  </aside>
+</section>
+
+<section data-markdown
+           data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### Passing argument to map
+```ruby
+[1, 2, 3].map { |item| item ** 2 }
+#  => [1, 4, 9]
+
+[1, 2, 3].map { _1 ** 2 }
+#  => [1, 4, 9]
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='4'></span>
+
+Notes:
+- we know that way of call we use it often
+- Do you use the second one?
+- of course we can do that for all iterators
+- we can do that with multiple parameters
+- is it more readable well, not really in most cases
+  </script>
+</section>
+
+<section data-transition='slide-in fade-out'>
+  <h2 class='font-size-like-h1'>
+    1 + 2
+  </h2>
+
+  <aside class='notes' data-markdown>
+- let's summarize some of knowledge from this presentation
+  </aside>
+</section>
+
+<section data-markdown
+           data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### 1 + 2
+```ruby
+1.+(2)
+#  => 3
+
+1.send(:+, 2)
+#  => 3
+
+1.method(:+) === 2
+#  => 3
+
+:+.to_proc.call(1, 2)
+#  => 3
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='4'></span>
+<span class='fragment current-only' data-code-focus='7'></span>
+<span class='fragment current-only' data-code-focus='10'></span>
+
+Notes:
+- syntactic sugar
+- we call method plus on object 1 with argument 2
+- Symbol, Hash, Method implements to_proc method
+- let stay for a moment with map
+  </script>
+</section>
+
+<section data-background='#fff' data-transition='slide-in fade-out'>
+  <img alt='Woman on Rails logo'
+       class='pure'
+       data-src='images/shared/womanonrails.svg'
+       width='100%'>
+  <h3 class='fragment'>
+    <a href='https://womanonrails.com/presentations/'>womanonrails.com/presentations</a>
+  </h3>
+</section>
+
+
+<section data-markdown
+         data-transition='slide-in fade-out'
+         style='font-size: 20pt; text-align: left;'>
+### Links
+
+- [Wat lightning talk](https://destroyallsoftware.com/talks/wat)
+- [parsel.y](https://github.com/ruby/ruby/blob/master/parse.y#L4992-L5000)
+- [Why do two strings separated by space concatenate in Ruby?](https://stackoverflow.com/questions/23811203/why-do-two-strings-separated-by-space-concatenate-in-ruby/)
+- [Scope resolution operator](https://en.wikipedia.org/wiki/Scope_resolution_operator#Ruby)
+- [Rubocop about double colons](https://github.com/rubocop/ruby-style-guide#double-colons)
+- [Literals doc](https://github.com/ruby/ruby/blob/master/doc/syntax/literals.rdoc#label-String+Literals)
+- [Discussion about string literals doc](https://stackoverflow.com/questions/18193792/where-is-rubys-string-literal-juxtaposition-feature-officially-documented/18194632#18194632)
+- [Yacc](https://en.wikipedia.org/wiki/Yacc)
+- [Backus–Naur form](https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_form)
+- [12 ways to call a method in Ruby](https://www.notonlycode.org/12-ways-to-call-a-method-in-ruby/)
+- [RailsConf 2022 - Ruby Archaeology by Nick Schwaderer](https://youtube.com/watch?v=53ueEIS0cng)
+- [Rails and Merb Merge](https://yehudakatz.com/2008/12/23/rails-and-merb-merge/)
+- [Together: The Merb Story](https://yehudakatz.com/2020/02/19/together-the-merb-story/)
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'
+         style='font-size: 20pt; text-align: left;'>
+### Links
+
+- [Rubinius](https://github.com/rubinius/rubinius)
+- [Ruby current Proc doc](https://ruby-doc.org/current/Proc.html)
+- [Ruby Proc doc 1.9.1](https://ruby-doc.org/core-1.9.1/Proc.html)
+- [Ruby Proc doc 1.8.6](https://ruby-doc.org/core-1.8.6/Proc.html)
+- [Method#curry](https://www.rubydoc.info/stdlib/core/Method:curry)
+- [Ruby map(&:method) syntax - meaning & usage](https://womanonrails.com/one-line-map-ruby)
+- [Method object](https://ruby-doc.org/current/Method.html)
+- [Functional programming in Ruby](https://womanonrails.com/functional-programming-ruby)
+- [Iterators in Ruby](https://womanonrails.com/ruby-iterators)
+- [Things you didn't know about Ruby](https://womanonrails.com/things-you-dont-know-about-ruby)
+</section>
+
+
+<section class='pull-right last-section' data-background='images/shared/unicorn-agnieszka.jpg'>
+  <img alt='Woman on Rails logotype' class='pure' data-src='images/womanonrails.png' height='94' width='300'>
+  <h2 class='author-name'>Agnieszka Małaszkiewicz</h2>
+  <p class='author-mail'>agnieszka (at) fractalsoft (dot) org</p>
+
+  <div class='links'>
+    <p>
+      <a href='https://womanonrails.com/' target='_blank' title='Web development from woman perspective'>
+        WomanOnRails.com
+      </a>
+    </p>
+    <p>
+      <a href='https://twitter.com/womanonrails' rel='nofollow noopener' target='_blank' title='Twitter @womanonrails'>
+      <span class='zocial-twitter'></span> @womanonrails
+    </a>
+    </p>
+    <p>
+      <a href='https://fractalsoft.org/pl' target='_blank' title='Ruby on Rails and JavaScript programmers'>
+        <span>
+          <img alt='Fractal Soft logo' class='pure' data-src='images/icons/svg/fractalsoft.svg' style='width: 30px;'>
+          Fractal Soft
+        </span>
+      </a>
+    </p>
+  </div>
+
+  <p class='social'>
+    <a href='https://github.com/womanonrails' rel='nofollow noopener' target='_blank' title='GitHub'>
+      <span class='zocial-github'></span>
+    </a>
+    <a href='https://www.instagram.com/womanonrails' rel='nofollow noopener' target='_blank' title='Instagram'>
+      <span class='zocial-instagram'></span>
+    </a>
+    <a href='https://www.facebook.com/107403177317825/' rel='nofollow noopener' target='_blank' title='Facebook'>
+      <span class='zocial-facebook'></span>
+    </a>
+    <a href='https://www.youtube.com/@womanonrails' rel='nofollow noopener' target='_blank' title='YouTube'>
+      <span class='zocial-youtube'></span>
+    </a>
+    <a href='https://vimeo.com/womanonrails' rel='nofollow noopener' target='_blank' title='Vimeo'>
+      <span class='zocial-vimeo'></span>
+    </a>
+  </p>
+</section>
+
+      </div>
+    </div>
+
+    <script src='js/reveal.js'></script>
+
+    <script>
+      // More info about config & dependencies:
+      // - https://github.com/hakimel/reveal.js#configuration
+      // - https://github.com/hakimel/reveal.js#dependencies
+      Reveal.initialize({
+        // Transition style for full page slide backgrounds
+        backgroundTransition: 'fade', // none/fade/slide/convex/concave/zoom
+
+        // Vertical centering of slides
+        center: true,
+
+        // Display presentation control arrows
+        controls: false,
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden" or "visible"
+        controlsBackArrows: 'faded',
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: 39,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL, so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        hash: true,
+
+        // Flags if we should show a help overlay when the questionmark key is pressed
+        help: true,
+
+        // Hides the address bar on mobile devices
+        hideAddressBar: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Display a presentation progress bar
+        progress: false,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Display the page number of the current slide
+        slideNumber: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Transition style
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+        // Transition speed
+        transitionSpeed: 'default', // default/fast/slow
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        dependencies: [
+          { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/highlight/highlight.js', async: true },
+          { src: 'plugin/search/search.js', async: true },
+          { src: 'plugin/zoom-js/zoom.js', async: true },
+          { src: 'plugin/notes/notes.js', async: true },
+          {
+            src: 'plugin/reveal-code-focus/reveal-code-focus.js',
+            async: true,
+            callback: function() { RevealCodeFocus(); }
+          }
+        ]
+      });
+    </script>
+  </body>
+</html>
