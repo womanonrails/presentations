@@ -48,10 +48,10 @@
      onclick="document.getElementById('theme').setAttribute('href','css/theme/fractalsoft_white.css'); return false;"></a>
 
   <aside class='notes' data-markdown>
-- thanks for organizers for having me
-- thanks for coming here today
-- normally I talk to fast so I start slow today
-- Did you know this is my second presentation at this stage?
+- Thanks to organizers & all listeners
+- I'm stressed - talk faster
+- Problem with talk title
+- Chat GPT
   </aside>
 </section>
 
@@ -61,8 +61,8 @@
   </h3>
 
   <aside class='notes' data-markdown>
-- what presentation is about
-- chat GPT
+- read title
+- serious, university & boring talk
   </aside>
 </section>
 
@@ -72,7 +72,9 @@
   </h3>
 
   <aside class='notes' data-markdown>
-- now you know what we will discuss on this presentation
+- read title
+- Unlocking the Potential - OK
+- rest boring & theoretical
   </aside>
 </section>
 
@@ -82,19 +84,18 @@
   </h2>
 
   <aside class='notes' data-markdown>
-- current title
-- interesting
+- nice title, no technical worlds, marketing
+- titles describe the topic of the presentation.
+- second time on this stage ;)
   </aside>
 </section>
 
 <section data-background='#fff'
          data-transition='slide-in fade-out'>
-  <img alt='TDD' class='pure' data-src='images/ruby-rendezvous/wrocloverb-2020.png'>
+  <img alt='Wrocloverb 2020 - agenda' class='pure' data-src='images/ruby-rendezvous/wrocloverb-2020.png'>
   <aside class='notes' data-markdown>
-- second time as a speaker on Wroclove-rb
-- first time as ghost speaker at 2020 pandemic year
-- this time for real
-- funny is that people congratulate me my first presentation here in Wrocław
+- ghost speaker at 2020 - pandemic year
+- people congratulate me on my first talk
   </aside>
 </section>
 
@@ -108,37 +109,33 @@
   </h4>
 
   <aside class='notes' data-markdown>
-- I joined Ruby community when...
-- It was about 2011/2012
+- joined about 2011/2012
 - over 10 years - nostalgic
-- I started working when the first edition was create
+- Ruby 1.9.3 & Rails 3.0
   </aside>
 </section>
 
 <section data-background='#fff'
          data-transition='slide-in fade-out'>
-  <img alt='TDD' class='pure' data-src='images/ruby-rendezvous/old-wrocloverb-logo.jpg'>
+  <img alt='Old wrocloverb logo' class='pure' data-src='images/ruby-rendezvous/old-wrocloverb-logo.jpg'>
   <aside class='notes' data-markdown>
-- I remember the old logo
-- I wasn't on all editions
-- Do we have here someone who was on all editions? Besides Andrzej
+- old logo
+- not in all editions
+- Who was on all editions?
   </aside>
 </section>
 
 <section data-background='#fff'
          data-transition='slide-in fade-out'>
-  <img alt='TDD' class='pure' data-src='images/ruby-rendezvous/wat.jpg'>
+  <img alt='Horse holding a cat slide from Wat presentation' class='pure' data-src='images/ruby-rendezvous/wat.jpg'>
   <p class='fragment' data-fragment-index='1'>
     A lightning talk by<br><strong>Gary Bernhardt</strong> from <strong>CodeMash</strong> 2012
   </p>
   <aside class='notes' data-markdown>
-- I also remember the Wat presentation
-- anyone know that?
-- even now it is still funny for me
-- links do everything in the end
-- back then I was thinking Wow! That's so fun!
-- I want to find more of these Ruby flavors
-- here we are
+- Wat lightning talk - 2012
+- my inspiration
+- all links at the end of talk
+- compare Wat tricks with Ruby 3.2.1
   </aside>
 </section>
 
@@ -169,11 +166,11 @@ def method_missing(*args); args.join(' '); end
 <span class='fragment current-only' data-code-focus='11'></span>
 
 Notes:
-- let's quickly check wat lightning talk in Ruby 3.2.1
-- a = a still working the same
-- method_missing may cause infinite loops
-- bare words trick - is not working anymore - that's sad
-- it's not working in Ruby 2.6.4
+- a = a working the same
+- bare words - exception
+- method_missing - close console
+- bare words trick - not working - sad
+- definitely not working in Ruby 2.6.4
   </script>
 </section>
 
@@ -196,12 +193,13 @@ Notes:
 <span class='fragment current-only' data-code-focus='7-8'></span>
 
 Notes:
-- but in Ruby 3.2 we can do this
-- we can mix different ways of declaring String
-- we can do it in multiple lines
-- combine multiple string by space between them without any additional method
-- we can do this is any Ruby
-- string concatenation is working also in Python, C, C++
+- join strings by space
+- mix different ways
+- `%q{}` only on beginning
+- later `%` is considered a modulus operator
+- multiple lines
+- possible in any Ruby
+- also works in Python, C, C++
   </script>
 </section>
 
@@ -228,18 +226,15 @@ string		: tCHAR
 <span class='fragment current-only' data-code-focus='6'></span>
 
 Notes:
-- why it is possible?
-- lets go to file `parse.y` in Ruby source for implementation details
-- in next slides will be even worst ;)
-- which has notation similar to BNF - Backus-Naur Form
-- which is used by Yacc (Yet Another Compiler-Compiler) to parser generation
+- `parse.y` in Ruby source for implementation details
+- notation similar to BNF - Backus-Naur Form
+- used by Yacc (Yet Another Compiler-Compiler) to parser generation
 - Output is generated in C
-- what it mean?
+- next slides will be even worse ;)
 - A Ruby string is either a tCHAR (e.g. ?q),
 - a string1 (e.g. "q", 'q', or %q{q}),
 - or a recursive definition of the concatenation of string1 and string itself,
 - which results in string expressions like "foo" "bar" being concatenated
-- when `%q{}` is not on the beginning `%` is considered a modulus operator
   </script>
 </section>
 
@@ -249,17 +244,18 @@ Notes:
   </h2>
 
   <aside class='notes' data-markdown>
-- I started to think what else can be interesting
-- calling method in ruby
+- what else can be interesting?
+- calling method in Ruby
   </aside>
 </section>
 
 <section data-background='#fff'
          data-transition='slide-in fade-out'>
-  <img alt='TDD' class='pure' data-src='images/ruby-rendezvous/12-ways-to-call-a-method-in-ruby.png'>
+  <img alt='Gregory Witek blog post title page' class='pure' data-src='images/ruby-rendezvous/12-ways-to-call-a-method-in-ruby.png'>
   <aside class='notes' data-markdown>
 - grate article by Gregory Witek
-- but I know two more ways to call method in Ruby
+- 12 ways of call a method
+- I know 2 more
   </aside>
 </section>
 
@@ -285,7 +281,7 @@ end
 <span class='fragment current-only' data-code-focus='6'></span>
 
 Notes:
-- I will use the same code like Gregory in his article
+- the same convention like Gregory
   </script>
 </section>
 
@@ -311,12 +307,10 @@ Notes:
 
 <section data-background='#fff'
          data-transition='slide-in fade-out'>
-  <img alt='TDD' class='pure' data-src='images/ruby-rendezvous/ruby-archaeology.png'>
+  <img alt='Nick Schwaderer giving a Ruby Archaeology talk on RailsConf 2022' class='pure' data-src='images/ruby-rendezvous/ruby-archaeology.png'>
   <aside class='notes' data-markdown>
-- two more calls
 - first from Ruby Archaeology talk by Nick Schwaderer
-- btw I like the title Ruby detective which he use
-- this is what we will do a little bit today
+- Ruby Detective title
 - from Merb framework
 - Who remember merb?
   </aside>
@@ -337,8 +331,10 @@ user::hello
 <span class='fragment current-only' data-code-focus='3'></span>
 
 Notes:
-- colons call
-- 13 way of calling method
+- double colon call
+- 13th call method type
+- **constant resolution operator**
+- **scope resolution operator**
   </script>
 </section>
 
@@ -370,8 +366,9 @@ Workplace.User
 <span class='fragment current-only' data-code-focus='13'></span>
 
 Notes:
-- double colons and dot are not the same
-- difference for scope usage
+- double colon != dot
+- scope `Workplace`
+- `User` is not a method!
   </script>
 </section>
 
@@ -402,6 +399,7 @@ Notes:
 - Rubocop doc
 - Read this text
 - We decided to forgot this way
+- How does it work? - don't know
   </script>
 </section>
 
@@ -412,6 +410,10 @@ Notes:
 
   <aside class='notes' data-markdown>
 - proc definition
+- encapsulation of a block of code
+- stored in a local variable
+- passed to a method or another proc, and invoked
+- core of its functional programming features
   </aside>
 </section>
 
@@ -438,11 +440,9 @@ Notes:
 <span class='fragment current-only' data-code-focus='9'></span>
 
 Notes:
-- turn symbol to proc and call it on user
-- call, yield - which is on the Gregory list
-- but there is one more way to call a proc
-- is it so obvious for others?
-- well I risk and ask Gregory about that
+- change symbol to proc and call it on user
+- call, yield, [] - on the Gregory list
+- How does it work?
   </script>
 </section>
 
@@ -473,10 +473,13 @@ end
 <span class='fragment current-only' data-code-focus='11'></span>
 
 Notes:
+- Rubinius implementation - last update 2020
+- IronRuby in C# for .NET 2011
 - a `to_proc` method
-- store `self` symbol in local variable (avoid changing the current self)
-- check if we have object on which we call method
-- last - the real call of our method
+- store `self` symbol in local variable
+- (avoid changing the current self)
+- check the args - call need one
+- other way - `exception`
   </script>
 </section>
 
@@ -510,14 +513,17 @@ Notes:
 - a `to_proc` method
 - `self` is a :hello symbol
 - `args` has `user`, so it is not empty
-- So we send :hello to user object without any additional arguments
+- send `:hello` to `user` without any additional arguments
+- other way to call a proc
   </script>
 </section>
 
 <section data-background='#fff'
          data-transition='slide-in fade-out'>
-  <img alt='TDD' class='pure' data-src='images/ruby-rendezvous/agnieszka-twit.png'>
+  <img alt="Agnieszka's twit - Did you know that there is one more way to call a method using Proc?" class='pure' data-src='images/ruby-rendezvous/agnieszka-twit.png'>
   <aside class='notes' data-markdown>
+- Did you know call a proc with a ===?
+- triple equal sign
 - this is my twit
 - yes there is a misspell
   </aside>
@@ -525,12 +531,12 @@ Notes:
 
 <section data-background='#fff'
          data-transition='slide-in fade-out'>
-  <img alt='TDD' class='pure' data-src='images/ruby-rendezvous/gregory-twit.png'>
+  <img alt="Gregory's twit - Wow that's a good one! Btw do you know when it was added to Ruby?" class='pure' data-src='images/ruby-rendezvous/gregory-twit.png'>
   <aside class='notes' data-markdown>
 - and I get answer
-- answer for Gregory question. First version of Ruby where I found === method is 1.9.1
-- in Ryby 1.8.6 I didn't see that in the documentation
-- so I decided to put it here
+- Greg's question
+- First time I saw it in doc in 1.9.1
+- for Ryby 1.8.6 - nothing in a doc
   </aside>
 </section>
 
@@ -547,9 +553,9 @@ Notes:
 <span class='fragment current-only' data-code-focus='1'></span>
 
 Notes:
-- but proc is called also when we use ===
-- 14 way of calling method
-- I put it separately, because it allow us to do one more thing
+- call proc by ===
+- 14th way to call method
+- another use case!
   </script>
 </section>
 
@@ -595,12 +601,11 @@ check_type('SingleMessageAdded')
 <span class='fragment current-only' data-code-focus='5'></span>
 
 Notes:
-- I create a method just for the example
-- create a proc in that method
+- method just for the example
+- create a proc
 - prepare a case
-- we can all this method with different arguments
-- in first example we go to this line
-- in the next example we fulfill the proc condition
+- can method
+- proc is called
   </script>
 </section>
 
@@ -610,7 +615,7 @@ Notes:
   </h2>
 
   <aside class='notes' data-markdown>
-- method with argument with call proc
+- call a proc with argument
   </aside>
 </section>
 
@@ -632,15 +637,15 @@ end
 <span class='fragment current-only' data-code-focus='6'></span>
 
 Notes:
-- Let's extend User with method having one argument
-- When I put the method name I head in my head Beyonce song say my name
+- add method with argument
+- Beyonce song - Say my name
   </script>
 </section>
 
 <section data-background='#fff'
          data-transition='slide-in fade-out'>
   <h3>Say my name</h3>
-  <img alt='TDD' class='pure' data-src='images/ruby-rendezvous/beyonce-saymyname.gif'>
+  <img alt='Beyonce singing - Say me name' class='pure' data-src='images/ruby-rendezvous/beyonce-saymyname.gif'>
   <aside class='notes' data-markdown>
 - I know this is not funny
   </aside>
@@ -662,20 +667,17 @@ user.say_my_age(15)
 <span class='fragment current-only' data-code-focus='3'></span>
 
 Notes:
-- one more time we create our user
-- I will not tell you my real age
-- but because I think I still look like teenager
-- 15 is OK
-- sometimes is annoying that people think like your younger then you are
-- but theirs face when they already know you are older is priceless ;)
-- anyway we can normally call a method - obviously
+- create new user
+- 15 is not my age
+- looks like a teenager
+- call a method - obviously
   </script>
 </section>
 
 <section data-background='#fff'
          data-transition='slide-in fade-out'>
   <h3>Obviously</h3>
-  <img alt='TDD' class='pure' data-src='images/ruby-rendezvous/obviously.gif'>
+  <img alt='Snape saing obviously' class='pure' data-src='images/ruby-rendezvous/obviously.gif'>
   <aside class='notes' data-markdown>
   </aside>
 </section>
@@ -700,10 +702,9 @@ user = User.new('Agnieszka')
 <span class='fragment current-only' data-code-focus='7'></span>
 
 Notes:
-- let's check how we can call it with proc
-- with yield and call is easy
-- you put the object and the argument to a call and everything works fine.
-- what about triple equal sign?
+- call with proc
+- using `yield` and `call` is easy
+- put argument as second `call` argument
   </script>
 </section>
 
@@ -734,11 +735,11 @@ end
 <span class='fragment current-only' data-code-focus='11'></span>
 
 Notes:
-- use our example
 - a `to_proc` method
-- `self` is a :say_my_age symbol
-- `args` has `user` and 15, so it is not empty
-- So we send :say_my_age to user object with 15 as additional argument, without a block
+- `self` is a `:say_my_age` symbol
+- `args` is `user` and 15 - not empty
+- send `:say_my_age` to user with 15
+- what about triple equal sign?
   </script>
 </section>
 
@@ -764,9 +765,9 @@ user = User.new('Agnieszka')
 <span class='fragment current-only' data-code-focus='8'></span>
 
 Notes:
-- it's not so simple
-- we cannot do that, but we can that
-- but what if we want to remove this little dot and have only triple =
+- It's not that simple
+- as operator - exception
+- as method - OK
   </script>
 </section>
 
@@ -791,12 +792,10 @@ user = User.new('Agnieszka')
 <span class='fragment current-only' data-code-focus='3'></span>
 
 Notes:
-- we can use `curry` method here
-- `curry` not as spices
-- `curry` allows us to tell proc how many arguments its need
-- it will wait with a call till we provide all arguments
-- or more precises when we want 2 arguments and we provide only one we will get another proc but with one argument
-- when we call it with this one argument the basic proc will be called
+- use `curry`
+- `curry` not a spices
+- `curry` - tell proc how many arguments it needs
+- wait with a call until all arguments are provided
   </script>
 </section>
 
@@ -822,10 +821,12 @@ proc_1[user][15]
 <span class='fragment current-only' data-code-focus='7'></span>
 
 Notes:
-- prepare proc
-- then next
-- real call
-- fancy call
+- tell proc how many arguments it needs
+- we need 2
+- lower arity - get curried proc in return
+- partially executed
+- 2 args == real call
+- fancy square brackets call
   </script>
 </section>
 
@@ -835,7 +836,7 @@ Notes:
   </h2>
 
   <aside class='notes' data-markdown>
-- since we are taking about procs let's check map with &
+- map + &
   </aside>
 </section>
 
@@ -859,9 +860,8 @@ Notes:
 <span class='fragment current-only' data-code-focus='7'></span>
 
 Notes:
-- people often think that this is shortcut for second call
-- it is shortcut for second one
-- so we call `proc` in `map` as a block argument
+- shortcut for second call not first
+- call `to_proc` in `map` as a block argument
   </script>
 </section>
 
@@ -881,8 +881,9 @@ my_next = Proc.new { |item| item.next }
 <span class='fragment current-only' data-code-focus='4'></span>
 
 Notes:
-- this is not a magic
-- just normal `map` with block argument
+- similar example
+- proc & call in `map`
+- normal `map` block argument
   </script>
 </section>
 
@@ -892,8 +893,9 @@ Notes:
   </h2>
 
   <aside class='notes' data-markdown>
-- lets ask the same question one more time
-- we want to increase about 2
+- the same question
+- proc with argument
+- increase about 2
   </aside>
 </section>
 
@@ -914,8 +916,8 @@ Notes:
 
 Notes:
 - for first one we get error
-- second is OK
-- let's look closer to this
+- second one is OK
+- let's take a closer look
   </script>
 </section>
 
@@ -933,8 +935,9 @@ Notes:
 <span class='fragment current-only' data-code-focus='4'></span>
 
 Notes:
-- we create method + on object 2
-- then we call it with argument 1
+- create method + on object 2
+- then call it with argument 1
+- in `map` is called as proc on `Array`
   </script>
 </section>
 
@@ -953,12 +956,14 @@ Notes:
 <span class='fragment current-only' data-code-focus='4'></span>
 
 Notes:
-- We convert Array to Enumerable object.
-- Then inject the 2 object into it.
-- In the end, we iterate through each element of the Array and do the addition.
-- we can use also lambda, proc, own method
-- or curry we convert + to proc and tell that it can be called only with 2 arguments
-- and the first one is 2, second is from array
+- convert `Array` to `Enumerable` object
+- inject the 2 into it
+- iterate through Array
+- convert :+ to proc
+- curry 2 arguments
+- call the first agr - 2
+- iterate through Array
+- use lambda, proc or own method
   </script>
 </section>
 
@@ -968,7 +973,7 @@ Notes:
   </h2>
 
   <aside class='notes' data-markdown>
-- Do you know that you can use hash in the map
+- Do you know that you can use hash in the map?
   </aside>
 </section>
 
@@ -987,8 +992,8 @@ Notes:
 <span class='fragment current-only' data-code-focus='4'></span>
 
 Notes:
-- Hash implement to_proc method so we can use it in a map
-- It's working because when we call proc on hash it behaves like this
+- run map on `Hash`
+- `Hash` implement `to_proc` method
   </script>
 </section>
 
@@ -1013,8 +1018,11 @@ end
 <span class='fragment current-only' data-code-focus='8'></span>
 
 Notes:
-- Which is in Rubinius implementation just simple a proc from from square bracket method
-- So basically proc call in that case is just
+- Rubinius implementation
+- create method for `self` object
+- with `:[]`
+- and convert it to proc
+- `to_proc` call on Hash `:[]`
   </script>
 </section>
 
@@ -1037,9 +1045,9 @@ Notes:
 <span class='fragment current-only' data-code-focus='7'></span>
 
 Notes:
-- Hash is the last one of basic object where `to_proc`
-- Symbol, Hash, Method implements to_proc method
-- let stay for a moment with map
+- Hash - last basic object with `to_proc`
+- Symbol, Hash, Method implements `to_proc`
+- Proc too - obvious
   </script>
 </section>
 
@@ -1049,7 +1057,7 @@ Notes:
   </h2>
 
   <aside class='notes' data-markdown>
-- Do you know that you can use hash in the map
+- iterator variable in 2 ways
   </aside>
 </section>
 
@@ -1068,11 +1076,10 @@ Notes:
 <span class='fragment current-only' data-code-focus='4'></span>
 
 Notes:
-- we know that way of call we use it often
-- Do you use the second one?
-- of course we can do that for all iterators
-- we can do that with multiple parameters
-- is it more readable well, not really in most cases
+- named iterator variable
+- _1 (_ number)
+- do with multiple parameters
+- think about readability
   </script>
 </section>
 
@@ -1082,7 +1089,7 @@ Notes:
   </h2>
 
   <aside class='notes' data-markdown>
-- let's summarize some of knowledge from this presentation
+- summarize presentation
   </aside>
 </section>
 
@@ -1110,9 +1117,10 @@ Notes:
 
 Notes:
 - syntactic sugar
-- we call method plus on object 1 with argument 2
-- Symbol, Hash, Method implements to_proc method
-- let stay for a moment with map
+- call method + on object 1 with argument 2
+- send message `:+` to object 1
+- create method on object and call `===`
+- call on proc
   </script>
 </section>
 
@@ -1238,7 +1246,7 @@ Notes:
         // Specify the average time in seconds that you think you will spend
         // presenting each slide. This is used to show a pacing timer in the
         // speaker view
-        defaultTiming: 39,
+        defaultTiming: 48,
 
         // Turns fragments on and off globally
         fragments: true,
