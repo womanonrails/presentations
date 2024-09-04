@@ -1,0 +1,2241 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+
+    <title>Functional Programming in Ruby</title>
+    <meta name='description' content="On a daily basis, Ruby is our trusted companion, and we often take its conventions for granted in our work. However, let's take a moment to pause and ponder. Let's step away from big projects and dive into the world of small Ruby syntax gems. In this presentation, we will explore the art of procs, lambdas and blocks in Ruby.">
+
+    <link rel='stylesheet' href='css/reset.css'>
+    <link rel='stylesheet' href='css/reveal.css'>
+    <link rel='stylesheet' href='css/theme/fractalsoft_white.css' id='theme'>
+
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class='reveal'>
+      <div class='slides'>
+
+<section data-transition='slide-in slide-out'>
+  <h1>
+    Functional Programming in Ruby
+  </h1>
+  <h3>Proc, Lambda, and Beyond</h3>
+
+  <p>
+    <a href='https://womanonrails.com' target='_blank' title='Web development from woman perspective'>Agnieszka Małaszkiewicz</a> at <a href='https://fractalsoft.org' target='_blank' title='Ruby on Rails developers'>Fractal Soft</a>
+  </p>
+
+  <a class='theme-box'
+     id='theme-black'
+     href="#"
+     onclick="document.getElementById('theme').setAttribute('href','css/theme/fractalsoft_black.css'); return false;"></a>
+  <a class='theme-box'
+     id='theme-white'
+     href="#"
+     onclick="document.getElementById('theme').setAttribute('href','css/theme/fractalsoft_white.css'); return false;"></a>
+
+  <aside class='notes' data-markdown>
+- Thanks to organizers & all listeners
+- I'm stressed - talk faster
+- You came to this presentation of your own free will
+- At your own risk
+  </aside>
+</section>
+
+<section data-transition='slide-in fade-out'>
+  <h2 class='font-size-like-h1'>
+    I joined Ruby community when...
+  </h2>
+  <h4>
+    <span class='fragment' data-fragment-index='1'>Ruby 1.9.3</span><br>
+    <span class='fragment' data-fragment-index='2'>Rails 3.0</span>
+  </h4>
+
+  <aside class='notes' data-markdown>
+- joined about 2011/2012
+- over 10 years - nostalgic
+- Ruby 1.9.3 & Rails 3.0
+  </aside>
+</section>
+
+<section data-transition='slide-in fade-out'>
+  <img alt='Horse holding a cat slide from Wat presentation' class='pure' data-src='images/ruby-rendezvous/wat.jpg'>
+  <p class='fragment' data-fragment-index='1'>
+    A lightning talk by<br><strong>Gary Bernhardt</strong> from <strong>CodeMash</strong> 2012
+  </p>
+  <aside class='notes' data-markdown>
+- Blog in 15 minutes
+- Wat lightning talk - 2012
+- my inspiration
+- all links at the end of talk
+- compare Wat tricks with Ruby 3.3.4
+  </aside>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+#### Ruby 3.3.4
+
+```ruby
+a = a
+#  => nil
+
+ruby has no bare words
+# `<main>': undefined local variable or method `words' for main (NameError)
+# 	from <internal:kernel>:187:in `loop'
+# 	from /home/agnieszka/.rvm/rubies/ruby-3.3.4/lib/ruby/gems/3.3.0/gems/irb-1.13.1/exe/irb:9:in `<top (required)>'
+# 	from /home/agnieszka/.rvm/rubies/ruby-3.3.4/bin/irb:25:in `load'
+# 	from /home/agnieszka/.rvm/rubies/ruby-3.3.4/bin/irb:25:in `<main>'
+
+def method_missing(*args); args.join(' '); end
+# warning: redefining Object#method_missing may cause infinite loop
+#  in `join': stack level too deep (SystemStackError)
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='4'></span>
+<span class='fragment current-only' data-code-focus='5'></span>
+<span class='fragment current-only' data-code-focus='11'></span>
+<span class='fragment current-only' data-code-focus='12'></span>
+
+Notes:
+- a = a working the same
+- bare words - exception
+- method_missing - close console
+- bare words trick - not working - sad
+- definitely not working in Ruby 2.6.4
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+```ruby
+"ruby" "has" "no" "bare" "words"
+#  => "rubyhasnobarewords"
+
+%q{ruby} "has" 'no' "bare" 'words'
+#  => "rubyhasnobarewords"
+
+"ruby" "has" "no" "bare"\
+'words'
+#  => "rubyhasnobarewords"
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='4'></span>
+<span class='fragment current-only' data-code-focus='7-8'></span>
+
+Notes:
+- join strings by space
+- mix different ways
+- `%q{}` only on beginning
+- later `%` is considered a modulus operator
+- multiple lines
+- possible in any Ruby
+- also works in Python, C, C++
+- more about it in different presentation
+  </script>
+</section>
+
+<section data-transition='slide-in fade-out'>
+  <h2 class='font-size-like-h1'>
+    Agenda
+  </h2>
+
+  <ul>
+    <li>🏢 Block</li>
+    <li>🔁 Procs</li>
+    <li>💃 Lambdas</li>
+    <li>🚪 Closures</li>
+    <li>🧙‍♂️ Crazy stuff</li>
+    <li>📑 Summary</li>
+  </ul>
+
+  <aside class='notes' data-markdown>
+- today not about merging strings
+- read my blog or see my Wroclove.rb presentation
+- Agenda
+  </aside>
+</section>
+
+<section data-transition='slide-in fade-out'>
+  <h2 class='font-size-like-h1'>
+    📈 Function
+  </h2>
+
+  <aside class='notes' data-markdown>
+- immutable values
+- no side-effects
+- function always return the same result
+- function can never take a value and change it
+- **method in Ruby not always Math function**
+- higher-order functions (HOF) - take function or return function `map`
+- currying - transforming a function that takes multiple arguments into a function that takes one argument
+- recursion
+- lazy-evaluation
+  </aside>
+</section>
+
+<section data-transition='slide-in fade-out'>
+  <h2 class='font-size-like-h1'>
+    🏢 Block
+  </h2>
+  <aside class='notes' data-markdown>
+- block - nameless function in Ruby
+- only one per method
+- as last argument
+  </aside>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+```ruby
+[1, 2, 3, 4].each do |item|
+  p item
+end
+
+# 1
+# 2
+# 3
+# 4
+#  => [1, 2, 3, 4]
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='5-8'></span>
+<span class='fragment current-only' data-code-focus='1-3'></span>
+<span class='fragment current-only' data-code-focus='9'></span>
+
+Notes:
+- p - return text from ""
+- puts - return nil
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### Define block
+
+```ruby
+def my_own_block
+  p 'before'
+  yield
+  p 'after'
+end
+```
+<span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='3'></span>
+<span class='fragment current-only' data-code-focus='4'></span>
+
+Notes:
+- declare block
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### How can we run our block?
+
+```ruby
+my_own_block
+# "before"
+# in `my_own_block': no block given (yield) (LocalJumpError)
+# 	from (irb):6:in `<main>'
+# 	from <internal:kernel>:187:in `loop'
+# 	from /home/agnieszka/.rvm/rubies/ruby-3.3.4/lib/ruby/gems/3.3.0/gems/irb-1.13.1/exe/irb:9:in `<top (required)>'
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='3'></span>
+
+Notes:
+- error
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### Simple fix
+
+```ruby
+def my_own_block
+  p 'before'
+  yield if block_given?
+  p 'after'
+end
+```
+<span class='fragment current-only' data-code-focus='3'></span>
+
+Notes:
+- `block_given?`
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### How can we run our block?
+
+```ruby
+my_own_block
+# "before"
+# "after"
+#  => "after"
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='3'></span>
+<span class='fragment current-only' data-code-focus='4'></span>
+
+Notes:
+- block is not running
+- we didn't provide it
+- Ruby always return last line execution!
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### How to put something to the block?
+
+```ruby
+my_own_block(5)
+# `my_own_block': wrong number of arguments (given 1, expected 0) (ArgumentError)
+# 	from (irb):6:in `<main>'
+# 	from <internal:kernel>:187:in `loop'
+# 	from /home/agnieszka/.rvm/rubies/ruby-3.3.4/lib/ruby/gems/3.3.0/gems/irb-1.13.1/exe/irb:9:in `<top (required)>'
+# 	from /home/agnieszka/.rvm/rubies/ruby-3.3.4/bin/irb:25:in `load'
+# 	from /home/agnieszka/.rvm/rubies/ruby-3.3.4/bin/irb:25:in `<main>'
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='2'></span>
+
+Notes:
+- try to put argument into function with block
+- method has 0 arguments
+- **block is not an argument**
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### How to put something to the block?
+
+```ruby
+my_own_block { 5 }
+# "before"
+# "after"
+#  => "after"
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='3'></span>
+<span class='fragment current-only' data-code-focus='4'></span>
+
+Notes:
+- parameter is not a argument
+- do block but we don't see it
+- when we want to see we can put print into
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### How to put something to the block?
+
+```ruby
+my_own_block { p 5 }
+# "before"
+# 5
+# "after"
+#  => "after"
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='3'></span>
+<span class='fragment current-only' data-code-focus='4'></span>
+
+Notes:
+- we can use `do end` instead `{}`
+- block always return last line!
+  </script>
+</section>
+
+<section data-transition='slide-in fade-out'>
+  <h2 class='font-size-like-h1'>
+    🔁 Proc
+  </h2>
+  <aside class='notes' data-markdown>
+- proc definition
+- encapsulation of a block of code
+- stored in a local variable
+- passed to a method or another proc, and invoked
+- core of its functional programming features
+  </aside>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### Block class
+
+```ruby
+def my_block(&block)
+  p 'before'
+  p block.class
+  block.call
+  p 'after'
+end
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='3'></span>
+<span class='fragment current-only' data-code-focus='4'></span>
+<span class='fragment current-only' data-code-focus='5'></span>
+
+Notes:
+- declaring block as an argument
+- check the block class
+- call a block
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### Execute
+
+```ruby
+my_block { p 4 }
+# "before"
+# Proc
+# 4
+# "after"
+#  => "after"
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='3'></span>
+<span class='fragment current-only' data-code-focus='4'></span>
+<span class='fragment current-only' data-code-focus='5'></span>
+<span class='fragment current-only' data-code-focus='6'></span>
+
+Notes:
+- Step by step what is going on
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### Many Procs in one function
+
+```ruby
+def run_proc(first, last)
+  first.call
+  last.call
+end
+
+proc1 = Proc.new { p 'first' }
+proc2 = proc { p 'last' }
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='3'></span>
+<span class='fragment current-only' data-code-focus='6'></span>
+<span class='fragment current-only' data-code-focus='7'></span>
+
+Notes:
+- Step by step what is going on
+- two different calls: one `Proc` class i `Kernel#proc`
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### Execute
+
+```ruby
+run_proc proc1, proc2
+# "first"
+# "last"
+#  => "last"
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='3'></span>
+<span class='fragment current-only' data-code-focus='4'></span>
+
+Notes:
+- Step by step what is going on
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### 🤪 Fun fact
+
+```ruby
+def run_proc
+  p 'before'
+  my_proc = Proc.new
+  my_proc.call
+  p 'after'
+end
+```
+<span class='fragment current-only' data-code-focus='3'></span>
+<span class='fragment current-only' data-code-focus='4'></span>
+
+Notes:
+- How it was working?
+- If `Proc.new` don't have a block of code
+- it look for Proc in current context and use it
+- its implicitly work
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### Execute
+
+```ruby
+run_proc { p 6 }
+# "before"
+# in `new': tried to create Proc object without a block (ArgumentError)
+# 	from (irb):3:in `run_proc'
+# 	from (irb):7:in `<main>'
+# 	from <internal:kernel>:187:in `loop'
+# 	from /home/agnieszka/.rvm/rubies/ruby-3.3.4/lib/ruby/gems/3.3.0/gems/irb-1.13.1/exe/irb:9:in `<top (required)>'
+# 	from /home/agnieszka/.rvm/rubies/ruby-3.3.4/bin/irb:25:in `load'
+# 	from /home/agnieszka/.rvm/rubies/ruby-3.3.4/bin/irb:25:in `<main>'
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='3'></span>
+
+Notes:
+- It's not working any more
+- it was working till ruby 2.7.1
+- In Ruby 2.6 was OK for sure
+- It's in Ruby 2.6 doc
+  </script>
+</section>
+
+<section data-transition='slide-in fade-out'>
+  <h2 class='font-size-like-h1'>
+    🤔 How call Proc object?
+  </h2>
+  <aside class='notes' data-markdown>
+  </aside>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### Proc with parameter
+
+```ruby
+my_proc = Proc.new do |item|
+  p "Text: #{item}"
+end
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='3'></span>
+
+Notes:
+- Step by step what is going on
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### Execute
+
+```ruby
+my_proc.call 10
+my_proc.yield 20
+my_proc.(30)
+my_proc[40]
+my_proc === 50
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='3'></span>
+<span class='fragment current-only' data-code-focus='4'></span>
+<span class='fragment current-only' data-code-focus='5'></span>
+
+Notes:
+- if we call Proc like this `my_proc.(20)` we must use `()`
+- First time I saw `===` in doc in 1.9.1
+- for Ruby 1.8.6 - nothing in a doc
+  </script>
+</section>
+
+<section data-transition='slide-in fade-out'>
+  <h2 class='font-size-like-h1'>
+    💼 Proc in case
+  </h2>
+
+  <aside class='notes' data-markdown>
+- since proc respond to `===` we can use it in case
+  </aside>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### Use proc in case
+
+```ruby
+def check_type(name)
+  message_type = proc { |name| name.include?('Message') }
+
+  case name
+  when message_type then "It's a message type!"
+  else
+    'Other type'
+  end
+end
+
+check_type('ConversationAdded')
+# => "Other type"
+check_type('SingleMessageAdded')
+# => "It's a message type!"
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='4'></span>
+<span class='fragment current-only' data-code-focus='5'></span>
+<span class='fragment current-only' data-code-focus='7'></span>
+<span class='fragment current-only' data-code-focus='11'></span>
+<span class='fragment current-only' data-code-focus='7'></span>
+<span class='fragment current-only' data-code-focus='13'></span>
+<span class='fragment current-only' data-code-focus='5'></span>
+
+Notes:
+- method just for the example
+- create a proc
+- prepare a case
+- can method
+- proc is called
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### 🪄 One more trick
+
+```ruby
+(4..7) === 5 # => true
+```
+
+Notes:
+- case use also `Range` so we can do tricks in Ruby
+  </script>
+</section>
+
+<section data-transition='slide-in fade-out'>
+  <h2 class='font-size-like-h1'>
+    ☎️ Call method with argument as proc
+  </h2>
+
+  <aside class='notes' data-markdown>
+- call a proc with argument
+  </aside>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+```ruby
+class User
+  def initialize(name)
+    @name = name
+  end
+
+  def say_my_age(age)
+    puts "I'm #{age} years ago"
+  end
+end
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='6'></span>
+
+Notes:
+- add method with argument
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+```ruby
+user = User.new('Agnieszka')
+
+user.say_my_age(15)
+# I'm 15 years ago
+#  => nil
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='3'></span>
+<span class='fragment current-only' data-code-focus='4'></span>
+<span class='fragment current-only' data-code-focus='3'></span>
+
+Notes:
+- create new user
+- 15 is not my age
+- looks like a teenager
+- call a method - obviously
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### Call with call 😉
+
+```ruby
+user = User.new('Agnieszka')
+
+:say_my_age.to_proc.call(user, 15)
+# I'm 15 years ago
+#  => nil
+
+:say_my_age.to_proc.yield(user, 15)
+# I'm 15 years ago
+#  => nil
+```
+<span class='fragment current-only' data-code-focus='3'></span>
+<span class='fragment current-only' data-code-focus='7'></span>
+
+Notes:
+- call with proc
+- using `yield` and `call` is easy
+- put argument as second `call` argument
+- How this works
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### Rubinius implementation
+
+```ruby
+# Returns a Proc object which respond to the given method by sym.
+def to_proc
+  # Put sym in the outer enclosure so that this proc can be instance_eval'd.
+  # If we used self in the block and the block is passed to instance_eval, then
+  # self becomes the object instance_eval was called on. So to get around this,
+  # we leave the symbol in sym and use it in the block.
+  #
+  sym = self
+  Proc.new do |*args, &b|
+    raise ArgumentError, "no receiver given" if args.empty?
+    args.shift.__send__(sym, *args, &b)
+  end
+end
+```
+<span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='8'></span>
+<span class='fragment current-only' data-code-focus='9'></span>
+<span class='fragment current-only' data-code-focus='10'></span>
+<span class='fragment current-only' data-code-focus='11'></span>
+
+Notes:
+- Rubinius implementation - last update 2020
+- IronRuby in C# for .NET 2011
+- a `to_proc` method
+- store `self` symbol in local variable
+- (avoid changing the current self)
+- check the args - call need one
+- other way - `exception`
+  </script>
+</section>
+
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### Use our example
+
+```ruby
+# Returns a Proc object which respond to the given method by sym.
+def to_proc
+  # Put sym in the outer enclosure so that this proc can be instance_eval'd.
+  # If we used self in the block and the block is passed to instance_eval, then
+  # self becomes the object instance_eval was called on. So to get around this,
+  # we leave the symbol in sym and use it in the block.
+  #
+  sym = :say_my_age
+  Proc.new do |*args, &b|
+    raise ArgumentError, "no receiver given" if [user, 15].empty?
+    user.__send__(:say_my_age, *[15], &b)
+  end
+end
+```
+<span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='8'></span>
+<span class='fragment current-only' data-code-focus='9'></span>
+<span class='fragment current-only' data-code-focus='10'></span>
+<span class='fragment current-only' data-code-focus='11'></span>
+
+Notes:
+- a `to_proc` method
+- `self` is a `:say_my_age` symbol
+- `args` is `user` and 15 - not empty
+- send `:say_my_age` to user with 15
+- what about triple equal sign?
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### Call with ===
+
+```ruby
+user = User.new('Agnieszka')
+
+:say_my_age.to_proc === user, 15
+# `loop': (irb):31: syntax error, unexpected ',', expecting end-of-input (SyntaxError)
+#  :say_my_age.to_proc === user, 15
+#                               ^
+
+:say_my_age.to_proc.=== user, 15
+# I'm 15 years ago
+#  => nil
+```
+<span class='fragment current-only' data-code-focus='3'></span>
+<span class='fragment current-only' data-code-focus='4'></span>
+<span class='fragment current-only' data-code-focus='8'></span>
+
+Notes:
+- It's not that simple
+- as operator - exception
+- as method - OK
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### 😮 Call with ===
+
+```ruby
+user = User.new('Agnieszka')
+
+(:say_my_age.to_proc.curry(2) === user)[15]
+# I'm 15 years ago
+#  => nil
+
+(:say_my_age.to_proc.curry(2) === user).call(15)
+# I'm 15 years ago
+#  => nil
+```
+<span class='fragment current-only' data-code-focus='3'></span>
+<span class='fragment current-only' data-code-focus='7'></span>
+<span class='fragment current-only' data-code-focus='3'></span>
+
+Notes:
+- use `curry`
+- `curry` not a spices
+- `curry` - tell proc how many arguments it needs
+- wait with a call until all arguments are provided
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### 🍛 Curry
+
+```ruby
+proc_1 = :say_my_age.to_proc.curry(2)
+proc_2 = proc_1.call(user)
+proc_2.call(15)
+# I'm 15 years ago
+#  => nil
+
+proc_1[user][15]
+# I'm 15 years ago
+#  => nil
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='3'></span>
+<span class='fragment current-only' data-code-focus='7'></span>
+
+Notes:
+- tell proc how many arguments it needs
+- we need 2
+- lower arity - get curried proc in return
+- partially executed
+- 2 args == real call
+- fancy square brackets call
+  </script>
+</section>
+
+<section data-transition='slide-in fade-out'>
+  <h2 class='font-size-like-h1'>
+    💃 Lambdas
+  </h2>
+  <aside class='notes' data-markdown>
+- almost like `Proc`, but have some different behaviors
+- in Ruby 1.8 `proc` is `lambda` but in 1.9 `proc` is `Proc` object
+  </aside>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### 1. Arguments control
+
+```ruby
+my_proc = Proc.new { |item|  p "==#{item}==" }
+my_lambda = lambda { |item|  p "==#{item}==" }
+
+my_proc.arity
+#  => 1
+my_lambda.arity
+#  => 1
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='4'></span>
+<span class='fragment current-only' data-code-focus='6'></span>
+
+Notes:
+- tell proc how many arguments it needs
+- the same number
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### Execute
+
+```ruby
+my_proc.call
+# "===="
+#  => "===="
+
+my_lambda.call
+# in <top (required)>': wrong number of arguments (given 0, expected 1) (ArgumentError)
+#   from (irb):6:in `<main>'
+#   from <internal:kernel>:187:in `loop'
+#   from /home/agnieszka/.rvm/rubies/ruby-3.3.4/lib/ruby/gems/3.3.0/gems/irb-1.13.1/exe/irb:9:in `<top (required)>'
+#   from /home/agnieszka/.rvm/rubies/ruby-3.3.4/bin/irb:25:in `load'
+#   from /home/agnieszka/.rvm/rubies/ruby-3.3.4/bin/irb:25:in `<main>'
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='3'></span>
+<span class='fragment current-only' data-code-focus='5'></span>
+<span class='fragment current-only' data-code-focus='6'></span>
+
+Notes:
+- in `lambda` is like a method
+- need an argument
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### 🗄️ Array of arguments
+
+```ruby
+lambda { |*items| }.arity
+# => -1
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='2'></span>
+
+Notes:
+- unspecified number of arguments
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### New lambda declaration
+
+```ruby
+my_lambda = -> { p 'Is it still working?' }
+my_lambda.call
+# "Is it still working?"
+#  => "Is it still working?"
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='3'></span>
+<span class='fragment current-only' data-code-focus='4'></span>
+
+Notes:
+- another way of declaring lambda by `->`
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### But ...
+
+```ruby
+my_lambda.class
+# => Proc
+
+my_lambda.lambda?
+# => true
+
+my_lambda = lambda { |item|  p "==#{item}==" }
+# => #<Proc:0x00007f2ac55ce080 (irb):2 (lambda)>
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='4'></span>
+<span class='fragment current-only' data-code-focus='5'></span>
+<span class='fragment current-only' data-code-focus='7'></span>
+<span class='fragment current-only' data-code-focus='8'></span>
+
+Notes:
+- `lambda` class is always `Proc`
+- but is not the same
+- during declaration we can see that
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### 2. Using with return
+
+```ruby
+def run(proc)
+  p 'before'
+  proc.call
+  p 'after'
+end
+```
+<span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='3'></span>
+<span class='fragment current-only' data-code-focus='4'></span>
+
+Notes:
+- the same stroy for break
+- declaring a method
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### Execute lambda
+
+```ruby
+run lambda { p 'In'; return }
+# "before"
+# "In"
+# "after"
+#  => "after"
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='3'></span>
+<span class='fragment current-only' data-code-focus='4'></span>
+
+Notes:
+- for `lambda` everything is ok
+- `lambda` finished and go back to method `run`
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### Execute proc
+
+```ruby
+run proc { p 'In'; return }
+# "before"
+# "In"
+# in `block in <top (required)>': unexpected return (LocalJumpError)
+# 	from (irb):14:in `run'
+# 	from (irb):19:in `<main>'
+# 	from <internal:kernel>:187:in `loop'
+# 	from /home/agnieszka/.rvm/rubies/ruby-3.3.4/lib/ruby/gems/3.3.0/gems/irb-1.13.1/exe/irb:9:in `<top (required)>'
+# 	from /home/agnieszka/.rvm/rubies/ruby-3.3.4/bin/irb:25:in `load'
+# 	from /home/agnieszka/.rvm/rubies/ruby-3.3.4/bin/irb:25:in `<main>'
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='3'></span>
+<span class='fragment current-only' data-code-focus='4'></span>
+
+Notes:
+- for `proc` we have error, stop on `"In"`
+- `proc` don't return current context
+- `proc` want to return context where he was defined
+- (in this case it is main context)
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### 🏝️ Change the context
+
+```ruby
+def change_context
+  run lambda { p 'In'; return }
+  run proc { p 'In'; return }
+end
+
+# "before"
+# "In"
+# "after"
+# "before"
+# "In"
+#  => nil
+```
+<span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='3'></span>
+
+<span class='fragment current-only' data-code-focus='6-8'></span>
+<span class='fragment current-only' data-code-focus='10'></span>
+<span class='fragment current-only' data-code-focus='11'></span>
+
+Notes:
+- first run `lambda`
+- in this case context for `proc` is `change_context` method
+- `proc` return this context
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### 🏝️ Change the context
+
+```ruby
+def change_context
+  run proc { p 'In'; return }
+  run lambda { p 'In'; return }
+end
+
+# "before"
+# "In"
+#  => nil
+```
+<span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='3'></span>
+<span class='fragment current-only' data-code-focus='6-8'></span>
+
+Notes:
+- first run `proc`
+- `lambda` is not running at all
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### 3. Lambda can return value even if the creation context is gone
+
+```ruby
+def first(closure)
+  p 'start first'
+  p "closure: #{closure.call}"
+  p 'end first'
+end
+
+def second
+  p 'start second'
+  p "first return: #{first(lambda { return 'lambda' })}"
+  p 'end second'
+end
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='3'></span>
+<span class='fragment current-only' data-code-focus='4'></span>
+<span class='fragment current-only' data-code-focus='7'></span>
+<span class='fragment current-only' data-code-focus='8'></span>
+<span class='fragment current-only' data-code-focus='9'></span>
+<span class='fragment current-only' data-code-focus='10'></span>
+
+Notes:
+- method `first` will get `lambda`
+- this `lambda` should return word `"lambda"`
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### Execute
+
+```ruby
+second
+# "start second"
+# "start first"
+# "closure: lambda"
+# "end first"
+# "first return: end first"
+# "end second"
+#  => "end second"
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='3'></span>
+<span class='fragment current-only' data-code-focus='4'></span>
+<span class='fragment current-only' data-code-focus='5'></span>
+<span class='fragment current-only' data-code-focus='6'></span>
+<span class='fragment current-only' data-code-focus='7'></span>
+<span class='fragment current-only' data-code-focus='8'></span>
+
+Notes:
+- check now
+- method `first` will get `lambda`
+- this `lambda` should return word `"lambda"`
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### 3. Proc after return, finishes all methods (first and second)
+
+```ruby
+def first(closure)
+  p 'start first'
+  p "closure: #{closure.call}"
+  p 'end first'
+end
+
+def second
+  p 'start second'
+  p "first return: #{first(proc { return 'proc' })}"
+  p 'end second'
+end
+```
+<span class='fragment current-only' data-code-focus='9'></span>
+
+Notes:
+- method `first` will get `proc` now
+- point 3 results from point 2
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### Execute
+
+```ruby
+second
+# "start second"
+# "start first"
+#  => "proc"
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='3'></span>
+<span class='fragment current-only' data-code-focus='4'></span>
+
+Notes:
+- using exception with proc is unsafe
+  </script>
+</section>
+
+<section data-transition='slide-in fade-out'>
+  <h2 class='font-size-like-h1'>
+    🚪 Closures
+  </h2>
+  <aside class='notes' data-markdown>
+  </aside>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### Execute
+
+```ruby
+def run(proc)
+  proc.call
+end
+
+name = 'Agnieszka'
+my_proc = proc { p name }
+run my_proc
+# "Agnieszka"
+#  => "Agnieszka"
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='5'></span>
+<span class='fragment current-only' data-code-focus='6'></span>
+<span class='fragment current-only' data-code-focus='7'></span>
+<span class='fragment current-only' data-code-focus='8'></span>
+
+Notes:
+- Before `proc` context we declare `name`
+- when we run our `proc` it sees the name in variable
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### What happened if the variable was not created before?
+
+```ruby
+my_proc = proc { p last_name }
+run my_proc
+# in <top (required)>': undefined local variable or method `last_name' for main (NameError)
+#  my_proc = proc { p last_name }
+#                     ^^^^^^^^^
+#    from (irb):2:in `run'
+#    from (irb):10:in `<main>'
+#    from <internal:kernel>:187:in `loop'
+#    from /home/agnieszka/.rvm/rubies/ruby-3.3.4/lib/ruby/gems/3.3.0/gems/irb-1.13.1/exe/irb:9:in `<top (required)>'
+#    from /home/agnieszka/.rvm/rubies/ruby-3.3.4/bin/irb:25:in `load'
+#    from /home/agnieszka/.rvm/rubies/ruby-3.3.4/bin/irb:25:in `<main>'
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='3'></span>
+
+Notes:
+- error
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### Second try
+
+```ruby
+last_name = "Małaszkiewicz"
+run my_proc
+# in <top (required)>': undefined local variable or method `last_name' for main (NameError)
+# my_proc = proc { p last_name }
+#                   ^^^^^^^^^
+#	from (irb):2:in `run'
+#	from (irb):12:in `<main>'
+#	from <internal:kernel>:187:in `loop'
+#	from /home/agnieszka/.rvm/rubies/ruby-3.3.4/lib/ruby/gems/3.3.0/gems/irb-1.13.1/exe/irb:9:in `<top (required)>'
+#	from /home/agnieszka/.rvm/rubies/ruby-3.3.4/bin/irb:25:in `load'
+#	from /home/agnieszka/.rvm/rubies/ruby-3.3.4/bin/irb:25:in `<main>'
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='3'></span>
+
+Notes:
+- `last_name` variable don't exist when `proc` is create so they can not use it
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### 🤔 What's going on here?
+
+```ruby
+name = 'Agnieszka'
+my_proc = proc { p name }
+name = 'Ula'
+
+run my_proc
+# => ?
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='3'></span>
+<span class='fragment current-only' data-code-focus='5'></span>
+<span class='fragment current-only' data-code-focus='6'></span>
+
+Notes:
+- question for listeners
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### Answer
+
+```ruby
+name = 'Agnieszka'
+my_proc = proc { p name }
+name = 'Ula'
+
+run my_proc
+"Ula"
+# => "Ula"
+```
+<span class='fragment current-only' data-code-focus='5'></span>
+<span class='fragment current-only' data-code-focus='6'></span>
+<span class='fragment current-only' data-code-focus='7'></span>
+
+Notes:
+- `proc` remember reference to this variable not a content
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### Where can we use this?
+#### Defining function which creates other functions
+
+```ruby
+def multiple(m)
+  lambda { |n| n * m }
+end
+
+double = multiple(2)
+triple = multiple(3)
+
+double[5] => 10
+triple[5] => 15
+```
+<span class='fragment current-only' data-code-focus='1-3'></span>
+<span class='fragment current-only' data-code-focus='5-6'></span>
+<span class='fragment current-only' data-code-focus='8-9'></span>
+
+Notes:
+- Higher-order function
+- `m` comes in and exist
+- `multiple` method `lambda` see `m` (2 or 3)
+- `lambda` has an argument `n` so we put `5` in this case
+  </script>
+</section>
+
+<section data-transition='slide-in fade-out'>
+  <h2 class='font-size-like-h1'>
+    🧙‍♂️ Crazy stuff
+  </h2>
+
+  <aside class='notes' data-markdown>
+- Allowed from 18 years
+- Once you see it, you will never unsee it
+- No production use
+- Go back to the fun - to Ruby root
+  </aside>
+</section>
+
+<section data-transition='slide-in fade-out'>
+  <h2 class='font-size-like-h1'>
+    🗺️ map(&:name)
+  </h2>
+
+  <aside class='notes' data-markdown>
+- map + &
+  </aside>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### 🗺️ map(&:name)
+
+```ruby
+[1, 2, 3].map(&:next)
+#  => [2, 3, 4]
+
+[1, 2, 3].map { |item| item.next }
+#  => [2, 3, 4]
+
+[1, 2, 3].map(&:next.to_proc)
+#  => [2, 3, 4]
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='4'></span>
+<span class='fragment current-only' data-code-focus='7'></span>
+
+Notes:
+- shortcut for second call not first
+- call `to_proc` in `map` as a block argument
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### 🗺️ map(&:name)
+
+```ruby
+my_next = Proc.new { |item| item.next }
+#  => #<Proc:0x000055acb457fd30 (irb):4>
+
+[1, 2, 3].map(&my_next)
+#  => [2, 3, 4]
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='4'></span>
+
+Notes:
+- similar example
+- proc & call in `map`
+- normal `map` block argument
+  </script>
+</section>
+
+<section data-transition='slide-in fade-out'>
+  <h2 class='font-size-like-h1'>
+    🦄 Call map with argument method
+  </h2>
+
+  <aside class='notes' data-markdown>
+- the same question
+- proc with argument
+- increase about 2
+  </aside>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+```ruby
+[1, 2, 3].map(&:+(2))
+# in `loop': (irb):1: syntax error, unexpected '(', expecting ')' (SyntaxError)
+# [1, 2, 3].map(&:+(2))
+#                  ^
+
+[1, 2, 3].map(&2.method(:+))
+#  => [3, 4, 5]
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='6'></span>
+
+Notes:
+- for first one we get error
+- second one is OK
+- let's take a closer look
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+```ruby
+2.method(:+)
+#  => #<Method: Integer#+(_)>
+
+2.method(:+).call(1)
+#  => 3
+
+[1, 2, 3].map(&2.method(:+))
+#  => [3, 4, 5]
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='4'></span>
+<span class='fragment current-only' data-code-focus='7'></span>
+
+Notes:
+- create method + on object 2
+- then call it with argument 1
+- in `map` is called as proc on `Array`
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### 😲 Other possibilities
+```ruby
+[1, 2, 3].to_enum.with_object(2).map(&:+)
+#  => [3, 4, 5]
+
+[1, 2, 3].map(&:+.to_proc.curry(2).call(2))
+#  => [3, 4, 5]
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='4'></span>
+
+Notes:
+- convert `Array` to `Enumerable` object
+- inject the 2 into it
+- iterate through Array
+- convert :+ to proc
+- curry 2 arguments
+- call the first agr - 2
+- iterate through Array
+- use lambda, proc or own method
+  </script>
+</section>
+
+<section data-transition='slide-in fade-out'>
+  <h2 class='font-size-like-h1'>
+    #️⃣ Hash in map
+  </h2>
+
+  <aside class='notes' data-markdown>
+- Do you know that you can use hash in the map?
+  </aside>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### #️⃣ Hash in map
+```ruby
+[:check, :my, :keys].map(&{ my: 2 })
+#  => [nil, 2, nil]
+
+{ my: 2 }.to_proc.call(:my)
+#  => 2
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='4'></span>
+
+Notes:
+- run map on `Hash`
+- `Hash` implement `to_proc` method
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### 💎 Rubinius implementation
+```ruby
+def to_proc
+  method(:[]).to_proc
+end
+
+{ my: 2 }.to_proc.call(:my)
+#  => 2
+
+{ my: 2 }[:my]
+#  => 2
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='5'></span>
+<span class='fragment current-only' data-code-focus='8'></span>
+
+Notes:
+- Rubinius implementation
+- create method for `self` object
+- with `:[]`
+- and convert it to proc
+- `to_proc` call on Hash `:[]`
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### Objects implement to_proc method
+```ruby
+[1, 2, 3].map(&:next)
+#  => [2, 3, 4]
+
+[1, 2, 3].map(&2.method(:+))
+#  => [3, 4, 5]
+
+[:check, :my, :keys].map(&{ my: 2 })
+#  => [nil, 2, nil]
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='4'></span>
+<span class='fragment current-only' data-code-focus='7'></span>
+
+Notes:
+- Hash - last basic object with `to_proc`
+- Symbol, Hash, Method implements `to_proc`
+- Proc too - obvious
+  </script>
+</section>
+
+<section data-transition='slide-in fade-out'>
+  <h2 class='font-size-like-h1'>
+    🦓 Passing argument to map
+  </h2>
+
+  <aside class='notes' data-markdown>
+- iterator variable in 2 ways
+  </aside>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### 🦓 Passing argument to map
+```ruby
+[1, 2, 3].map { |item| item ** 2 }
+#  => [1, 4, 9]
+
+[1, 2, 3].map { _1 ** 2 }
+#  => [1, 4, 9]
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='4'></span>
+
+Notes:
+- named iterator variable
+- _1 (_ number)
+- do with multiple parameters
+- think about readability
+  </script>
+</section>
+
+<section data-transition='slide-in fade-out'>
+  <h2 class='font-size-like-h1'>
+    1 + 2
+  </h2>
+
+  <aside class='notes' data-markdown>
+- summarize presentation
+  </aside>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### 1 + 2
+```ruby
+1.+(2)
+#  => 3
+
+1.send(:+, 2)
+#  => 3
+
+1.method(:+) === 2
+#  => 3
+
+:+.to_proc.call(1, 2)
+#  => 3
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='4'></span>
+<span class='fragment current-only' data-code-focus='7'></span>
+<span class='fragment current-only' data-code-focus='10'></span>
+
+Notes:
+- syntactic sugar
+- call method + on object 1 with argument 2
+- send message `:+` to object 1
+- create method on object and call `===`
+- call on proc
+  </script>
+</section>
+
+<section data-transition='slide-in fade-out'>
+  <h2 class='font-size-like-h1'>
+    🤯
+  </h2>
+
+  <aside class='notes' data-markdown>
+- Is it possible to be more creasy?
+  </aside>
+</section>
+
+<section data-transition='slide-in fade-out'>
+  <h2 class='font-size-like-h1'>
+    Summary
+  </h2>
+
+  <aside class='notes' data-markdown>
+- Get rest - presentation summary
+  </aside>
+</section>
+
+<section data-transition='slide-in fade-out'>
+  <h2 class='font-size-like-h1'>
+    Types
+  </h2>
+  <ul>
+    <li>🏢 block + yield</li>
+    <li>🏁 block + &b</li>
+    <li>🔁 Proc.new</li>
+    <li>👨‍💻 proc</li>
+    <li>💃 lambda</li>
+    <li>🤖 method</li>
+  </ul>
+
+  <aside class='notes' data-markdown>
+- Types of functional programming
+  </aside>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### Where do we use this?
+
+```ruby
+[1, 2, 3].each { |item| p item }
+[1, 2, 3].each_cons(2).map { |x, y| x + y }
+[1, 2, 3].map { |item| item.next }
+[1, 2, 3].inject(0) { |sum, item| sum + item }
+[1, 2, 3].inject(0, :+)
+
+respond_to do |format|
+  format.html # index.html.erb
+  format.xml  { render :xml => @items }
+end
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='3'></span>
+<span class='fragment current-only' data-code-focus='4'></span>
+<span class='fragment current-only' data-code-focus='5'></span>
+<span class='fragment current-only' data-code-focus='7-10'></span>
+
+Notes:
+- simle `each`
+- `map` with two arguments
+- `inject` with argument and block
+- `inject` with symbol
+- render Rails websites
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### 📞 How do we call yield_run or block_run?
+
+```ruby
+def yield_run
+  yield
+end
+
+def block_run(&block)
+  block.call
+end
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='5'></span>
+<span class='fragment current-only' data-code-focus='6'></span>
+
+Notes:
+- How do we call run with `yield` or `call`?
+- `yield` is not `Proc` type, it is something like `block.call`
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### The same 😂
+
+```ruby
+block_run { 'my proc' }
+block_run { p 'my proc' }
+
+block_run do
+  'my proc'
+end
+
+my_proc = lambda { p 'my proc' }
+block_run &my_proc
+
+block_run { my_proc }
+block_run { my_proc.call }
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='4-6'></span>
+<span class='fragment current-only' data-code-focus='8'></span>
+<span class='fragment current-only' data-code-focus='9'></span>
+<span class='fragment current-only' data-code-focus='11'></span>
+<span class='fragment current-only' data-code-focus='12'></span>
+
+Notes:
+- the same
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### 📦 What do we get?
+
+```ruby
+name = 'Agnieszka'
+my_proc = lambda do
+  name = 'Maria'
+  p name
+end
+
+my_proc.call # => ?
+name # => ?
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='2-5'></span>
+<span class='fragment current-only' data-code-focus='3'></span>
+<span class='fragment current-only' data-code-focus='4'></span>
+<span class='fragment current-only' data-code-focus='7'></span>
+<span class='fragment current-only' data-code-focus='8'></span>
+
+Notes:
+- What do we get?
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### 🤨 Answer
+
+```ruby
+name = 'Agnieszka'
+my_proc = lambda do
+  name = 'Maria'
+  p name
+end
+
+my_proc.call
+# "Maria"
+#  => "Maria"
+
+name # => "Maria"
+```
+<span class='fragment current-only' data-code-focus='7'></span>
+<span class='fragment current-only' data-code-focus='8'></span>
+<span class='fragment current-only' data-code-focus='9'></span>
+<span class='fragment current-only' data-code-focus='11'></span>
+
+Notes:
+- Answer
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### 🎁 What do we get?
+
+```ruby
+def run
+  a = 10
+  yield
+  yield
+  p "#{a}"
+end
+
+a = 5
+run { a += 1 } # => ?
+a # => ?
+```
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='3-4'></span>
+<span class='fragment current-only' data-code-focus='5'></span>
+<span class='fragment current-only' data-code-focus='8'></span>
+<span class='fragment current-only' data-code-focus='9'></span>
+<span class='fragment current-only' data-code-focus='10'></span>
+
+Notes:
+- What do we get?
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### 😵‍💫 Answer
+
+```ruby
+def run
+  a = 10
+  yield
+  yield
+  p "#{a}"
+end
+
+a = 5
+run { a += 1 }
+# "10"
+#  => "10"
+a # => 7
+```
+
+<span class='fragment current-only' data-code-focus='8'></span>
+<span class='fragment current-only' data-code-focus='9'></span>
+<span class='fragment current-only' data-code-focus='10'></span>
+<span class='fragment current-only' data-code-focus='11'></span>
+<span class='fragment current-only' data-code-focus='12'></span>
+
+Notes:
+- What do we get?
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### 💝 What do we get?
+
+```ruby
+f = proc {|x| x * x }
+g = proc {|x| x + x }
+
+(f >> g).call(2) # => ?
+(g >> f).call(2) # => ?
+
+# f(g(x))
+# g(f(x))
+```
+
+<span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='2'></span>
+<span class='fragment current-only' data-code-focus='4'></span>
+<span class='fragment current-only' data-code-focus='5'></span>
+<span class='fragment current-only' data-code-focus='7-8'></span>
+
+Notes:
+- What do we get?
+- `prc >> g → a_proc`
+- Returns a proc that is the composition of this `prc` and the given `g`
+  </script>
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'>
+  <script type='text/template'>
+### 😵 Answer
+
+```ruby
+f = proc {|x| x * x }
+g = proc {|x| x + x }
+
+(f >> g).call(2) # => 8
+(g >> f).call(2) # => 16
+```
+
+<span class='fragment current-only' data-code-focus='4'></span>
+<span class='fragment current-only' data-code-focus='5'></span>
+
+Notes:
+- What do we get?
+  </script>
+</section>
+
+<section data-background='#fff' data-transition='slide-in fade-out'>
+  <img alt='Woman on Rails logo'
+       class='pure'
+       data-src='images/shared/womanonrails.svg'
+       width='100%'>
+  <h3 class='fragment'>
+    <a href='https://womanonrails.com/presentations/'>womanonrails.com/presentations</a>
+  </h3>
+</section>
+
+
+<section data-markdown
+         data-transition='slide-in fade-out'
+         style='font-size: 20pt; text-align: left;'>
+### Links
+
+- [Wat lightning talk](https://destroyallsoftware.com/talks/wat)
+- [parsel.y](https://github.com/ruby/ruby/blob/master/parse.y#L4992-L5000)
+- [Why do two strings separated by space concatenate in Ruby?](https://stackoverflow.com/questions/23811203/why-do-two-strings-separated-by-space-concatenate-in-ruby/)
+- [Closure in Ruby](http://innig.net/software/ruby/closures-in-ruby)
+- [An Introduction to Proc, Lambdas and Closures in Ruby](https://www.youtube.com/watch?v=VBC-G6hahWA)
+- [Design Patterns in Ruby - Russ Olsen](http://www.amazon.com/Design-Patterns-Ruby-Russ-Olsen/dp/0321490452)
+- [Ruby doc](http://ruby-doc.org/)
+- [Functional Programming with Ruby](http://www.slideshare.net/tokland/functional-programming-with-ruby-9975242)
+- [Features of Functional Languages](http://www.sitepoint.com/functional-programming-techniques-with-ruby-part-i/)
+- [Ruby Proc doc 2.6](https://ruby-doc.org/core-2.6/Proc.html#method-c-new)
+</section>
+
+<section data-markdown
+         data-transition='slide-in fade-out'
+         style='font-size: 20pt; text-align: left;'>
+### Links
+
+- [Rubinius](https://github.com/rubinius/rubinius)
+- [Ruby current Proc doc](https://ruby-doc.org/current/Proc.html)
+- [Ruby Proc doc 1.9.1](https://ruby-doc.org/core-1.9.1/Proc.html)
+- [Ruby Proc doc 1.8.6](https://ruby-doc.org/core-1.8.6/Proc.html)
+- [Method#curry](https://www.rubydoc.info/stdlib/core/Method:curry)
+- [Ruby map(&:method) syntax - meaning & usage](https://womanonrails.com/one-line-map-ruby)
+- [Method object](https://ruby-doc.org/current/Method.html)
+- [Functional programming in Ruby](https://womanonrails.com/functional-programming-ruby)
+- [Iterators in Ruby](https://womanonrails.com/ruby-iterators)
+- [Things you didn't know about Ruby](https://womanonrails.com/things-you-dont-know-about-ruby)
+</section>
+
+
+<section class='pull-right last-section' data-background='images/shared/unicorn-agnieszka.jpg'>
+  <img alt='Woman on Rails logotype' class='pure' data-src='images/womanonrails.png' height='94' width='300'>
+  <h2 class='author-name'>Agnieszka Małaszkiewicz</h2>
+  <p class='author-mail'>agnieszka (at) fractalsoft (dot) org</p>
+
+  <div class='links'>
+    <p>
+      <a href='https://womanonrails.com/' target='_blank' title='Web development from woman perspective'>
+        WomanOnRails.com
+      </a>
+    </p>
+    <p>
+      <a href='https://twitter.com/womanonrails' rel='nofollow noopener' target='_blank' title='Twitter @womanonrails'>
+      <span class='zocial-twitter'></span> @womanonrails
+    </a>
+    </p>
+    <p>
+      <a href='https://fractalsoft.org/pl' target='_blank' title='Ruby on Rails and JavaScript programmers'>
+        <span>
+          <img alt='Fractal Soft logo' class='pure' data-src='images/icons/svg/fractalsoft.svg' style='width: 30px;'>
+          Fractal Soft
+        </span>
+      </a>
+    </p>
+  </div>
+
+  <p class='social'>
+    <a href='https://github.com/womanonrails' rel='nofollow noopener' target='_blank' title='GitHub'>
+      <span class='zocial-github'></span>
+    </a>
+    <a href='https://www.instagram.com/womanonrails' rel='nofollow noopener' target='_blank' title='Instagram'>
+      <span class='zocial-instagram'></span>
+    </a>
+    <a href='https://www.facebook.com/107403177317825/' rel='nofollow noopener' target='_blank' title='Facebook'>
+      <span class='zocial-facebook'></span>
+    </a>
+    <a href='https://www.youtube.com/@womanonrails' rel='nofollow noopener' target='_blank' title='YouTube'>
+      <span class='zocial-youtube'></span>
+    </a>
+    <a href='https://vimeo.com/womanonrails' rel='nofollow noopener' target='_blank' title='Vimeo'>
+      <span class='zocial-vimeo'></span>
+    </a>
+  </p>
+</section>
+
+      </div>
+    </div>
+
+    <script src='js/reveal.js'></script>
+
+    <script>
+      // More info about config & dependencies:
+      // - https://github.com/hakimel/reveal.js#configuration
+      // - https://github.com/hakimel/reveal.js#dependencies
+      Reveal.initialize({
+        // Transition style for full page slide backgrounds
+        backgroundTransition: 'fade', // none/fade/slide/convex/concave/zoom
+
+        // Vertical centering of slides
+        center: true,
+
+        // Display presentation control arrows
+        controls: false,
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden" or "visible"
+        controlsBackArrows: 'faded',
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: 48,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL, so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        hash: true,
+
+        // Flags if we should show a help overlay when the questionmark key is pressed
+        help: true,
+
+        // Hides the address bar on mobile devices
+        hideAddressBar: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Display a presentation progress bar
+        progress: false,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Display the page number of the current slide
+        slideNumber: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Transition style
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+        // Transition speed
+        transitionSpeed: 'default', // default/fast/slow
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        dependencies: [
+          { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/highlight/highlight.js', async: true },
+          { src: 'plugin/search/search.js', async: true },
+          { src: 'plugin/zoom-js/zoom.js', async: true },
+          { src: 'plugin/notes/notes.js', async: true },
+          {
+            src: 'plugin/reveal-code-focus/reveal-code-focus.js',
+            async: true,
+            callback: function() { RevealCodeFocus(); }
+          }
+        ]
+      });
+    </script>
+  </body>
+</html>
