@@ -262,6 +262,7 @@ my_own_block
 # 	from /home/agnieszka/.rvm/rubies/ruby-3.3.4/lib/ruby/gems/3.3.0/gems/irb-1.13.1/exe/irb:9:in `<top (required)>'
 ```
 <span class='fragment current-only' data-code-focus='1'></span>
+<span class='fragment current-only' data-code-focus='2'></span>
 <span class='fragment current-only' data-code-focus='3'></span>
 
 Notes:
@@ -377,7 +378,7 @@ my_own_block { p 5 }
 
 Notes:
 - we can use `do end` instead `{}`
-- block always return last line!
+- method always return last line!
   </script>
 </section>
 
@@ -1131,6 +1132,7 @@ end
 <span class='fragment current-only' data-code-focus='3'></span>
 
 <span class='fragment current-only' data-code-focus='6-8'></span>
+<span class='fragment current-only' data-code-focus='9'></span>
 <span class='fragment current-only' data-code-focus='10'></span>
 <span class='fragment current-only' data-code-focus='11'></span>
 
@@ -2013,8 +2015,8 @@ g = proc {|x| x + x }
 (f >> g).call(2) # => ?
 (g >> f).call(2) # => ?
 
-# f(g(x))
 # g(f(x))
+# f(g(x))
 ```
 
 <span class='fragment current-only' data-code-focus='1'></span>
